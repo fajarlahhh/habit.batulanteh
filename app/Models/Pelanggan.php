@@ -51,13 +51,13 @@ class Pelanggan extends Model
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }
 
-    public function rekeningAir()
+    public function bacaMeter()
     {
-        return $this->hasMany(RekeningAir::class);
+        return $this->hasMany(BacaMeter::class);
     }
 
-    public function rekeningAirTerakhir()
+    public function bacaMeterTerakhir()
     {
-        return $this->hasOne(RekeningAir::class)->orderBy('periode', 'desc');
+        return $this->hasOne(BacaMeter::class)->orderBy('periode', 'desc');
     }
 }

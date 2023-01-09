@@ -8,12 +8,13 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $data, $key, $status, $noLangganan, $nama, $alamat, $noHp, $tanggalPasang, $noBodyWaterMeter, $golongan, $jalan, $merkWaterMeter, $diameter, $pembaca;
+    public $data, $key, $ktp, $status, $noLangganan, $nama, $alamat, $noHp, $tanggalPasang, $noBodyWaterMeter, $golongan, $jalan, $merkWaterMeter, $diameter, $pembaca;
 
     public function submit()
     {
         $this->validate([
             'status' => 'required|numeric|between:1,4',
+            'ktp' => 'numeric|digits:16',
             'nama' => 'required',
             'alamat' => 'required',
             'noHp' => 'digits_between:9,13|numeric|regex:/(08)[0-9]{9}/',
@@ -36,6 +37,7 @@ class Form extends Component
             $this->data->no_langganan = $this->noLangganan;
         }
 
+        $this->data->ktp = $this->ktp;
         $this->data->status = $this->status;
         $this->data->nama = $this->nama;
         $this->data->alamat = $this->alamat;
@@ -57,6 +59,7 @@ class Form extends Component
     {
         if ($this->key) {
             $this->data = Pelanggan::findOrFail($this->key);
+            $this->ktp = $this->data->ktp;
             $this->status = $this->data->status;
             $this->noLangganan = $this->data->no_langganan;
             $this->nama = $this->data->nama;

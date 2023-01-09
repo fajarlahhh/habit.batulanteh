@@ -29,8 +29,7 @@
                         </div>
                         <div class="form-group">
                             <label for="control-label">Status</label>
-                            <select wire:model.defer="status" class="form-control selectpicker"
-                                data-width="100%">
+                            <select wire:model.defer="status" class="form-control selectpicker" data-width="100%">
                                 <option selected hidden>-- Pilih Status --</option>
                                 <option value="1">Aktif</option>
                                 <option value="2">Putus Sementara</option>
@@ -38,6 +37,13 @@
                                 <option value="4">Putus Rampung</option>
                             </select>
                             @error('status')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">KTP</label>
+                            <input class="form-control" type="text" autocomplete="off" wire:model.defer="ktp" />
+                            @error('ktp')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -141,8 +147,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="control-label">Petugas Baca Meter</label>
-                                    <select wire:model.defer="pembaca" class="form-control selectpicker" data-live-search="true" data-size="10"
-                                        data-width="100%">
+                                    <select wire:model.defer="pembaca" class="form-control selectpicker"
+                                        data-live-search="true" data-size="10" data-width="100%">
                                         <option selected hidden>-- Pilih Petugas Baca Meter --</option>
                                         @foreach (\App\Models\Pengguna::orderBy('nama')->get() as $row)
                                             <option value="{{ $row->getKey() }}">{{ $row->nama }}

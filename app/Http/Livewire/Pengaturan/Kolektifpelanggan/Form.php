@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pengaturan\Kolektif;
+namespace App\Http\Livewire\Pengaturan\Kolektifpelanggan;
 
 use App\Models\Kolektif;
 use App\Models\KolektifDetail;
@@ -32,11 +32,12 @@ class Form extends Component
             KolektifDetail::insert(collect($this->detail)->map(fn($q) => [
                 'kolektif_id' => $this->data->id,
                 'pelanggan_id' => $q['pelanggan_id'],
+                'penanggung_jawab' => $q['penanggung_jawab'],
             ])->toArray());
             session()->flash('success', 'Berhasil menyimpan data');
         });
 
-        return redirect(route('pengaturan.kolektif'));
+        return redirect(route('pengaturan.kolektifpelanggan'));
     }
 
     public function tambahDetail()
@@ -44,6 +45,7 @@ class Form extends Component
         $this->detail[] = [
             'kolektif_id' => null,
             'pelanggan_id' => null,
+            'penanggung_jawab' => null,
         ];
     }
 
@@ -71,6 +73,6 @@ class Form extends Component
 
     public function render()
     {
-        return view('livewire.pengaturan.kolektif.form');
+        return view('livewire.pengaturan.kolektifpelanggan.form');
     }
 }

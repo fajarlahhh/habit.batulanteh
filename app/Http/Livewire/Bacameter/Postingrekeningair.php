@@ -137,25 +137,25 @@ class Postingrekeningair extends Component
 
                 Ira::where('periode', $this->tahun . '-' . $this->bulan . '-01')->delete();
 
-                $dataRekening = Pelanggan::where('tanggal_pasang', '<', Carbon::parse($this->tahun . '-' . $this->bulan . '-01')->format('Y-m-d'))->with(['rekeningAirTerakhir' => fn($q) => $q->where('periode', $this->tahun . '-' . $this->bulan . '-01')])->with('rekeningAirTerakhir.bacaMeter')->with('jalan')->get();
+                $dataRekening = Pelanggan::where('tanggal_pasang', '<', Carbon::parse($this->tahun . '-' . $this->bulan . '-01')->format('Y-m-d'))->with(['bacaMeterTerakhir' => fn($q) => $q->where('periode', $this->tahun . '-' . $this->bulan . '-01')])->with('bacaMeterTerakhir.rekeningAir')->with('jalan')->get();
 
                 $dataIra = [];
                 foreach ($dataRekening as $row) {
                     array_push($dataIra, [
                         'status_pelanggan' => $row->status,
                         'periode' => $this->tahun . '-' . $this->bulan . '-01',
-                        'stand_lalu' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->bacaMeter->stand_lalu : null,
-                        'stand_ini' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->bacaMeter->stand_ini : null,
-                        'harga_air' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->harga_air : 0,
-                        'biaya_denda' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->biaya_denda : 0,
-                        'biaya_lainnya' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->biaya_lainnya : 0,
-                        'biaya_meter_air' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->biaya_meter_air : 0,
-                        'biaya_materai' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->biaya_materai : 0,
-                        'biaya_ppn' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->biaya_ppn : 0,
-                        'diskon' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->diskon : 0,
-                        'golongan_id' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->golongan_id : 0,
-                        'jalan_id' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->jalan_id : 0,
-                        'id_pelanggan' => $row->getKey(),
+                        'stand_lalu' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->stand_lalu : null,
+                        'stand_ini' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->stand_ini : null,
+                        'harga_air' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->harga_air : 0,
+                        'biaya_denda' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_denda : 0,
+                        'biaya_lainnya' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_lainnya : 0,
+                        'biaya_meter_air' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_meter_air : 0,
+                        'biaya_materai' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_materai : 0,
+                        'biaya_ppn' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_ppn : 0,
+                        'diskon' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->diskon : 0,
+                        'golongan_id' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->golongan_id : 0,
+                        'jalan_id' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->jalan_id : 0,
+                        'pelanggan_id' => $row->getKey(),
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
@@ -166,7 +166,7 @@ class Postingrekeningair extends Component
                     Ira::insert($rekap->toArray());
                 }
 
-                session()->flash('success', 'Data rekening air periode ' . $this->tahun . '-' . $this->bulan . ' berhasil diposting');
+                session()->flash('success', 'Data rekening air dan IRA periode ' . $this->tahun . '-' . $this->bulan . ' berhasil diposting');
             });
         }
         $this->reset('proses');

@@ -1,15 +1,14 @@
 <div>
-    @section('title', 'Kelurahan')
-
+    @section('title', 'Unit Pelayanan')
 
     @section('page')
         <li class="breadcrumb-item">Data Master</li>
         <li class="breadcrumb-item">Regional</li>
-        <li class="breadcrumb-item">Kelurahan</li>
+        <li class="breadcrumb-item">Unit Pelayanan</li>
         <li class="breadcrumb-item active">{{ $key ? 'Edit' : 'Tambah' }} Data</li>
     @endsection
 
-    <h1 class="page-header">Kelurahan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
+    <h1 class="page-header">Unit Pelayanan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
 
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
@@ -23,13 +22,6 @@
         <form wire:submit.prevent="submit">
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="control-label">Kode</label>
-                    <input class="form-control" type="text" autocomplete="off" wire:model.defer="kode" />
-                    @error('kode')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group">
                     <label class="control-label">Nama</label>
                     <input class="form-control" type="text" autocomplete="off" wire:model.defer="nama" />
                     @error('nama')
@@ -37,15 +29,9 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="control-label">Kecamatan</label>
-                    <select wire:model.defer="kecamatan" class="form-control selectpicker" data-live-search="true"
-                        data-width="100%">
-                        <option selected hidden>-- Pilih Kecamatan --</option>
-                        @foreach (\App\Models\Kecamatan::orderBy('nama')->get() as $row)
-                            <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
-                        @endforeach
-                    </select>
-                    @error('kecamatan')
+                    <label class="control-label">Alamat</label>
+                    <textarea class="form-control" autocomplete="off" rows="3" wire:model.defer="alamat"></textarea>
+                    @error('alamat')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -54,17 +40,10 @@
                 @role('super-admin|supervisor')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
-                <a href="{{ route('datamaster.regional.kecamatan') }}" class="btn btn-danger">Batal</a>
+                <a href="{{ route('datamaster.regional.unitpelayanan') }}" class="btn btn-danger">Batal</a>
             </div>
         </form>
     </div>
 
     <x-info />
-    @push('scripts')
-        <script>
-            Livewire.on('reinitialize', () => {
-                $('.selectpicker').selectpicker()
-            });
-        </script>
-    @endpush
 </div>

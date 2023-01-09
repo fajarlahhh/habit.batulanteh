@@ -29,7 +29,8 @@
                 </div>
                 <div class="form-group">
                     <label for="control-label">Kelurahan</label>
-                    <select wire:model.defer="kelurahan" class="form-control selectpicker" data-width="100%">
+                    <select wire:model.defer="kelurahan" class="form-control selectpicker" data-live-search="true"
+                        data-width="100%">
                         <option selected hidden>-- Pilih Kelurahan --</option>
                         @foreach (\App\Models\Kelurahan::orderBy('nama')->get() as $row)
                             <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
@@ -43,9 +44,9 @@
                     <label for="control-label">Jenis</label>
                     <select wire:model.defer="jenis" class="form-control selectpicker" data-width="100%">
                         <option selected hidden>-- Pilih Jenis --</option>
-                        <option value="Jalan" >Jalan</option>
-                        <option value="Gang" >Gang</option>
-                        <option value="Perumahan" >Perumahan</option>
+                        <option value="Jalan">Jalan</option>
+                        <option value="Gang">Gang</option>
+                        <option value="Perumahan">Perumahan</option>
                     </select>
                     @error('jenis')
                         <span class="text-danger">{{ $message }}</span>

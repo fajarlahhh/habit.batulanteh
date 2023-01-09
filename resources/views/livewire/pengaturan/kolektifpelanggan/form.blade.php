@@ -1,12 +1,12 @@
 <div>
-    @section('title', 'Kolektif')
+    @section('title', 'Kolektif Pelanggan')
     @section('page')
         <li class="breadcrumb-item">Pengaturan</li>
-        <li class="breadcrumb-item">Kolektif</li>
+        <li class="breadcrumb-item">Kolektif Pelanggan</li>
         <li class="breadcrumb-item active">{{ $key ? 'Edit' : 'Tambah' }} Data</li>
     @endsection
 
-    <h1 class="page-header">Kolektif <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
+    <h1 class="page-header">Kolektif Pelanggan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
 
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
@@ -43,6 +43,7 @@
                                 <table class="table">
                                     <tr>
                                         <td>Pelanggan</td>
+                                        <td>Penanggung Jawab</td>
                                         <td class="width-10"></td>
                                     </tr>
                                     @foreach ($detail as $key => $row)
@@ -56,6 +57,10 @@
                                                             {{ $row->no_langganan . ' - ' . $row->nama }}</option>
                                                     @endforeach
                                                 </select>
+                                            </td>
+                                            <td class="with-form-control">
+                                                <input type="text" class="form-control"
+                                                    wire:model.defer="detail.{{ $key }}.penanggung_jawab">
                                             </td>
                                             <td class="with-btn align-middle">
                                                 <a href="javascript:;" wire:click="hapusDetail({{ $key }})"
@@ -83,7 +88,7 @@
                 @role('super-admin|supervisor')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
-                <a href="{{ route('pengaturan.kolektif') }}" class="btn btn-danger">Batal</a>
+                <a href="{{ route('pengaturan.kolektifpelanggan') }}" class="btn btn-danger">Batal</a>
             </div>
         </form>
     </div>

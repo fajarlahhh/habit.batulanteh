@@ -54,6 +54,7 @@ class Buattarget extends Component
                     'longitude' => $row->longitude,
                     'pelanggan_id' => $row->id,
                     'pembaca_id' => $row->pembaca_id,
+                    'pengguna_id' => auth()->id(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

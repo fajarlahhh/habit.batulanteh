@@ -34,10 +34,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/pengguna/tambah', \App\Http\Livewire\Pengaturan\Pengguna\Form::class)->name('pengaturan.pengguna.tambah');
             Route::get('/pengguna/edit/{key}', \App\Http\Livewire\Pengaturan\Pengguna\Form::class)->name('pengaturan.pengguna.edit');
         });
-        Route::group(['middleware' => ['role_or_permission:super-admin|pengaturanpengguna']], function () {
-            Route::get('/kolektif', \App\Http\Livewire\Pengaturan\Kolektif\Index::class)->name('pengaturan.kolektif');
-            Route::get('/kolektif/tambah', \App\Http\Livewire\Pengaturan\Kolektif\Form::class)->name('pengaturan.kolektif.tambah');
-            Route::get('/kolektif/edit/{key}', \App\Http\Livewire\Pengaturan\Kolektif\Form::class)->name('pengaturan.kolektif.edit');
+        Route::group(['middleware' => ['role_or_permission:super-admin|pengaturankolektifpelanggan']], function () {
+            Route::get('/kolektifpelanggan', \App\Http\Livewire\Pengaturan\Kolektifpelanggan\Index::class)->name('pengaturan.kolektifpelanggan');
+            Route::get('/kolektifpelanggan/tambah', \App\Http\Livewire\Pengaturan\Kolektifpelanggan\Form::class)->name('pengaturan.kolektifpelanggan.tambah');
+            Route::get('/kolektifpelanggan/edit/{key}', \App\Http\Livewire\Pengaturan\Kolektifpelanggan\Form::class)->name('pengaturan.kolektifpelanggan.edit');
         });
     });
     Route::prefix('cetak')->group(function () {
@@ -95,6 +95,11 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('/kelurahan/tambah', \App\Http\Livewire\Datamaster\Regional\Kelurahan\Form::class)->name('datamaster.regional.kelurahan.tambah');
                 Route::get('/kelurahan/edit/{key}', \App\Http\Livewire\Datamaster\Regional\Kelurahan\Form::class)->name('datamaster.regional.kelurahan.edit');
             });
+            Route::group(['middleware' => ['role_or_permission:super-admin|datamasterregionalunitpelayanan']], function () {
+                Route::get('/unitpelayanan', \App\Http\Livewire\Datamaster\Regional\Unitpelayanan\Index::class)->name('datamaster.regional.unitpelayanan');
+                Route::get('/unitpelayanan/tambah', \App\Http\Livewire\Datamaster\Regional\Unitpelayanan\Form::class)->name('datamaster.regional.unitpelayanan.tambah');
+                Route::get('/unitpelayanan/edit/{key}', \App\Http\Livewire\Datamaster\Regional\Unitpelayanan\Form::class)->name('datamaster.regional.unitpelayanan.edit');
+            });
         });
         Route::prefix('tarif')->group(function () {
             Route::group(['middleware' => ['role_or_permission:super-admin|datamastertarifdenda']], function () {
@@ -133,6 +138,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/masterpelanggan', \App\Http\Livewire\Masterpelanggan\Index::class)->name('masterpelanggan');
         Route::get('/masterpelanggan/tambah', \App\Http\Livewire\Masterpelanggan\Form::class)->name('masterpelanggan.tambah');
         Route::get('/masterpelanggan/edit/{key}', \App\Http\Livewire\Masterpelanggan\Form::class)->name('masterpelanggan.edit');
+    });
+    Route::prefix('tagihanrekeningair')->group(function () {
+        Route::group(['middleware' => ['role_or_permission:super-admin|tagihanrekeningairangsuran']], function () {
+            Route::get('/angsuran', \App\Http\Livewire\Tagihanrekeningair\Angsuran\Index::class)->name('tagihanrekeningair.angsuran');
+            Route::get('/angsuran/tambah', \App\Http\Livewire\Tagihanrekeningair\Angsuran\Form::class)->name('tagihanrekeningair.angsuran.tambah');
+        });
     });
 });
 

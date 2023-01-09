@@ -1,12 +1,13 @@
 <div>
-    @section('title', 'Kolektif')
+    @section('title', 'Unit Pelayanan')
 
     @section('page')
-        <li class="breadcrumb-item">Pengaturan</li>
-        <li class="breadcrumb-item active">Kolektif</li>
+        <li class="breadcrumb-item">Data Master</li>
+        <li class="breadcrumb-item">Regional</li>
+        <li class="breadcrumb-item active">Unit Pelayanan</li>
     @endsection
 
-    <h1 class="page-header">Kolektif</h1>
+    <h1 class="page-header">Unit Pelayanan</h1>
 
     <x-alert />
 
@@ -17,7 +18,8 @@
                 <div class="col-xl-1 col-sm-1">
                     @role('super-admin|supervisor')
                         <div class="form-inline">
-                            <a class="btn btn-primary" href="{{ route('pengaturan.kolektif.tambah') }}">Tambah</a>
+                            <a class="btn btn-primary"
+                                href="{{ route('datamaster.regional.unitpelayanan.tambah') }}">Tambah</a>
                         </div>
                     @endrole
                 </div>
@@ -48,7 +50,7 @@
                     <tr>
                         <th class="width-60">No.</th>
                         <th>Nama</th>
-                        <th>Detail</th>
+                        <th>Alamat</th>
                         <th>Operator</th>
                         @role('super-admin|supervisor')
                             <th class="width-90"></th>
@@ -60,15 +62,7 @@
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
-                            <td class="align-middle height-100 overflow-auto">
-                                <ul>
-                                    @foreach ($row->kolektifDetail as $subRow)
-                                        <li>
-                                            {{ $subRow->pelanggan->no_langganan . ' - ' . $subRow->pelanggan->nama }}
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </td>
+                            <td class="align-middle">{{ $row->alamat }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
                             @role('super-admin|supervisor')
                                 <td class="with-btn-group align-middle text-right" nowrap>
@@ -88,7 +82,7 @@
                                                     Permanen</button>
                                                 <button wire:click="setKey" class="btn btn-success">Batal</button>
                                             @else
-                                                <a href="{{ route('pengaturan.kolektif.edit', ['key' => $row->getKey()]) }}"
+                                                <a href="{{ route('datamaster.regional.unitpelayanan.edit', ['key' => $row->getKey()]) }}"
                                                     class="btn btn-info"><i class="fas fa-sm fa-pencil-alt"></i></a>
                                                 <button wire:click="setKey({{ $row->getKey() }})" class="btn btn-danger"><i
                                                         class="fas fa-sm fa-trash-alt"></i></button>

@@ -19,6 +19,35 @@ return [
         'url' => '/dashboard',
         'id' => 'dashboard',
     ], [
+        'icon' => 'fas fa-gavel',
+        'title' => 'Administrator',
+        'url' => 'javascript:;',
+        'caret' => true,
+        'id' => 'administrator',
+        'sub_menu' => [[
+            'url' => 'javascript:;',
+            'caret' => true,
+            'title' => 'Data Pembayaran',
+            'id' => 'administratordatapembayaran',
+            'sub_menu' => [[
+                'url' => '/administrator/datapembayaran/angsuranrekeningair',
+                'id' => 'administratordatapembayaranangsuranrekeningair',
+                'title' => 'Angsuran Rekening Air',
+            ], [
+                'url' => '/administrator/datapembayaran/rekeningair',
+                'id' => 'administratordatapembayaranrekeningair',
+                'title' => 'Rekening Air',
+            ], [
+                'url' => '/administrator/datapembayaran/rekeningnonair',
+                'id' => 'administratordatapembayaranrekeningnonair',
+                'title' => 'Rekening Non Air',
+            ]],
+        ], [
+            'url' => '/administrator/statuspelanggan',
+            'id' => 'administratorstatuspelanggan',
+            'title' => 'Status Pelanggan',
+        ]],
+    ], [
         'icon' => 'fas fa-tachometer-alt',
         'title' => 'Baca Meter',
         'url' => 'javascript:;',
@@ -99,6 +128,10 @@ return [
                 'url' => '/datamaster/regional/kelurahan',
                 'id' => 'datamasterregionalkelurahan',
                 'title' => 'Kelurahan',
+            ], [
+                'url' => '/datamaster/regional/unitpelayanan',
+                'id' => 'datamasterregionalunitpelayanan',
+                'title' => 'Unit Pelayanan',
             ]],
         ], [
             'url' => '/datamaster/statusbaca',
@@ -173,9 +206,9 @@ return [
         'caret' => true,
         'id' => 'pengaturan',
         'sub_menu' => [[
-            'url' => '/pengaturan/kolektif',
-            'id' => 'pengaturankolektif',
-            'title' => 'Kolektif',
+            'url' => '/pengaturan/kolektifpelanggan',
+            'id' => 'pengaturankolektifpelanggan',
+            'title' => 'Kolektif Pelanggan',
         ], [
             'url' => '/pengaturan/pengguna',
             'id' => 'pengaturanpengguna',
@@ -188,6 +221,10 @@ return [
         'caret' => true,
         'id' => 'tagihanrekeningair',
         'sub_menu' => [[
+            'url' => '/tagihanrekeningair/angsuran',
+            'id' => 'tagihanrekeningairangsuran',
+            'title' => 'Angsuran',
+        ], [
             'url' => '/tagihanrekeningair/koreksi',
             'id' => 'tagihanrekeningairkoreksi',
             'title' => 'Koreksi',
