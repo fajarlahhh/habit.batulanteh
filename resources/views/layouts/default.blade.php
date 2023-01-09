@@ -59,7 +59,7 @@
             <ul class="navbar-nav navbar-right">
                 <li class="dropdown navbar-user">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="/assets/img/user/user.png" alt="" />
+                        <img src="/assets/img/user.png" alt="" />
                         <span class="d-none d-md-inline">{{ auth()->user()->nama }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -82,7 +82,7 @@
                         <a href="javascript:;" data-toggle="nav-profile">
                             <div class="cover with-shadow"></div>
                             <div class="image">
-                                <img src="/assets/img/user/user.png" alt="" />
+                                <img src="/assets/img/user.png" alt="" />
                             </div>
                             <div class="info">
                                 <b class="caret pull-right"></b>{{ auth()->user()->nama }}

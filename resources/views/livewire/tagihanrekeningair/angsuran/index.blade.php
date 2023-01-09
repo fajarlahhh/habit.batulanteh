@@ -84,7 +84,8 @@
                                             @else
                                                 <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})"
                                                     class="btn btn-danger">Hapus</a>
-                                                <button class="btn btn-white dropdown-toggle" data-toggle="dropdown"></button>
+                                                <button class="btn dropdown-toggle" data-toggle="dropdown"><i
+                                                        class="fas fa-angle-down"></i></button>
                                                 <div class="dropdown-menu">
                                                     <a href="javascript:;" class="dropdown-item"
                                                         wire:click="cetak({{ $row->getKey() }})"

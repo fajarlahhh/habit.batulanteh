@@ -16,7 +16,8 @@
         "livewire/livewire": "^2.10",
         "maatwebsite/excel": "^3.1",
         "predis/predis": "^2.0",
-        "spatie/laravel-permission": "^5.7"
+        "spatie/laravel-permission": "^5.7",
+        "wandersonwhcr/romans": "^1.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

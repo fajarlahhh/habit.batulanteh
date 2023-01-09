@@ -29,7 +29,7 @@
     <div id="page-container" class="fade">
         <div class="login login-with-news-feed">
             <div class="news-feed">
-                <div class="news-image" style="background-image: url(../assets/img/login-bg/login-bg-11.jpg)"></div>
+                <div class="news-image" style="background-image: url(../assets/img/login.jpg)"></div>
                 <div class="news-caption">
                     <h4 class="caption-title">{{ config('constant.perusahaan') }}</h4>
                     <p>

@@ -8,7 +8,7 @@
 
     @section('page')
         <li class="breadcrumb-item">Tagihan Rekening Air</li>
-        <li class="breadcrumb-item">Angsuran Rekening Air</li>
+        <li class="breadcrumb-item">Angsuran </li>
         <li class="breadcrumb-item active">Tambah Data</li>
     @endsection
 
@@ -79,10 +79,14 @@
                             autocomplete="off" readonly />
                     </div>
                 </div>
+                @role('user|super-admin|supervisor')
+                    <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
+                @endrole
+                <a href="{{ route('tagihanrekeningair.angsuran') }}" class="btn btn-primary">Data Angsuran</a>
             </div>
             <!-- end tab-pane -->
             <!-- begin tab-pane -->
-            {{-- <div class="tab-pane fade" id="default-tab-2" wire:ignore.self>
+            <div class="tab-pane fade" id="default-tab-2" wire:ignore.self>
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="note note-primary">
@@ -93,27 +97,27 @@
                                     <table class="table width-full">
                                         <thead>
                                             <tr>
-                                                <th class="width-10"></th>
                                                 <th class="width-100">Periode</th>
                                                 <th class="width-200">Tagihan</th>
                                                 <th class="width-150">Denda</th>
+                                                <th class="width-10"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (collect($dataRekeningAir)->sortBy('periode') as $index => $row)
                                                 <tr>
-                                                    <td class="with-btn align-middle">
-                                                        <a href="javascript:;" wire:click="hapus({{ $row['id'] }})"
-                                                            class="btn btn-xs btn-danger m-t-5">X</a>
-                                                    </td>
                                                     <td class="align-middle">
                                                         {{ $row['periode'] }}
                                                     </td>
                                                     <td class="align-middle">
-                                                        {{ number_format($row['total']) }}
+                                                        {{ number_format($row['tagihan']) }}
                                                     </td>
                                                     <td class="align-middle">
                                                         {{ number_format($row['denda']) }}
+                                                    </td>
+                                                    <td class="with-btn align-middle">
+                                                        <a href="javascript:;" wire:click="hapus({{ $index }})"
+                                                            class="btn btn-xs btn-danger">X</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -121,8 +125,9 @@
                                     </table>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Total Tunggakan Yang Akan Diangsur</label>
-                                    <input class="form-control" type="number" wire:model="total_tunggakan"
+                                    <label class="control-label">Total Tunggakan</label>
+                                    <input class="form-control" type="text"
+                                        value="{{ number_format(collect($dataRekeningAir)->sum(fn($q) => $q['tagihan'] + $q['denda'])) }}"
                                         autocomplete="off" readonly />
                                     @error('total_tunggakan')
                                         <span class="text-danger">{{ $message }}</span>
@@ -137,8 +142,8 @@
                                 <div class="form-group">
                                     <label class="control-label">Tenor</label>
                                     <select class="form-control selectpicker" data-live-search="true"
-                                        data-style="btn-success" wire:change="simulasi()" data-size="10"
-                                        data-width="100%" wire:model="tenor">
+                                        data-style="btn-success" data-size="10" data-width="100%"
+                                        wire:model="tenor">
                                         @for ($i = 2; $i < 31; $i++)
                                             <option value="{{ $i }}">{{ $i }} Kali</option>
                                         @endfor
@@ -149,17 +154,17 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Angsuran ke 1</label>
-                                    <input class="form-control" type="number" wire:model.lazy="keterangan"
-                                        wire:change="simulasi()" autocomplete="off" />
-                                    @error('keterangan')
+                                    <input class="form-control" type="number" wire:model.lazy="angsuranPertama"
+                                        autocomplete="off" />
+                                    @error('angsuranPertama')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">{{ $keterangan_angsuran }}</label>
-                                    <input class="form-control" type="number"
-                                        wire:model.defer="angsuran_selanjutnya" autocomplete="off" readonly />
-                                    @error('angsuran_selanjutnya')
+                                    <label class="control-label">Angsuran Selanjutnya</label>
+                                    <input class="form-control" type="number" wire:model.defer="angsuranSelanjutnya"
+                                        autocomplete="off" readonly />
+                                    @error('angsuranSelanjutnya')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -174,8 +179,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Keterangan</label>
-                                    <input class="form-control" type="text" wire:model.defer="keterangan"
-                                        autocomplete="off" />
+                                    <textarea class="form-control" type="text" wire:model.defer="keterangan" autocomplete="off" rows="3">
+                                    </textarea>
                                     @error('keterangan')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -187,8 +192,8 @@
                 @role('user|super-admin|supervisor')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
-                <a href="{{ route('tagihanrekeningair.angsuran') }}" class="btn btn-danger">Batal</a>
-            </div> --}}
+                <a href="{{ route('tagihanrekeningair.angsuran') }}" class="btn btn-primary">Data Angsuran</a>
+            </div>
             <!-- end tab-pane -->
         </div>
         <!-- end nav-tabs -->

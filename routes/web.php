@@ -141,8 +141,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::prefix('tagihanrekeningair')->group(function () {
         Route::group(['middleware' => ['role_or_permission:super-admin|tagihanrekeningairangsuran']], function () {
-            Route::get('/angsuran', \App\Http\Livewire\Tagihanrekeningair\Angsuran\Index::class)->name('tagihanrekeningair.angsuran');
-            Route::get('/angsuran/tambah', \App\Http\Livewire\Tagihanrekeningair\Angsuran\Form::class)->name('tagihanrekeningair.angsuran.tambah');
+            Route::get('/angsuran', \App\Http\Livewire\Tagihanrekeningair\Angsuran\Form::class)->name('tagihanrekeningair.angsuran.tambah');
+            Route::get('/angsuran/data', \App\Http\Livewire\Tagihanrekeningair\Angsuran\Index::class)->name('tagihanrekeningair.angsuran');
         });
     });
 });
