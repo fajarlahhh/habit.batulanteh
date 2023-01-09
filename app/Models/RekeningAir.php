@@ -61,6 +61,11 @@ class RekeningAir extends Model
         return $this->belongsTo(BacaMeter::class);
     }
 
+    public function angsuranRekeningAirPeriode()
+    {
+        return $this->hasOne(AngsuranRekeningAirPeriode::class);
+    }
+
     public function scopeSudahBayar($query)
     {
         return $query->whereNotNull('kasir_id')->whereNotNull('waktu_bayar');
@@ -69,5 +74,10 @@ class RekeningAir extends Model
     public function scopeBelumBayar($query)
     {
         return $query->whereNull('kasir_id')->orWhereNull('waktu_bayar');
+    }
+
+    public function scopeBelumDiangsur($query)
+    {
+        return $query->whereDoesntHave('angsuranRekeningAirPeriode');
     }
 }

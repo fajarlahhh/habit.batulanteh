@@ -31,6 +31,11 @@ class Pelanggan extends Model
         return $this->belongsTo(Diameter::class);
     }
 
+    public function angsuranRekeningAir()
+    {
+        return $this->hasMany(AngsuranRekeningAir::class);
+    }
+
     public function jalan()
     {
         return $this->belongsTo(Jalan::class);

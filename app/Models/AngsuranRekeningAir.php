@@ -27,6 +27,11 @@ class AngsuranRekeningAir extends Model
         return $this->hasMany(AngsuranRekeningAirDetail::class);
     }
 
+    public function angsuranRekeningAirPeriode()
+    {
+        return $this->hasMany(AngsuranRekeningAirPeriode::class);
+    }
+
     public function scopeBelumLunas($query)
     {
         return $query->whereRaw("(select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id and kasir_id is not null and waktu_bayar is not null) != (select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id)");

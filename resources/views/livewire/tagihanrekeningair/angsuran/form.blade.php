@@ -41,7 +41,7 @@
                         <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
                             wire:model.lazy="pelangganId">
                             <option selected hidden>-- Pilih Pelanggan --</option>
-                            @foreach (\App\Models\Pelanggan::all() as $row)
+                            @foreach (\App\Models\Pelanggan::whereDoesntHave('angsuranRekeningAir', fn($q) => $q->belumLunas())->get() as $row)
                                 <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} - {{ $row->nama }}
                                 </option>
                             @endforeach

@@ -82,8 +82,10 @@
                                                 <a href="javascript:;" wire:click="hapus" class="btn btn-danger">Ya, Hapus</a>
                                                 <a wire:click="setKey" href="javascript:;" class="btn btn-success">Batal</a>
                                             @else
-                                                <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})"
-                                                    class="btn btn-danger">Hapus</a>
+                                                @if ($lunas == 0)
+                                                    <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})"
+                                                        class="btn btn-danger">Hapus</a>
+                                                @endif
                                                 <button class="btn dropdown-toggle" data-toggle="dropdown"><i
                                                         class="fas fa-angle-down"></i></button>
                                                 <div class="dropdown-menu">
@@ -110,18 +112,20 @@
             </div>
         </div>
 
+        <x-modal />
 
         @push('scripts')
-            @if (Session::has('cetak_url'))
+            @if (Session::has('cetak'))
                 <script>
-                    $.get("{!! Session::pull('cetak_url') !!}", function(result) {
-                        window.livewire.emit('set:setcetak', 'Angsuran Rekening Air', result);
-                    });
+                    $('#modal-cetak').modal('show');
                 </script>
             @endif
             <script>
                 Livewire.on('reinitialize', id => {
                     $('.selectpicker').selectpicker();
+                });
+                Livewire.on('cetak', id => {
+                    $('#modal-cetak').modal('show');
                 });
             </script>
         @endpush

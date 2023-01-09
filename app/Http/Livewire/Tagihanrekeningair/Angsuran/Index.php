@@ -18,11 +18,20 @@ class Index extends Component
 
     public function setKey($key = null)
     {
-        if (AngsuranRekeningAir::findOrFail($this->key)->angsuranRekeningAirDetailTerbayar->count() > 0) {
+        if (AngsuranRekeningAir::findOrFail($key)->angsuranRekeningAirDetailTerbayar->count() > 0) {
             session()->flash('warning', 'Tidak dapat menghapus data. Data angsuran sudah pernah dibayar');
         } else {
             $this->key = $key;
         }
+    }
+
+    public function cetak($id)
+    {
+        $cetak = view('livewire.tagihanrekeningair.angsuran.cetak', [
+            'data' => AngsuranRekeningAir::with('angsuranRekeningAirDetail')->with('angsuranRekeningAirPeriode.rekeningAir.bacaMeter')->findOrFail($id),
+        ])->render();
+        session()->flash('cetak', $cetak);
+        $this->emit('cetak');
     }
 
     public function hapus()

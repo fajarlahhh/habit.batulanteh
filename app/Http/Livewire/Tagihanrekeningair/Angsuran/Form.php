@@ -27,7 +27,7 @@ class Form extends Component
 
     public function updatedPelangganId()
     {
-        $this->pelanggan = Pelanggan::with('golongan')->with('bacaMeter.rekeningAir')->with(['bacaMeter' => fn($q) => $q->whereHas('rekeningAir', fn($r) => $r->belumBayar())])->findOrFail($this->pelangganId);
+        $this->pelanggan = Pelanggan::with('golongan')->with('bacaMeter.rekeningAir')->with(['bacaMeter' => fn($q) => $q->whereHas('rekeningAir', fn($r) => $r->belumDiangsur()->belumBayar())])->findOrFail($this->pelangganId);
         $this->dataRekeningAir = $this->pelanggan->bacaMeter->map(fn($q) => [
             'rekening_air_id' => $q->rekeningAir->id,
             'periode' => $q->periode,
@@ -98,9 +98,13 @@ class Form extends Component
                 'angsuran_rekening_air_id' => $data->id,
                 'rekening_air_id' => $q['rekening_air_id'],
             ])->toArray());
+
+            $cetak = view('livewire.tagihanrekeningair.angsuran.cetak', [
+                'data' => AngsuranRekeningAir::with('angsuranRekeningAirDetail')->with('angsuranRekeningAirPeriode.rekeningAir.bacaMeter')->findOrFail($data->id),
+            ])->render();
+            session()->flash('cetak', $cetak);
         });
 
-        session()->flash('cetak', '$this->data->id');
         session()->flash('success', 'Berhasil menyimpan data');
         return redirect(route('tagihanrekeningair.angsuran'));
     }

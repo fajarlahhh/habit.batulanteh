@@ -14,4 +14,9 @@ class AngsuranRekeningAirPeriode extends Model
     protected $fillable = [
         'rekening_air_id', 'angsuran_rekening_air_id',
     ];
+
+    public function rekeningAir()
+    {
+        return $this->belongsTo(RekeningAir::class);
+    }
 }

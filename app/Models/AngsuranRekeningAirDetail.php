@@ -14,4 +14,9 @@ class AngsuranRekeningAirDetail extends Model
     protected $fillable = [
         'angsuran_rekening_air_id', 'urutan', 'nilai', 'kasir_id', 'waktu_bayar',
     ];
+
+    public function pengguna()
+    {
+        return $this->belongsTo(Pengguna::class, 'kasir_id');
+    }
 }
