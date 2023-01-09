@@ -11,11 +11,78 @@
  Target Server Version : 50733
  File Encoding         : 65001
 
- Date: 27/12/2022 08:17:24
+ Date: 09/01/2023 21:18:15
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for angsuran_rekening_air
+-- ----------------------------
+DROP TABLE IF EXISTS `angsuran_rekening_air`;
+CREATE TABLE `angsuran_rekening_air`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nomor` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `pemohon` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `keterangan` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `pelanggan_id` bigint(20) NULL DEFAULT NULL,
+  `pengguna_id` bigint(20) NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
+  CONSTRAINT `angsuran_rekening_air_ibfk_1` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of angsuran_rekening_air
+-- ----------------------------
+INSERT INTO `angsuran_rekening_air` VALUES (9, '00001/ANGSURAN//I/2023', 'Pemohon', 'Keterangan', 1, 1, '2023-01-09 15:52:19', '2023-01-09 15:52:19');
+
+-- ----------------------------
+-- Table structure for angsuran_rekening_air_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `angsuran_rekening_air_detail`;
+CREATE TABLE `angsuran_rekening_air_detail`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `angsuran_rekening_air_id` bigint(20) NULL DEFAULT NULL,
+  `urutan` tinyint(4) NULL DEFAULT NULL,
+  `nilai` decimal(15, 2) NULL DEFAULT NULL,
+  `kasir_id` bigint(20) NULL DEFAULT NULL,
+  `waktu_bayar` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `angsuran_rekening_air_id`(`angsuran_rekening_air_id`) USING BTREE,
+  INDEX `kasir_id`(`kasir_id`) USING BTREE,
+  CONSTRAINT `angsuran_rekening_air_detail_ibfk_1` FOREIGN KEY (`angsuran_rekening_air_id`) REFERENCES `angsuran_rekening_air` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `angsuran_rekening_air_detail_ibfk_2` FOREIGN KEY (`kasir_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of angsuran_rekening_air_detail
+-- ----------------------------
+INSERT INTO `angsuran_rekening_air_detail` VALUES (10, 9, 1, 10000.00, NULL, NULL);
+INSERT INTO `angsuran_rekening_air_detail` VALUES (11, 9, 2, 27200.00, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for angsuran_rekening_air_periode
+-- ----------------------------
+DROP TABLE IF EXISTS `angsuran_rekening_air_periode`;
+CREATE TABLE `angsuran_rekening_air_periode`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `rekening_air_id` bigint(20) NULL DEFAULT NULL,
+  `angsuran_rekening_air_id` bigint(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `rekening_air_id`(`rekening_air_id`) USING BTREE,
+  INDEX `angsuran_rekening_air_id`(`angsuran_rekening_air_id`) USING BTREE,
+  CONSTRAINT `angsuran_rekening_air_periode_ibfk_1` FOREIGN KEY (`angsuran_rekening_air_id`) REFERENCES `angsuran_rekening_air` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `angsuran_rekening_air_periode_ibfk_2` FOREIGN KEY (`rekening_air_id`) REFERENCES `rekening_air` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of angsuran_rekening_air_periode
+-- ----------------------------
+INSERT INTO `angsuran_rekening_air_periode` VALUES (4, 9, 9);
 
 -- ----------------------------
 -- Table structure for baca_meter
@@ -24,6 +91,7 @@ DROP TABLE IF EXISTS `baca_meter`;
 CREATE TABLE `baca_meter`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `periode` date NOT NULL,
+  `stand_lalu` int(11) NULL DEFAULT NULL,
   `stand_ini` int(11) NULL DEFAULT NULL,
   `status_baca` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `tanggal_baca` datetime NULL DEFAULT NULL,
@@ -32,20 +100,26 @@ CREATE TABLE `baca_meter`  (
   `latitude` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `pelanggan_id` bigint(20) NULL DEFAULT NULL,
   `pembaca_id` bigint(20) NULL DEFAULT NULL,
+  `pengguna_id` bigint(20) NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE,
+  UNIQUE INDEX `periode`(`periode`, `pelanggan_id`) USING BTREE,
   INDEX `id_pembaca`(`pembaca_id`) USING BTREE,
-  INDEX `periode`(`periode`) USING BTREE,
   INDEX `id_pelanggan`(`pelanggan_id`) USING BTREE,
   INDEX `tanggal_baca`(`tanggal_baca`) USING BTREE,
-  CONSTRAINT `baca_meter_ibfk_1` FOREIGN KEY (`pembaca_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
+  CONSTRAINT `baca_meter_ibfk_1` FOREIGN KEY (`pembaca_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `baca_meter_ibfk_2` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `baca_meter_ibfk_3` FOREIGN KEY (`pelanggan_id`) REFERENCES `pelanggan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of baca_meter
 -- ----------------------------
+INSERT INTO `baca_meter` VALUES (9, '2023-01-01', 0, 12, '5', '2023-01-02 00:00:00', 'public/bacameter/2023010212310113167263387363b25e11187b4.png', NULL, NULL, 1, 1, NULL, '2023-01-02 10:40:44', '2023-01-02 12:31:13', NULL);
 
 -- ----------------------------
 -- Table structure for diameter
@@ -127,19 +201,16 @@ CREATE TABLE `ira`  (
   `periode` date NULL DEFAULT NULL,
   `stand_lalu` int(11) NULL DEFAULT NULL,
   `stand_ini` int(11) NULL DEFAULT NULL,
-  `pakai` int(11) NULL DEFAULT NULL,
   `harga_air` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_retribusi` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_jasa_lingkungan` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_pemeliharaan` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_administrasi` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_materai` decimal(15, 2) NULL DEFAULT 0.00,
   `biaya_denda` decimal(15, 2) NULL DEFAULT 0.00,
+  `biaya_lainnya` decimal(15, 2) NULL DEFAULT 0.00,
+  `biaya_meter_air` decimal(15, 2) NULL DEFAULT 0.00,
+  `biaya_materai` decimal(15, 2) NULL DEFAULT 0.00,
   `biaya_ppn` decimal(15, 2) NULL DEFAULT 0.00,
-  `diskon` decimal(15, 2) NULL DEFAULT NULL,
-  `pelanggan_id` bigint(20) NOT NULL,
+  `diskon` decimal(15, 2) NULL DEFAULT 0.00,
   `golongan_id` bigint(20) NULL DEFAULT NULL,
   `jalan_id` bigint(20) NULL DEFAULT NULL,
+  `pelanggan_id` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
@@ -150,11 +221,12 @@ CREATE TABLE `ira`  (
   CONSTRAINT `ira_ibfk_1` FOREIGN KEY (`pelanggan_id`) REFERENCES `pelanggan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ira_ibfk_2` FOREIGN KEY (`golongan_id`) REFERENCES `golongan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `ira_ibfk_3` FOREIGN KEY (`jalan_id`) REFERENCES `jalan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12841783 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ira
 -- ----------------------------
+INSERT INTO `ira` VALUES (1, 1, '2023-01-01', 0, 12, 12200.00, 0.00, 0.00, 15000.00, 0.00, 0.00, 0.00, 229, NULL, 1, '2023-01-09 09:33:55', '2023-01-09 09:33:55');
 
 -- ----------------------------
 -- Table structure for jalan
@@ -163,6 +235,7 @@ DROP TABLE IF EXISTS `jalan`;
 CREATE TABLE `jalan`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `jenis` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `kelurahan_id` bigint(20) NULL DEFAULT NULL,
   `pengguna_id` bigint(20) NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -180,7 +253,7 @@ CREATE TABLE `jalan`  (
 -- ----------------------------
 -- Records of jalan
 -- ----------------------------
-INSERT INTO `jalan` VALUES (2936, 'tsadsf', 173, 1, '2022-12-26 12:49:27', '2022-12-26 12:49:27', NULL);
+INSERT INTO `jalan` VALUES (2936, 'tsadsf', NULL, 173, 1, '2022-12-26 12:49:27', '2022-12-26 12:49:27', NULL);
 
 -- ----------------------------
 -- Table structure for kecamatan
@@ -242,15 +315,20 @@ DROP TABLE IF EXISTS `kolektif`;
 CREATE TABLE `kolektif`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `keterangan` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
   `pengguna_id` bigint(20) NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
+  CONSTRAINT `kolektif_ibfk_1` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of kolektif
 -- ----------------------------
+INSERT INTO `kolektif` VALUES (1, 'Nama', 'Keterangan', 1, '2023-01-05 11:54:37', '2023-01-05 11:54:37', NULL);
 
 -- ----------------------------
 -- Table structure for kolektif_detail
@@ -260,14 +338,18 @@ CREATE TABLE `kolektif_detail`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `kolektif_id` bigint(20) NULL DEFAULT NULL,
   `pelanggan_id` bigint(20) NULL DEFAULT NULL,
+  `penanggung_jawab` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `kolektif_id`(`kolektif_id`) USING BTREE,
-  CONSTRAINT `kolektif_detail_ibfk_1` FOREIGN KEY (`kolektif_id`) REFERENCES `kolektif` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  INDEX `kolektif_detail_ibfk_2`(`pelanggan_id`) USING BTREE,
+  CONSTRAINT `kolektif_detail_ibfk_1` FOREIGN KEY (`kolektif_id`) REFERENCES `kolektif` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `kolektif_detail_ibfk_2` FOREIGN KEY (`pelanggan_id`) REFERENCES `pelanggan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of kolektif_detail
 -- ----------------------------
+INSERT INTO `kolektif_detail` VALUES (3, 1, 1, 'tes');
 
 -- ----------------------------
 -- Table structure for merk_water_meter
@@ -338,32 +420,44 @@ DROP TABLE IF EXISTS `pelanggan`;
 CREATE TABLE `pelanggan`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `status` tinyint(4) NULL DEFAULT 1,
-  `no_langganan` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `ktp` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `no_langganan` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `alamat` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  `telepon` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `tanggal_pasang` datetime NULL DEFAULT NULL,
+  `no_hp` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `tanggal_pasang` date NULL DEFAULT NULL,
   `no_body_water_meter` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `denah` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
   `latitude` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `longitude` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `golongan_id` bigint(20) NULL DEFAULT NULL,
   `jalan_id` bigint(20) NULL DEFAULT NULL,
-  `water_meter_id` bigint(20) NULL DEFAULT NULL,
+  `merk_water_meter_id` bigint(20) NULL DEFAULT NULL,
   `diameter_id` bigint(20) NULL DEFAULT NULL,
   `pembaca_id` bigint(20) NULL DEFAULT NULL,
-  `tarfi_khusus_id` bigint(20) NULL DEFAULT NULL,
+  `tarif_lainnya_id` bigint(20) NULL DEFAULT NULL,
   `pengguna_id` bigint(20) NULL DEFAULT NULL,
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   `deleted_at` datetime NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
+  INDEX `pembaca_id`(`pembaca_id`) USING BTREE,
+  INDEX `golongan_id`(`golongan_id`) USING BTREE,
+  INDEX `merk_water_meter_id`(`merk_water_meter_id`) USING BTREE,
+  INDEX `jalan_id`(`jalan_id`) USING BTREE,
+  INDEX `tarif_lainnya_id`(`tarif_lainnya_id`) USING BTREE,
+  CONSTRAINT `pelanggan_ibfk_1` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `pelanggan_ibfk_2` FOREIGN KEY (`pembaca_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `pelanggan_ibfk_3` FOREIGN KEY (`golongan_id`) REFERENCES `golongan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `pelanggan_ibfk_4` FOREIGN KEY (`merk_water_meter_id`) REFERENCES `merk_water_meter` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `pelanggan_ibfk_5` FOREIGN KEY (`jalan_id`) REFERENCES `jalan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `pelanggan_ibfk_6` FOREIGN KEY (`tarif_lainnya_id`) REFERENCES `tarif_lainnya` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pelanggan
 -- ----------------------------
+INSERT INTO `pelanggan` VALUES (1, 1, NULL, '12300001', 'Nama', 'Alamat', '083124124124', '2022-01-02', 'asdf', NULL, NULL, 229, 2936, 1, 1, 1, NULL, 1, '2023-01-02 09:47:55', '2023-01-02 12:32:15', NULL);
 
 -- ----------------------------
 -- Table structure for pengguna
@@ -426,7 +520,6 @@ INSERT INTO `permissions` VALUES (131, 'datamasterregionalkelurahan', 'web', '20
 INSERT INTO `permissions` VALUES (132, 'datamasterstatusbaca', 'web', '2022-12-26 09:16:15', '2022-12-26 09:16:15');
 INSERT INTO `permissions` VALUES (133, 'datamastertarif', 'web', '2022-12-26 09:16:15', '2022-12-26 09:16:15');
 INSERT INTO `permissions` VALUES (134, 'datamastertarifdenda', 'web', '2022-12-26 09:16:15', '2022-12-26 09:16:15');
-INSERT INTO `permissions` VALUES (135, 'datamastertarifkhusus', 'web', '2022-12-26 09:16:15', '2022-12-26 09:16:15');
 INSERT INTO `permissions` VALUES (136, 'datamastertariflainnya', 'web', '2022-12-26 09:16:15', '2022-12-26 09:16:15');
 INSERT INTO `permissions` VALUES (137, 'datamastertarifmaterai', 'web', '2022-12-26 09:16:15', '2022-12-26 09:16:15');
 INSERT INTO `permissions` VALUES (138, 'datamastertarifmeterair', 'web', '2022-12-26 09:16:15', '2022-12-26 09:16:15');
@@ -450,52 +543,83 @@ INSERT INTO `permissions` VALUES (151, 'tagihanrekeningairpostingira', 'web', '2
 DROP TABLE IF EXISTS `rekening_air`;
 CREATE TABLE `rekening_air`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `periode` date NULL DEFAULT NULL,
-  `stand_lalu` int(11) NULL DEFAULT NULL,
-  `stand_ini` int(11) NULL DEFAULT NULL,
   `pakai` int(11) NULL DEFAULT NULL,
   `harga_air` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_retribusi` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_jasa_lingkungan` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_pemeliharaan` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_administrasi` decimal(15, 2) NULL DEFAULT 0.00,
-  `biaya_materai` decimal(15, 2) NULL DEFAULT 0.00,
   `biaya_denda` decimal(15, 2) NULL DEFAULT 0.00,
+  `biaya_lainnya` decimal(15, 2) NULL DEFAULT 0.00,
+  `biaya_meter_air` decimal(15, 2) NULL DEFAULT 0.00,
+  `biaya_materai` decimal(15, 2) NULL DEFAULT 0.00,
   `biaya_ppn` decimal(15, 2) NULL DEFAULT 0.00,
   `diskon` decimal(15, 2) NULL DEFAULT 0.00,
-  `status_baca` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  `waktu_bayar` datetime NULL DEFAULT NULL,
   `keterangan` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  `kasir_id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `pelanggan_id` bigint(20) NULL DEFAULT NULL,
-  `golongan_id` bigint(20) NULL DEFAULT NULL,
+  `waktu_bayar` datetime NULL DEFAULT NULL,
+  `kasir_id` bigint(20) NULL DEFAULT NULL,
   `jalan_id` bigint(20) NULL DEFAULT NULL,
+  `golongan_id` bigint(20) NULL DEFAULT NULL,
   `tarif_denda_id` bigint(20) NULL DEFAULT NULL,
   `tarif_lainnya_id` bigint(20) NULL DEFAULT NULL,
+  `tarif_materai_id` bigint(20) NULL DEFAULT NULL,
   `tarif_meter_air_id` bigint(20) NULL DEFAULT NULL,
   `tarif_progresif_id` bigint(20) NULL DEFAULT NULL,
-  `tarif_progresif_khusus_id` bigint(20) NULL DEFAULT NULL,
+  `baca_meter_id` bigint(20) NULL DEFAULT NULL,
   `pengguna_id` bigint(20) NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE,
-  UNIQUE INDEX `periode`(`periode`, `pelanggan_id`) USING BTREE,
+  UNIQUE INDEX `baca_meter_id`(`baca_meter_id`) USING BTREE,
   INDEX `kasir`(`kasir_id`) USING BTREE,
-  INDEX `rekening_air_periode`(`periode`) USING BTREE,
   INDEX `waktu_bayar`(`waktu_bayar`) USING BTREE,
-  INDEX `id_pelanggan`(`pelanggan_id`) USING BTREE,
   INDEX `id_golongan`(`golongan_id`) USING BTREE,
-  INDEX `id_jalan`(`jalan_id`) USING BTREE,
   INDEX `deleted_at`(`deleted_at`) USING BTREE,
-  CONSTRAINT `rekening_air_ibfk_2` FOREIGN KEY (`pelanggan_id`) REFERENCES `pelanggan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
+  INDEX `jalan_id`(`jalan_id`) USING BTREE,
+  INDEX `tarif_denda_id`(`tarif_denda_id`) USING BTREE,
+  INDEX `tarif_lainnya_id`(`tarif_lainnya_id`) USING BTREE,
+  INDEX `tarif_materai_id`(`tarif_materai_id`) USING BTREE,
+  INDEX `tarif_meter_air_id`(`tarif_meter_air_id`) USING BTREE,
+  INDEX `tarif_progresif_id`(`tarif_progresif_id`) USING BTREE,
   CONSTRAINT `rekening_air_ibfk_3` FOREIGN KEY (`golongan_id`) REFERENCES `golongan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `rekening_air_ibfk_4` FOREIGN KEY (`jalan_id`) REFERENCES `jalan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 19962939 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `rekening_air_ibfk_5` FOREIGN KEY (`baca_meter_id`) REFERENCES `baca_meter` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_air_ibfk_6` FOREIGN KEY (`kasir_id`) REFERENCES `pelanggan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_air_ibfk_7` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_air_ibfk_8` FOREIGN KEY (`jalan_id`) REFERENCES `jalan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_air_ibfk_10` FOREIGN KEY (`tarif_lainnya_id`) REFERENCES `tarif_lainnya` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_air_ibfk_11` FOREIGN KEY (`tarif_materai_id`) REFERENCES `tarif_materai` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_air_ibfk_12` FOREIGN KEY (`tarif_meter_air_id`) REFERENCES `tarif_meter_air` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_air_ibfk_13` FOREIGN KEY (`tarif_progresif_id`) REFERENCES `tarif_progresif` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_air_ibfk_9` FOREIGN KEY (`tarif_denda_id`) REFERENCES `tarif_denda` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rekening_air
+-- ----------------------------
+INSERT INTO `rekening_air` VALUES (9, 12, 12200.00, 0.00, 0.00, 15000.00, 0.00, 0.00, 0.00, NULL, NULL, NULL, NULL, 229, 2, NULL, 1, 4, 1, 9, 1, '2023-01-03 10:53:18', '2023-01-03 10:53:18', NULL);
+
+-- ----------------------------
+-- Table structure for rekening_non_air
+-- ----------------------------
+DROP TABLE IF EXISTS `rekening_non_air`;
+CREATE TABLE `rekening_non_air`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nomor` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `nilai` decimal(15, 2) NULL DEFAULT NULL,
+  `jenis` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `pengguna_id` bigint(20) NULL DEFAULT NULL,
+  `pelanggan_id` bigint(20) NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `pelanggan_id`(`pelanggan_id`) USING BTREE,
+  INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
+  CONSTRAINT `rekening_non_air_ibfk_1` FOREIGN KEY (`pelanggan_id`) REFERENCES `pelanggan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_non_air_ibfk_2` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of rekening_non_air
 -- ----------------------------
 
 -- ----------------------------
@@ -579,7 +703,120 @@ CREATE TABLE `tarif_denda`  (
 -- ----------------------------
 -- Records of tarif_denda
 -- ----------------------------
-INSERT INTO `tarif_denda` VALUES (2, '2022-12-26', 'tes', 'tesa', 123123.00, 1, '2022-12-26 13:08:46', '2022-12-26 13:08:46', NULL);
+INSERT INTO `tarif_denda` VALUES (2, '2022-12-26', 'tes', 'tesa', 10000.00, 1, '2022-12-26 13:08:46', '2022-12-26 13:08:46', NULL);
+
+-- ----------------------------
+-- Table structure for tarif_lainnya
+-- ----------------------------
+DROP TABLE IF EXISTS `tarif_lainnya`;
+CREATE TABLE `tarif_lainnya`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tanggal_berlaku` date NULL DEFAULT NULL,
+  `sk` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `keterangan` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `pengguna_id` bigint(20) NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
+  CONSTRAINT `tarif_lainnya_ibfk_1` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tarif_lainnya
+-- ----------------------------
+INSERT INTO `tarif_lainnya` VALUES (5, '2022-12-27', 'tes', 'Keterangan', 1, '2022-12-27 12:02:39', '2022-12-27 12:02:39', NULL);
+
+-- ----------------------------
+-- Table structure for tarif_lainnya_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `tarif_lainnya_detail`;
+CREATE TABLE `tarif_lainnya_detail`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tarif_lainnya_id` bigint(20) NULL DEFAULT NULL,
+  `jenis` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `nilai` decimal(15, 2) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `tarif_meter_air_id`(`tarif_lainnya_id`) USING BTREE,
+  CONSTRAINT `tarif_lainnya_detail_ibfk_1` FOREIGN KEY (`tarif_lainnya_id`) REFERENCES `tarif_lainnya` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tarif_lainnya_detail
+-- ----------------------------
+INSERT INTO `tarif_lainnya_detail` VALUES (2, 5, 'tes', 1000.00);
+INSERT INTO `tarif_lainnya_detail` VALUES (3, 5, 'tes2', 2000.00);
+
+-- ----------------------------
+-- Table structure for tarif_materai
+-- ----------------------------
+DROP TABLE IF EXISTS `tarif_materai`;
+CREATE TABLE `tarif_materai`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tanggal_berlaku` date NULL DEFAULT NULL,
+  `sk` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `keterangan` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `min_harga_air` decimal(15, 2) NULL DEFAULT NULL,
+  `nilai` decimal(15, 2) NULL DEFAULT NULL,
+  `pengguna_id` bigint(20) NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `id_pengguna`(`nilai`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tarif_materai
+-- ----------------------------
+INSERT INTO `tarif_materai` VALUES (1, '2022-12-28', 'SK', 'Keterangan', 5000000.00, 10000.00, 1, '2022-12-27 10:53:02', '2022-12-27 10:53:02', NULL);
+
+-- ----------------------------
+-- Table structure for tarif_meter_air
+-- ----------------------------
+DROP TABLE IF EXISTS `tarif_meter_air`;
+CREATE TABLE `tarif_meter_air`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tanggal_berlaku` date NULL DEFAULT NULL,
+  `sk` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `keterangan` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `diameter_id` bigint(20) NULL DEFAULT NULL,
+  `pengguna_id` bigint(20) NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `golongan_id`(`diameter_id`) USING BTREE,
+  INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
+  CONSTRAINT `tarif_meter_air_ibfk_2` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `tarif_meter_air_ibfk_3` FOREIGN KEY (`diameter_id`) REFERENCES `diameter` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tarif_meter_air
+-- ----------------------------
+INSERT INTO `tarif_meter_air` VALUES (4, '2022-12-27', '123', 'Keterangan', 1, 1, '2022-12-27 11:45:06', '2022-12-27 11:45:06', NULL);
+
+-- ----------------------------
+-- Table structure for tarif_meter_air_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `tarif_meter_air_detail`;
+CREATE TABLE `tarif_meter_air_detail`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tarif_meter_air_id` bigint(20) NULL DEFAULT NULL,
+  `jenis` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `nilai` decimal(15, 2) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `tarif_meter_air_id`(`tarif_meter_air_id`) USING BTREE,
+  CONSTRAINT `tarif_meter_air_detail_ibfk_1` FOREIGN KEY (`tarif_meter_air_id`) REFERENCES `tarif_meter_air` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tarif_meter_air_detail
+-- ----------------------------
+INSERT INTO `tarif_meter_air_detail` VALUES (3, 4, 'asdf', 10000.00);
+INSERT INTO `tarif_meter_air_detail` VALUES (4, 4, 'asdfsadf', 5000.00);
 
 -- ----------------------------
 -- Table structure for tarif_progresif
@@ -592,6 +829,7 @@ CREATE TABLE `tarif_progresif`  (
   `keterangan` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
   `golongan_id` bigint(20) NULL DEFAULT NULL,
   `pengguna_id` bigint(20) NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
@@ -599,18 +837,19 @@ CREATE TABLE `tarif_progresif`  (
   INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
   CONSTRAINT `tarif_progresif_ibfk_1` FOREIGN KEY (`golongan_id`) REFERENCES `golongan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `tarif_progresif_ibfk_2` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tarif_progresif
 -- ----------------------------
+INSERT INTO `tarif_progresif` VALUES (1, '2022-12-27', 'SK', 'Keterangan', 229, 1, '2022-12-27 10:16:05', '2022-12-27 10:16:05', NULL);
 
 -- ----------------------------
 -- Table structure for tarif_progresif_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `tarif_progresif_detail`;
 CREATE TABLE `tarif_progresif_detail`  (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `tarif_progresif_id` bigint(20) NULL DEFAULT NULL,
   `min_pakai` int(11) NULL DEFAULT NULL,
   `max_pakai` int(11) NULL DEFAULT NULL,
@@ -618,10 +857,36 @@ CREATE TABLE `tarif_progresif_detail`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `tarif_progresif_id`(`tarif_progresif_id`) USING BTREE,
   CONSTRAINT `tarif_progresif_detail_ibfk_1` FOREIGN KEY (`tarif_progresif_id`) REFERENCES `tarif_progresif` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tarif_progresif_detail
 -- ----------------------------
+INSERT INTO `tarif_progresif_detail` VALUES (13, 1, 0, 10, 1000.00);
+INSERT INTO `tarif_progresif_detail` VALUES (14, 1, 11, 20, 1100.00);
+INSERT INTO `tarif_progresif_detail` VALUES (15, 1, 21, 30, 1200.00);
+INSERT INTO `tarif_progresif_detail` VALUES (16, 1, 31, 99999999, 1300.00);
+
+-- ----------------------------
+-- Table structure for unit_pelayanan
+-- ----------------------------
+DROP TABLE IF EXISTS `unit_pelayanan`;
+CREATE TABLE `unit_pelayanan`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `alamat` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `pengguna_id` bigint(20) NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `pengguna_id`(`pengguna_id`) USING BTREE,
+  CONSTRAINT `unit_pelayanan_ibfk_1` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of unit_pelayanan
+-- ----------------------------
+INSERT INTO `unit_pelayanan` VALUES (1, 'tesa', 'Alamat', 1, '2023-01-09 09:41:35', '2023-01-09 09:43:07', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
