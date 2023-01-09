@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Models;
+
+use App\Traits\PenggunaTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Pelanggan extends Model
+{
+    use HasFactory, PenggunaTrait;
+
+    protected $table = 'pelanggan';
+
+    protected $fillable = [
+        'no_body_water_meter',
+    ];
+
+    public function golongan()
+    {
+        return $this->belongsTo(Golongan::class);
+    }
+
+    public function tarifLainnya()
+    {
+        return $this->belongsTo(TarifLainnya::class);
+    }
+
+    public function diameter()
+    {
+        return $this->belongsTo(Diameter::class);
+    }
+
+    public function jalan()
+    {
+        return $this->belongsTo(Jalan::class);
+    }
+
+    public function merkWaterMeter()
+    {
+        return $this->belongsTo(MerkWaterMeter::class);
+    }
+
+    public function pembaca()
+    {
+        return $this->belongsTo(Pengguna::class)->withTrashed();
+    }
+
+    public function pengguna()
+    {
+        return $this->belongsTo(Pengguna::class)->withTrashed();
+    }
+
+    public function rekeningAir()
+    {
+        return $this->hasMany(RekeningAir::class);
+    }
+
+    public function rekeningAirTerakhir()
+    {
+        return $this->hasOne(RekeningAir::class)->orderBy('periode', 'desc');
+    }
+}
