@@ -43,10 +43,10 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Min Harga Air</label>
+                    <label class="control-label">Min Tagihan</label>
                     <input class="form-control" type="number" autocomplete="off" step="any"
-                        wire:model.defer="minHargaAir" />
-                    @error('minHargaAir')
+                        wire:model.defer="minTagihan" />
+                    @error('minTagihan')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>

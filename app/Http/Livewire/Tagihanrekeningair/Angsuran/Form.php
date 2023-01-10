@@ -13,7 +13,7 @@ use Romans\Filter\IntToRoman;
 
 class Form extends Component
 {
-    public $pelanggan, $pelangganId, $dataRekeningAir, $keterangan, $pemohon, $tenor = 2, $angsuranSelanjutnya = 0, $angsuranPertama = 0;
+    public $pelanggan, $pelangganId, $dataRekeningAir = [], $keterangan, $pemohon, $tenor = 2, $angsuranSelanjutnya = 0, $angsuranPertama = 0;
 
     protected $rules = [
         'pelangganId' => 'required',
@@ -94,7 +94,7 @@ class Form extends Component
             }
 
             AngsuranRekeningAirDetail::insert($detail);
-            AngsuranRekeningAirPeriode::insert($this->dataRekeningAir->map(fn($q) => [
+            AngsuranRekeningAirPeriode::insert(collect($this->dataRekeningAir)->map(fn($q) => [
                 'angsuran_rekening_air_id' => $data->id,
                 'rekening_air_id' => $q['rekening_air_id'],
             ])->toArray());

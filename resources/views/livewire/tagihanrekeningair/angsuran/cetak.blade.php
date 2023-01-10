@@ -79,7 +79,7 @@
                     <strong>{{ $data->pengguna->nama }}</strong>
                 </td>
                 <td class="text-center">
-                    {{ date('d F Y', strtotime($data->tanggal)) }}<br>
+                    {{ date('d F Y', strtotime($data->created_at)) }}<br>
                     Yang membuat pernyataan
                     <br><br><br><br><br>
                     <strong>{{ $data->pemohon }}</strong>

@@ -144,6 +144,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/angsuran', \App\Http\Livewire\Tagihanrekeningair\Angsuran\Form::class)->name('tagihanrekeningair.angsuran.tambah');
             Route::get('/angsuran/data', \App\Http\Livewire\Tagihanrekeningair\Angsuran\Index::class)->name('tagihanrekeningair.angsuran');
         });
+        Route::group(['middleware' => ['role_or_permission:super-admin|tagihanrekeningairkoreksi']], function () {
+            Route::get('/koreksi', \App\Http\Livewire\Tagihanrekeningair\Koreksi::class)->name('tagihanrekeningair.koreksi');
+        });
     });
 });
 

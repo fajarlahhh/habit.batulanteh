@@ -28,7 +28,7 @@ class RekeningAir extends Model
 
     public function kasir()
     {
-        return $this->belongsTo(Kasir::class, 'kasir_id')->withTrashed();
+        return $this->belongsTo(Pengguna::class, 'kasir_id')->withTrashed();
     }
 
     public function golongan()

@@ -66,7 +66,7 @@
                             <td class="align-middle">{{ $row->tanggal_berlaku }}</td>
                             <td class="align-middle">{{ $row->sk }}</td>
                             <td class="align-middle">{{ $row->keterangan }}</td>
-                            <td class="align-middle">{{ number_format($row->min_harga_air) }}</td>
+                            <td class="align-middle">{{ number_format($row->min_tagihan) }}</td>
                             <td class="align-middle">{{ number_format($row->nilai) }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
                             @role('super-admin|supervisor')
