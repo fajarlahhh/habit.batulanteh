@@ -38,14 +38,14 @@
                 </div>
                 <div class="form-group">
                     <label for="control-label">Kecamatan</label>
-                    <select wire:model.defer="kecamatan" class="form-control selectpicker" data-live-search="true"
+                    <select wire:model.defer="kecamatanId" class="form-control selectpicker" data-live-search="true"
                         data-width="100%">
                         <option selected hidden>-- Pilih Kecamatan --</option>
                         @foreach (\App\Models\Kecamatan::orderBy('nama')->get() as $row)
                             <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
                         @endforeach
                     </select>
-                    @error('kecamatan')
+                    @error('kecamatanId')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>

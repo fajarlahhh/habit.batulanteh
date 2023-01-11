@@ -122,6 +122,11 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('/meterair/tambah', \App\Http\Livewire\Datamaster\Tarif\Meterair\Form::class)->name('datamaster.tarif.meterair.tambah');
                 Route::get('/meterair/edit/{key}', \App\Http\Livewire\Datamaster\Tarif\Meterair\Form::class)->name('datamaster.tarif.meterair.edit');
             });
+            Route::group(['middleware' => ['role_or_permission:super-admin|datamastertarifpelayanan']], function () {
+                Route::get('/pelayanan', \App\Http\Livewire\Datamaster\Tarif\Pelayanan\Index::class)->name('datamaster.tarif.pelayanan');
+                Route::get('/pelayanan/tambah', \App\Http\Livewire\Datamaster\Tarif\Pelayanan\Form::class)->name('datamaster.tarif.pelayanan.tambah');
+                Route::get('/pelayanan/edit/{key}', \App\Http\Livewire\Datamaster\Tarif\Pelayanan\Form::class)->name('datamaster.tarif.pelayanan.edit');
+            });
             Route::group(['middleware' => ['role_or_permission:super-admin|datamastertarifprogresif']], function () {
                 Route::get('/progresif', \App\Http\Livewire\Datamaster\Tarif\Progresif\Index::class)->name('datamaster.tarif.progresif');
                 Route::get('/progresif/tambah', \App\Http\Livewire\Datamaster\Tarif\Progresif\Form::class)->name('datamaster.tarif.progresif.tambah');
@@ -146,6 +151,14 @@ Route::group(['middleware' => ['auth']], function () {
         });
         Route::group(['middleware' => ['role_or_permission:super-admin|tagihanrekeningairkoreksi']], function () {
             Route::get('/koreksi', \App\Http\Livewire\Tagihanrekeningair\Koreksi::class)->name('tagihanrekeningair.koreksi');
+        });
+    });
+    Route::prefix('pembayaran')->group(function () {
+        Route::group(['middleware' => ['role_or_permission:super-admin|pembayaranperrekeningairpelanggan']], function () {
+            Route::get('/perpelanggan', \App\Http\Livewire\Pembayaran\Rekeningair\Perpelanggan::class)->name('pembayaran.rekeningair.perpelanggan');
+        });
+        Route::group(['middleware' => ['role_or_permission:super-admin|pembayaranperrekeningairkolektif']], function () {
+            Route::get('/kolektif', \App\Http\Livewire\Pembayaran\Rekeningair\Kolektif::class)->name('pembayaran.rekeningair.kolektif');
         });
     });
 });

@@ -243,6 +243,7 @@
 
     <script src="/assets/js/app.min.js"></script>
     <script src="/assets/js/theme/material.min.js"></script>
+    <script src="/assets/plugins/autonumeric/autoNumeric.js"></script>
     <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
     @stack('scripts')

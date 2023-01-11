@@ -58,7 +58,7 @@ class Pelanggan extends Model
 
     public function bacaMeter()
     {
-        return $this->hasMany(BacaMeter::class)->orderBy('periode', 'desc');
+        return $this->hasMany(BacaMeter::class)->orderBy('periode', 'asc');
     }
 
     public function bacaMeterTerakhir()

@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class Koreksi extends Component
 {
-    public $pelanggan, $catatan, $pelangganId, $dataRekeningAir = [], $tahun, $dataTarifProgresif, $dataTarifMaterai;
+    public $pelanggan, $catatan, $pelangganId, $dataRekeningAir = [], $tahun, $dataTarifProgresif, $dataTarifMaterai, $dataBacaMeter;
 
     public function mount()
     {
@@ -24,7 +24,9 @@ class Koreksi extends Component
 
     public function updatedTahun()
     {
-        $this->setDataRekeningAir();
+        if ($this->pelanggan) {
+            $this->setDataRekeningAir();
+        }
     }
 
     public function updatedPelangganId()
@@ -34,14 +36,15 @@ class Koreksi extends Component
 
     public function setPelanggan()
     {
-        $this->pelanggan = Pelanggan::with('golongan')->with('bacaMeter.rekeningAir')->findOrFail($this->pelangganId);
+        $this->pelanggan = Pelanggan::with(['bacaMeter' => fn($q) => $q->with(['rekeningAir' => fn($r) => $r->with('golongan')->with('angsuranRekeningAirPeriode')])->whereHas('rekeningAir')])->with('angsuranRekeningAir.angsuranRekeningAirDetail')->findOrFail($this->pelangganId);
+        $this->dataBacaMeter = $this->pelanggan->bacaMeter;
         $this->setDataRekeningAir();
     }
 
     public function setDataRekeningAir()
     {
         $this->dataRekeningAir = [];
-        $this->dataRekeningAir = $this->pelanggan->bacaMeter->filter(fn($q) => false !== stristr($q->periode, $this->tahun))->map(fn($q) => [
+        $this->dataRekeningAir = $this->dataBacaMeter->filter(fn($q) => false !== stristr($q->periode, $this->tahun))->map(fn($q) => [
             'periode' => $q->periode,
             'stand_lalu_lama' => $q->stand_lalu,
             'stand_ini_lama' => $q->stand_ini,
@@ -61,6 +64,7 @@ class Koreksi extends Component
             'golongan_id_lama' => $q->rekeningAir->golongan_id,
             'golongan_id_baru' => $q->rekeningAir->golongan_id,
             'update' => 0,
+            'data_tarif' => $this->dataTarifProgresif->where('tanggal_berlaku', '<=', $q->periode)->count() == 0 ? 0 : 1,
         ])->toArray();
     }
 

@@ -26,8 +26,8 @@
             </li>
             <li class="nav-items">
                 <a href="#default-tab-2" data-toggle="tab" class="nav-link">
-                    <span class="d-sm-none">Detail Data Tagihan</span>
-                    <span class="d-sm-block d-none">Detail Data Tagihan</span>
+                    <span class="d-sm-none">Data Rekening Air</span>
+                    <span class="d-sm-block d-none">Data Rekening Air</span>
                 </a>
             </li>
         </ul>
@@ -105,7 +105,7 @@
                                 <th class="width-100">Pakai</th>
                                 <th>Harga Air</th>
                                 <th>Materai</th>
-                                <th>Pembayaran</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,7 +124,7 @@
                                         <div class="form-group m-0">
                                             <select class="form-control selectpicker" data-live-search="true"
                                                 wire:model="dataRekeningAir.{{ $index }}.golongan_id_baru"
-                                                @if ($row['angsur'] == 1 || $row['kasir'] || $row['waktu_bayar']) disabled @else 
+                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled @else 
                                                 wire:change="setHargaAir({{ $index }})" @endif
                                                 data-width="100%">
                                                 <option hidden selected>--Pilih Golongan--</option>
@@ -141,7 +141,7 @@
                                     <td class="with-btn">
                                         <div class="form-group m-0">
                                             <input class="form-control" type="number"
-                                                @if ($row['angsur'] == 1 || $row['kasir'] || $row['waktu_bayar']) disabled value="{{ $row['stand_lalu_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_lalu_baru" wire:change="setHargaAir({{ $index }})" @endif
+                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_lalu_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_lalu_baru" wire:change="setHargaAir({{ $index }})" @endif
                                                 autocomplete="off" />
                                             @error('dataRekeningAir.' . $index . '.stand_lalu_baru')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -151,7 +151,7 @@
                                     <td class="with-btn">
                                         <div class="form-group m-0">
                                             <input class="form-control" type="number"
-                                                @if ($row['angsur'] == 1 || $row['kasir'] || $row['waktu_bayar']) disabled value="{{ $row['stand_ini_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_ini_baru" wire:change="setHargaAir({{ $index }})" @endif
+                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_ini_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_ini_baru" wire:change="setHargaAir({{ $index }})" @endif
                                                 autocomplete="off" />
                                             @error('dataRekeningAir.' . $index . '.stand_ini_baru')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -186,10 +186,14 @@
                                         </div>
                                     </td>
                                     <td class="pt-0 align-middle">
-                                        @if ($row['angsur'] == 1)
-                                            <small class="text-red">Diangsur</small>
+                                        @if ($row['data_tarif'] == 0)
+                                            <small class="text-red">Tidak ada data tarif</small>
                                         @else
-                                            <small>{{ strtoupper($row['kasir']) }}<br>{{ $row['waktu_bayar'] }}</small>
+                                            @if ($row['angsur'] == 1)
+                                                <small class="text-red">Diangsur</small>
+                                            @else
+                                                <small>{{ strtoupper($row['kasir']) }}<br>{{ $row['waktu_bayar'] }}</small>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>

@@ -159,6 +159,10 @@ return [
                 'id' => 'datamastertarifmeterair',
                 'title' => 'Meter Air',
             ], [
+                'url' => '/datamaster/tarif/pelayanan',
+                'id' => 'datamastertarifpelayanan',
+                'title' => 'Pelayanan',
+            ], [
                 'url' => '/datamaster/tarif/progresif',
                 'id' => 'datamastertarifprogresif',
                 'title' => 'Progresif',

@@ -107,7 +107,6 @@ class Postingrekeningair extends Component
                     }
 
                     array_push($dataRekeningAir, [
-                        'pakai' => $row->stand_ini - $row->stand_lalu,
                         'harga_air' => $hargaAir,
                         'biaya_denda' => 0,
                         'biaya_lainnya' => $biayaLainnya,

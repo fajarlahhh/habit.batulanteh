@@ -19,4 +19,19 @@ class AngsuranRekeningAirDetail extends Model
     {
         return $this->belongsTo(Pengguna::class, 'kasir_id');
     }
+
+    public function angsuranRekeningAir()
+    {
+        return $this->belongsTo(AngsuranRekeningAir::class);
+    }
+
+    public function scopeBelumBayar($query)
+    {
+        return $query->whereNull('kasir_id')->orWhereNull('waktu_bayar');
+    }
+
+    public function scopeSudahBayar($query)
+    {
+        return $query->whereNotNull('kasir_id')->whereNotNull('waktu_bayar');
+    }
 }
