@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Datamaster\MerkWaterMeter;
+namespace App\Http\Livewire\Datamaster\Merkwatermeter;
 
 use App\Models\MerkWaterMeter;
 use Livewire\Component;

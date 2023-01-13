@@ -70,9 +70,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/golongan/edit/{key}', \App\Http\Livewire\Datamaster\Golongan\Form::class)->name('datamaster.golongan.edit');
         });
         Route::group(['middleware' => ['role_or_permission:super-admin|datamastermerkwatermeter']], function () {
-            Route::get('/merkwatermeter', \App\Http\Livewire\Datamaster\MerkWaterMeter\Index::class)->name('datamaster.merkwatermeter');
-            Route::get('/merkwatermeter/tambah', \App\Http\Livewire\Datamaster\MerkWaterMeter\Form::class)->name('datamaster.merkwatermeter.tambah');
-            Route::get('/merkwatermeter/edit/{key}', \App\Http\Livewire\Datamaster\MerkWaterMeter\Form::class)->name('datamaster.merkwatermeter.edit');
+            Route::get('/merkwatermeter', \App\Http\Livewire\Datamaster\Merkwatermeter\Index::class)->name('datamaster.merkwatermeter');
+            Route::get('/merkwatermeter/tambah', \App\Http\Livewire\Datamaster\Merkwatermeter\Form::class)->name('datamaster.merkwatermeter.tambah');
+            Route::get('/merkwatermeter/edit/{key}', \App\Http\Livewire\Datamaster\Merkwatermeter\Form::class)->name('datamaster.merkwatermeter.edit');
         });
         Route::group(['middleware' => ['role_or_permission:super-admin|datamasterstatusbaca']], function () {
             Route::get('/statusbaca', \App\Http\Livewire\Datamaster\Statusbaca\Index::class)->name('datamaster.statusbaca');

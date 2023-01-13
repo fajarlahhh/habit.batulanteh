@@ -44,7 +44,6 @@ class Form extends Component
                     $this->data->givePermissionTo($row);
                 }
             }
-
         });
 
         session()->flash('success', 'Berhasil menyimpan data');
