@@ -22,7 +22,7 @@ class Perpelanggan extends Component
 
     public function setPelanggan()
     {
-        $this->pelanggan = Pelanggan::with(['bacaMeter' => fn($q) => $q->where('periode', '<', date('Y-m-01'))->with(['rekeningAir' => fn($r) => $r->with('golongan')->with('angsuranRekeningAirPeriode')])->whereHas('rekeningAir')])->with(['angsuranRekeningAir' => fn($q) => $q->belumLunas()->with(['angsuranRekeningAirDetail' => fn($r) => $r->belumBayar()])])->findOrFail($this->pelangganId);
+        $this->pelanggan = Pelanggan::with(['bacaMeter' => fn($q) => $q->where('periode', '<', date('Y-m-01'))->with(['rekeningAir' => fn($r) => $r->with('golongan')->with('angsuranRekeningAirPeriode')])->whereHas('rekeningAir', fn($q) => $q->belumBayar())])->with(['angsuranRekeningAir' => fn($q) => $q->belumLunas()->with(['angsuranRekeningAirDetail' => fn($r) => $r->belumBayar()])])->findOrFail($this->pelangganId);
         $this->setDataRekeningAir();
         $this->setDataAngsuranRekeningAir();
         $this->reset(['pelangganId']);
@@ -107,12 +107,12 @@ class Perpelanggan extends Component
                 'dataRekeningAir' => RekeningAir::with('bacaMeter')->whereIn('id', collect($this->dataRekeningAir)->where('angsur', 0)->pluck('rekening_air_id')->all())->sudahBayar()->get(),
                 'dataAngsuranRekeningAir' => AngsuranRekeningAirDetail::with('angsuranRekeningAir')->whereIn('id', collect($this->dataAngsuranRekeningAir)->where('angsurs', 0)->pluck('rekening_air_id')->all())->sudahBayar()->get(),
             ])->render();
-            dd($cetak);
+
             session()->flash('cetak', $cetak);
         });
 
         session()->flash('success', 'Berhasil menyimpan data');
-        return redirect(route('pembayaran.perpelanggan'));
+        return redirect(route('pembayaran.rekeningair.perpelanggan'));
     }
 
     public function hapusDataRekeningAir($id)

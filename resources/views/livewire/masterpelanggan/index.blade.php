@@ -14,7 +14,7 @@
         <div class="panel-heading">
             <div class="row width-full">
                 <div class="col-xl-1 col-sm-1">
-                    @role('super-admin|supervisor')
+                    @role('administrator|super-admin')
                         <div class="form-inline">
                             <a class="btn btn-primary" href="{{ route('masterpelanggan.tambah') }}">Tambah</a>
                         </div>
@@ -59,7 +59,7 @@
                         <th>Tgl. Pasang</th>
                         <th>No. Body WM</th>
                         <th>Operator</th>
-                        @role('super-admin|supervisor')
+                        @role('administrator|super-admin')
                             <th class="width-90"></th>
                         @endrole
                     </tr>
@@ -79,18 +79,18 @@
                             <td class="align-middle">{{ $row->tanggal_pasang }}</td>
                             <td class="align-middle">{{ $row->no_body_water_meter }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
-                            @role('super-admin|supervisor')
+                            @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">
-                                            @if ($key === $row->getKey())
-                                                <button wire:click="hapus" class="btn btn-warning">Ya, Hapus</button>
-                                                <button wire:click="setKey" class="btn btn-success">Batal</button>
-                                            @else
-                                                <a href="{{ route('masterpelanggan.edit', ['key' => $row->getKey()]) }}"
-                                                    class="btn btn-info"><i class="fas fa-sm fa-pencil-alt"></i></a>
-                                                <button wire:click="setKey({{ $row->getKey() }})" class="btn btn-danger"><i
-                                                        class="fas fa-sm fa-trash-alt"></i></button>
-                                            @endif
+                                        @if ($key === $row->getKey())
+                                            <button wire:click="hapus" class="btn btn-warning">Ya, Hapus</button>
+                                            <button wire:click="setKey" class="btn btn-success">Batal</button>
+                                        @else
+                                            <a href="{{ route('masterpelanggan.edit', ['key' => $row->getKey()]) }}"
+                                                class="btn btn-info"><i class="fas fa-sm fa-pencil-alt"></i></a>
+                                            <button wire:click="setKey({{ $row->getKey() }})" class="btn btn-danger"><i
+                                                    class="fas fa-sm fa-trash-alt"></i></button>
+                                        @endif
                                     </div>
                                 </td>
                             @endrole

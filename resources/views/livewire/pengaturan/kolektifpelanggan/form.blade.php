@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                @role('super-admin|supervisor')
+                @role('administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
                 <a href="{{ route('pengaturan.kolektifpelanggan') }}" class="btn btn-danger">Batal</a>

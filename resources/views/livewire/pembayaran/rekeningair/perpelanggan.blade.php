@@ -203,7 +203,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                @role('user|super-admin|supervisor')
+                @role('user|administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                     <a class="btn btn-danger" href="/pembayaran/rekeningair/perpelanggan">Reset</a>
                 @endrole
@@ -212,8 +212,14 @@
     </div>
 
     <x-info />
+    <x-modal />
 
     @push('scripts')
+        @if (Session::has('cetak'))
+            <script>
+                $('#modal-cetak').modal('show');
+            </script>
+        @endif
         <script>
             autonumeric();
 

@@ -16,7 +16,7 @@
         <div class="panel-heading">
             <div class="row width-full">
                 <div class="col-xl-1 col-sm-1">
-                    @role('super-admin|supervisor')
+                    @role('administrator|super-admin')
                         <div class="form-inline">
                             <a class="btn btn-primary" href="{{ route('datamaster.regional.jalan.tambah') }}">Tambah</a>
                         </div>
@@ -52,7 +52,7 @@
                         <th>Kelurahan</th>
                         <th>Jenis</th>
                         <th>Operator</th>
-                        @role('super-admin|supervisor')
+                        @role('administrator|super-admin')
                             <th class="width-90"></th>
                         @endrole
                     </tr>
@@ -65,7 +65,7 @@
                             <td class="align-middle">{{ $row->kelurahan->nama }}</td>
                             <td class="align-middle">{{ $row->jenis }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
-                            @role('super-admin|supervisor')
+                            @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">
                                         @if ($row->trashed())

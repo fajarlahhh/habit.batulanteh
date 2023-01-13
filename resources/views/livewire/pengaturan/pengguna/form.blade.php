@@ -71,7 +71,7 @@
                                             {
                                                 $subMenu = '';
                                                 foreach ($menu as $i => $mn) {
-                                                    $subMenu .= "<div class='hakakses checkbox checkbox-css'><input " . ($level == 'super-admin' ? 'disabled' : '') . " type='checkbox' class='" . $class . "' wire:model.defer='akses' id='" . $mn['id'] . "' value='" . $mn['id'] . "'/><label for='" . $mn['id'] . "'>" . $mn['title'] . '' . subMenu($mn['sub_menu'], $class . ' ' . $mn['id'], $akses, $level) . '</label></div>';
+                                                    $subMenu .= "<div class='hakakses checkbox checkbox-css'><input " . ($level == 'administrator' ? 'disabled' : '') . " type='checkbox' class='" . $class . "' wire:model.defer='akses' id='" . $mn['id'] . "' value='" . $mn['id'] . "'/><label for='" . $mn['id'] . "'>" . $mn['title'] . '' . subMenu($mn['sub_menu'], $class . ' ' . $mn['id'], $akses, $level) . '</label></div>';
                                                 }
                                                 return $subMenu;
                                             }
@@ -79,7 +79,7 @@
                                         @foreach ($dataMenu as $i => $mn)
                                             <div class="checkbox checkbox-css col-md-6 col-lg-6 col-xl-4">
                                                 <input type="checkbox" wire:model.defer="akses"
-                                                    @if ($level == 'super-admin') disabled @endif
+                                                    @if ($level == 'administrator') disabled @endif
                                                     id="{{ $mn['id'] }}" value="{{ $mn['id'] }}" />
                                                 <label for="{{ $mn['id'] }}">{{ $mn['title'] }}
                                                     {!! subMenu($mn['sub_menu'], $mn['id'], $akses, $level) !!}
@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                @role('super-admin|supervisor')
+                @role('administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
                 <a href="{{ route('pengaturan.pengguna') }}" class="btn btn-danger m-r-3">Batal</a>

@@ -16,7 +16,7 @@
         <div class="panel-heading">
             <div class="row width-full">
                 <div class="col-xl-1 col-sm-1">
-                    @role('super-admin|supervisor')
+                    @role('administrator|super-admin')
                         <div class="form-inline">
                             <a class="btn btn-primary" href="{{ route('datamaster.tarif.pelayanan.tambah') }}">Tambah</a>
                         </div>
@@ -55,7 +55,7 @@
                         <th>Diameter</th>
                         <th>Nilai</th>
                         <th>Operator</th>
-                        @role('super-admin|supervisor')
+                        @role('administrator|super-admin')
                             <th class="width-90"></th>
                         @endrole
                     </tr>
@@ -71,7 +71,7 @@
                             <td class="align-middle">{{ $row->diameter->ukuran }}</td>
                             <td class="align-middle">{{ number_format($row->nilai) }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
-                            @role('super-admin|supervisor')
+                            @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">
                                         @if ($row->trashed())

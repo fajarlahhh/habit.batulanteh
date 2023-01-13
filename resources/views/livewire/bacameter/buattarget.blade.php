@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                @role('user|super-admin|supervisor')
+                @role('user|administrator|super-admin')
                     @if ($proses)
                         <input type="submit" value="Lanjutkan" class="btn btn-success" />
                         <a href="javascript:;" class="btn btn-danger" wire:click="setProses">Batal</a>

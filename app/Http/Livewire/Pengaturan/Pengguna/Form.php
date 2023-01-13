@@ -39,7 +39,7 @@ class Form extends Component
 
             $this->data->assignRole($this->level);
 
-            if ($this->level !== 'super-admin') {
+            if ($this->level !== 'administrator') {
                 foreach ($this->akses as $row) {
                     $this->data->givePermissionTo($row);
                 }
@@ -88,7 +88,7 @@ class Form extends Component
 
     public function updatedLevel()
     {
-        if ($this->level == 'super-admin') {
+        if ($this->level == 'administrator') {
             $this->akses = Permission::all()->pluck('name')->all();
         }
     }

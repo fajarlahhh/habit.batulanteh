@@ -15,7 +15,7 @@
         <div class="panel-heading">
             <div class="row width-full">
                 <div class="col-xl-3 col-sm-3">
-                    @role('super-admin|supervisor')
+                    @role('administrator|super-admin')
                         <div class="form-inline">
                             <a href="{{ route('pengaturan.pengguna.tambah') }}" class="btn btn-primary"><i
                                     class="fa fa-plus"></i>
@@ -51,7 +51,7 @@
                         <th>UID</th>
                         <th>Nama</th>
                         <th>Deskripsi</th>
-                        @role('super-admin|supervisor')
+                        @role('administrator|super-admin')
                             <th class="width-90"></th>
                         @endrole
                     </tr>
@@ -64,7 +64,7 @@
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->deskripsi }}</td>
                             <td class="with-btn-group align-middle text-right" nowrap>
-                                @role('super-admin|supervisor')
+                                @role('administrator|super-admin')
                                     <div class="btn-group btn-group-sm" role="group">
                                         @if ($row->trashed())
                                             @if ($key == $row->getKey())

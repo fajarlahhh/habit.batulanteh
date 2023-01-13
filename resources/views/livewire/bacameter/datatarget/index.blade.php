@@ -15,7 +15,7 @@
         <div class="panel-heading">
             <div class="row width-full">
                 <div class="col-xl-1 col-sm-1">
-                    @role('super-admin|supervisor')
+                    @role('administrator|super-admin')
                         <div class="form-inline">
                             <a class="btn btn-primary" href="{{ route('bacameter.buattarget') }}">Buat Data </a>
                         </div>
@@ -69,7 +69,7 @@
                         <th>Pakai</th>
                         <th>Status Baca</th>
                         <th>Foto</th>
-                        @role('super-admin|supervisor')
+                        @role('administrator|super-admin')
                             <th class="width-90"></th>
                         @endrole
                     </tr>
@@ -94,7 +94,7 @@
                                     <img src="{{ Storage::url($row->foto) }}" class='height-70' />
                                 @endif
                             </td>
-                            @role('super-admin|supervisor|user')
+                            @role('administrator|super-admin|user')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     @if (!$row->rekeningAir->harga_air)
                                         <div class="btn-group btn-group-sm" role="group">

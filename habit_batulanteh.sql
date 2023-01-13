@@ -696,8 +696,8 @@ CREATE TABLE `roles`  (
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES (1, 'super-admin', 'web', '2022-12-23 00:00:00', '2022-12-23 00:00:00');
-INSERT INTO `roles` VALUES (2, 'supervisor', 'web', '2022-12-23 00:00:00', '2022-12-23 00:00:00');
+INSERT INTO `roles` VALUES (1, 'administrator', 'web', '2022-12-23 00:00:00', '2022-12-23 00:00:00');
+INSERT INTO `roles` VALUES (2, 'super-admin', 'web', '2022-12-23 00:00:00', '2022-12-23 00:00:00');
 INSERT INTO `roles` VALUES (3, 'operator', 'web', '2022-12-23 00:00:00', '2022-12-23 00:00:00');
 INSERT INTO `roles` VALUES (4, 'guest', 'web', '2022-12-23 00:00:00', '2022-12-23 00:00:00');
 
