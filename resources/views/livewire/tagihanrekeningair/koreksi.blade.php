@@ -88,7 +88,7 @@
                 <div class="form-group">
                     <label class="control-label">Tahun</label>
                     <select class="form-control selectpicker" wire:model="tahun" data-live-search="true"
-                        data-style="btn-info" data-width="100%">
+                        data-width="100%">
                         @for ($i = 2010; $i <= date('Y'); $i++)
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endfor
@@ -213,7 +213,6 @@
                 @role('user|administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
-                <a wire:click="batal" class="btn btn-danger">Batal</a>
             </div>
             <!-- end tab-pane -->
         </div>

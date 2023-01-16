@@ -70,7 +70,8 @@
                         </div>
                         <div class="form-group">
                             <label for="control-label">Jalan/Gang/Perumahan</label>
-                            <select wire:model.defer="jalan" class="form-control selectpicker" data-width="100%">
+                            <select wire:model.defer="jalan" class="form-control selectpicker" data-width="100%"
+                                data-live-search="true">
                                 <option selected hidden>-- Pilih Jalan --</option>
                                 @foreach (\App\Models\Jalan::orderBy('nama')->get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}
@@ -105,7 +106,7 @@
                                 <div class="form-group">
                                     <label for="control-label">Golongan</label>
                                     <select wire:model.defer="golongan" class="form-control selectpicker"
-                                        data-width="100%">
+                                        data-live-search="true" data-width="100%">
                                         <option selected hidden>-- Pilih Golongan --</option>
                                         @foreach (\App\Models\Golongan::orderBy('nama')->get() as $row)
                                             <option value="{{ $row->getKey() }}">{{ $row->nama }} -
@@ -120,7 +121,7 @@
                                 <div class="form-group">
                                     <label for="control-label">Merk WM</label>
                                     <select wire:model.defer="merkWaterMeter" class="form-control selectpicker"
-                                        data-width="100%">
+                                        data-live-search="true" data-width="100%">
                                         <option selected hidden>-- Pilih Merk WM --</option>
                                         @foreach (\App\Models\MerkWaterMeter::orderBy('merk')->get() as $row)
                                             <option value="{{ $row->getKey() }}">{{ $row->merk }}
@@ -134,7 +135,7 @@
                                 <div class="form-group">
                                     <label for="control-label">Diameter</label>
                                     <select wire:model.defer="diameter" class="form-control selectpicker"
-                                        data-width="100%">
+                                        data-live-search="true" data-width="100%">
                                         <option selected hidden>-- Pilih Diameter --</option>
                                         @foreach (\App\Models\Diameter::orderBy('ukuran')->get() as $row)
                                             <option value="{{ $row->getKey() }}">{{ $row->ukuran }}

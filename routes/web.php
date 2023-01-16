@@ -172,6 +172,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['role_or_permission:administrator|tagihanrekeningairkoreksi']], function () {
             Route::get('/koreksi', \App\Http\Livewire\Tagihanrekeningair\Koreksi::class)->name('tagihanrekeningair.koreksi');
         });
+        Route::group(['middleware' => ['role_or_permission:administrator|tagihanrekeningairpenerbitan']], function () {
+            Route::get('/penerbitan', \App\Http\Livewire\Tagihanrekeningair\Penerbitan::class)->name('tagihanrekeningair.penerbitan');
+        });
     });
 
     Route::prefix('pembayaran')->group(function () {

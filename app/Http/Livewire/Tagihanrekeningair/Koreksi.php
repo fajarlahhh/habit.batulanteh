@@ -127,7 +127,7 @@ class Koreksi extends Component
     public function submit()
     {
         $this->validate([
-            'pelangganId' => 'required',
+            'pelangganId' => 'required||numeric',
             'catatan' => 'required',
             'dataRekeningAir' => 'required',
         ]);
