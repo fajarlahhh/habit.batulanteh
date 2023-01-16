@@ -56,12 +56,12 @@ class Penerbitan extends Component
             'standIni' => 'required|numeric',
             'statusBaca' => 'required',
         ]);
-        DB::transaction(function () {
-            if (date('Ymd') < $this->tahun . substr('0' . $this->bulan, -2) . '01') {
-                session()->flash('danger', 'Periode ' . $this->tahun . '-' . $this->bulan . ' belum saatnya terbit');
-            } else if (BacaMeter::where('pelanggan_id', $this->pelanggan->id)->withoutGlobalScopes()->where('periode', $this->tahun . '-' . $this->bulan . '-01')->count() > 0) {
-                session()->flash('danger', 'Rekening air periode ' . $this->tahun . '-' . $this->bulan . ' untuk pelanggan ini sudah ada');
-            } else {
+        if (date('Ymd') < $this->tahun . substr('0' . $this->bulan, -2) . '01') {
+            session()->flash('danger', 'Periode ' . $this->tahun . '-' . $this->bulan . ' belum saatnya terbit');
+        } else if (BacaMeter::where('pelanggan_id', $this->pelanggan->id)->withoutGlobalScopes()->where('periode', $this->tahun . '-' . $this->bulan . '-01')->count() > 0) {
+            session()->flash('danger', 'Rekening air periode ' . $this->tahun . '-' . $this->bulan . ' untuk pelanggan ini sudah ada');
+        } else {
+            DB::transaction(function () {
                 $pakai = $this->standIni - $this->standLalu;
                 if ($pakai >= 0) {
                     $tarifProgresif = $this->dataTarifProgresif->where('tanggal_berlaku', '<=', $this->tahun . '-' . $this->bulan . '-01')->where('golongan_id', $this->golongan)->sortByDesc('tanggal_berlaku')->first();
@@ -150,8 +150,9 @@ class Penerbitan extends Component
                     $rekeningAir->save();
                 }
                 session()->flash('success', 'Berhasil menyimpan data');
-            }
-        });
+            });
+            return $this->redirect('/tagihanrekeningair/penerbitan');
+        }
     }
 
     public function render()

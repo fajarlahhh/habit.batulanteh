@@ -145,7 +145,7 @@
                         data-width="100%">
                         <option selected hidden>-- Status Baca --</option>
                         @foreach (\App\Models\StatusBaca::orderBy('keterangan')->get() as $row)
-                            <option value="{{ $row->getKey() }}">
+                            <option value="{{ $row->keterangan }}">
                                 {{ $row->keterangan }}
                             </option>
                         @endforeach
