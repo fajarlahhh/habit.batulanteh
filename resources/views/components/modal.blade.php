@@ -24,7 +24,7 @@
             newWin.document.close();
             setTimeout(function() {
                 newWin.close();
-            }, 200);
+            }, 300);
         }
     </script>
 </div>
