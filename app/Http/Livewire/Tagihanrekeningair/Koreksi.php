@@ -78,7 +78,7 @@ class Koreksi extends Component
 
         $pakai = $this->dataRekeningAir[$id]['stand_ini_baru'] - $this->dataRekeningAir[$id]['stand_lalu_baru'];
         if ($pakai >= 0) {
-            $tarifProgresif = $this->dataTarifProgresif->where('tanggal_berlaku', '<=', $this->dataRekeningAir[$id]['periode'])->where('golongan_id', $this->dataRekeningAir[$id]['golongan_id_baru'])->first()->tarifProgresifDetail;
+            $tarifProgresif = $this->dataTarifProgresif->where('tanggal_berlaku', '<=', $this->dataRekeningAir[$id]['periode'])->where('golongan_id', $this->dataRekeningAir[$id]['golongan_id_baru'])->sortByDesc('tanggal_berlaku')->first()->tarifProgresifDetail;
 
             $hargaAir = 0;
             $sisa = $m3 = $pakai;
