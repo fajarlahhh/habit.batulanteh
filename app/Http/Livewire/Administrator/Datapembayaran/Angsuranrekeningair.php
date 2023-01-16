@@ -30,7 +30,7 @@ class Angsuranrekeningair extends Component
     {
         $cetak = view('livewire.pembayaran.rekeningair.cetak', [
             'dataRekeningAir' => collect([]),
-            'dataAngsuranRekeningAir ' => AngsuranRekeningAirDetail::with('angsuranRekeningAir')->where('angsuran_rekening_air_id', $id)->get(),
+            'dataAngsuranRekeningAir' => AngsuranRekeningAirDetail::with('angsuranRekeningAir')->where('id', $id)->get(),
         ])->render();
         session()->flash('cetak', $cetak);
         $this->emit('cetak');
