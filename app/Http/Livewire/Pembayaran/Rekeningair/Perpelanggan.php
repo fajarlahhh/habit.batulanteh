@@ -22,7 +22,7 @@ class Perpelanggan extends Component
 
     public function setPelanggan()
     {
-        $this->pelanggan = Pelanggan::with(['bacaMeter' => fn($q) => $q->where('periode', '<', date('Y-m-01'))->with(['rekeningAir' => fn($r) => $r->with('golongan')->with('angsuranRekeningAirPeriode')])->whereHas('rekeningAir', fn($q) => $q->belumBayar())])->with(['angsuranRekeningAir' => fn($q) => $q->belumLunas()->with(['angsuranRekeningAirDetail' => fn($r) => $r->belumBayar()])])->findOrFail($this->pelangganId);
+        $this->pelanggan = Pelanggan::with(['bacaMeter' => fn($q) => $q->with(['rekeningAir' => fn($r) => $r->with('golongan')->with('angsuranRekeningAirPeriode')])->whereHas('rekeningAir', fn($q) => $q->belumBayar())])->with(['angsuranRekeningAir' => fn($q) => $q->belumLunas()->with(['angsuranRekeningAirDetail' => fn($r) => $r->belumBayar()])])->findOrFail($this->pelangganId);
         $this->setDataRekeningAir();
         $this->setDataAngsuranRekeningAir();
         $this->reset(['pelangganId']);
@@ -31,43 +31,43 @@ class Perpelanggan extends Component
     public function setDataRekeningAir()
     {
         if ($this->pelanggan->bacaMeter->count() > 0) {
-            $this->dataRekeningAir = $this->pelanggan->bacaMeter->whereNotIn('baca_meter_id', collect($this->dataRekeningAir)->pluck('baca_meter_id'))->map(function ($q) {
-                $periode = new Carbon($q->periode);
-                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $q->rekeningAir->tarifDenda->nilai : 0;
-                return [
-                    'baca_meter_id' => $q->id,
-                    'rekening_air_id' => $q->rekeningAir->id,
-                    'pelanggan_id' => $q->pelanggan_id,
-                    'no_langganan' => $q->pelanggan->no_langganan,
-                    'nama' => $q->pelanggan->nama,
-                    'alamat' => $q->pelanggan->alamat,
-                    'periode' => $q->periode,
-                    'golongan' => $q->rekeningAir->golongan->nama,
-                    'angsur' => $q->rekeningAir->angsuranRekeningAirPeriode ? 1 : 0,
-                    'pakai' => $q->stand_ini - $q->stand_lalu,
-                    'tagihan' => $q->rekeningAir->harga_air + $q->rekeningAir->biaya_denda + $q->rekeningAir->biaya_lainnya + $q->rekeningAir->biaya_meter_air + $q->rekeningAir->biaya_materai,
+            foreach ($this->pelanggan->bacaMeter->whereNotIn('baca_meter_id', collect($this->dataRekeningAir)->pluck('baca_meter_id'))->all() as $key => $row) {
+                $periode = new Carbon($row->periode);
+                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->rekeningAir->tarifDenda->nilai : 0;
+                $this->dataRekeningAir[] = [
+                    'baca_meter_id' => $row->id,
+                    'rekening_air_id' => $row->rekeningAir->id,
+                    'pelanggan_id' => $row->pelanggan_id,
+                    'no_langganan' => $row->pelanggan->no_langganan,
+                    'nama' => $row->pelanggan->nama,
+                    'alamat' => $row->pelanggan->alamat,
+                    'periode' => $row->periode,
+                    'golongan' => $row->rekeningAir->golongan->nama,
+                    'angsur' => $row->rekeningAir->angsuranRekeningAirPeriode ? 1 : 0,
+                    'pakai' => $row->stand_ini - $row->stand_lalu,
+                    'tagihan' => $row->rekeningAir->harga_air + $row->rekeningAir->biaya_denda + $row->rekeningAir->biaya_lainnya + $row->rekeningAir->biaya_meter_air + $row->rekeningAir->biaya_materai,
                     'denda' => $denda,
                 ];
-            })->toArray();
+            }
         }
     }
 
     public function setDataAngsuranRekeningAir()
     {
         if ($this->pelanggan->angsuranRekeningAir->count() > 0) {
-            $this->dataAngsuranRekeningAir = $this->pelanggan->angsuranRekeningAir->first()->angsuranRekeningAirDetail->whereNotIn('angsuran_rekening_air_detail_id', collect($this->dataAngsuranRekeningAir)->pluck('angsuran_rekening_air_detail_id'))->map(function ($q) {
-                return [
-                    'angsuran_rekening_air_id' => $q->angsuranRekeningAir->id,
-                    'angsuran_rekening_air_detail_id' => $q->id,
-                    'pelanggan_id' => $q->angsuranRekeningAir->pelanggan_id,
-                    'no_langganan' => $q->angsuranRekeningAir->pelanggan->no_langganan,
-                    'nama' => $q->angsuranRekeningAir->pelanggan->nama,
-                    'alamat' => $q->angsuranRekeningAir->pelanggan->alamat,
-                    'nomor' => $q->angsuranRekeningAir->nomor,
-                    'urutan' => $q->urutan,
-                    'nilai' => $q->nilai,
+            foreach ($this->pelanggan->angsuranRekeningAir->first()->angsuranRekeningAirDetail->whereNotIn('angsuran_rekening_air_detail_id', collect($this->dataAngsuranRekeningAir)->pluck('angsuran_rekening_air_detail_id'))->all() as $key => $row) {
+                $this->dataAngsuranRekeningAir[] = [
+                    'angsuran_rekening_air_id' => $row->angsuranRekeningAir->id,
+                    'angsuran_rekening_air_detail_id' => $row->id,
+                    'pelanggan_id' => $row->angsuranRekeningAir->pelanggan_id,
+                    'no_langganan' => $row->angsuranRekeningAir->pelanggan->no_langganan,
+                    'nama' => $row->angsuranRekeningAir->pelanggan->nama,
+                    'alamat' => $row->angsuranRekeningAir->pelanggan->alamat,
+                    'nomor' => $row->angsuranRekeningAir->nomor,
+                    'urutan' => $row->urutan,
+                    'nilai' => $row->nilai,
                 ];
-            })->toArray();
+            }
         }
     }
 
@@ -87,7 +87,7 @@ class Perpelanggan extends Component
             }
 
             foreach (collect($this->dataAngsuranRekeningAir)->all() as $key => $row) {
-                AngsuranRekeningAir::where('id', $row['angsuran_rekening_air_detail_id'])->belumBayar()->update([
+                AngsuranRekeningAirDetail::where('urutan', $row['urutan'])->where('angsuran_rekening_air_id', $row['angsuran_rekening_air_id'])->where('id', $row['angsuran_rekening_air_detail_id'])->update([
                     'kasir_id' => auth()->id(),
                     'waktu_bayar' => now(),
                 ]);
@@ -103,9 +103,13 @@ class Perpelanggan extends Component
                     ]);
                 }
             }
+
             $cetak = view('livewire.pembayaran.rekeningair.cetak', [
                 'dataRekeningAir' => RekeningAir::with('bacaMeter')->whereIn('id', collect($this->dataRekeningAir)->where('angsur', 0)->pluck('rekening_air_id')->all())->sudahBayar()->get(),
-                'dataAngsuranRekeningAir' => AngsuranRekeningAirDetail::with('angsuranRekeningAir')->whereIn('id', collect($this->dataAngsuranRekeningAir)->where('angsurs', 0)->pluck('rekening_air_id')->all())->sudahBayar()->get(),
+                'dataAngsuranRekeningAir' => AngsuranRekeningAirDetail::with('angsuranRekeningAir')
+                    ->whereIn('urutan', collect($this->dataAngsuranRekeningAir)->pluck('urutan')->all())
+                    ->whereIn('angsuran_rekening_air_id', collect($this->dataAngsuranRekeningAir)->pluck('angsuran_rekening_air_id')->all())
+                    ->whereIn('id', collect($this->dataAngsuranRekeningAir)->pluck('angsuran_rekening_air_detail_id')->all())->sudahBayar()->get(),
             ])->render();
 
             session()->flash('cetak', $cetak);

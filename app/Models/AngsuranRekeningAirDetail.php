@@ -10,6 +10,7 @@ class AngsuranRekeningAirDetail extends Model
     use HasFactory;
 
     protected $table = 'angsuran_rekening_air_detail';
+    public $timestamps = false;
 
     protected $fillable = [
         'angsuran_rekening_air_id', 'urutan', 'nilai', 'kasir_id', 'waktu_bayar',
@@ -23,6 +24,11 @@ class AngsuranRekeningAirDetail extends Model
     public function angsuranRekeningAir()
     {
         return $this->belongsTo(AngsuranRekeningAir::class);
+    }
+
+    public function kasir()
+    {
+        return $this->belongsTo(Pengguna::class, 'kasir_id')->withTrashed();
     }
 
     public function scopeBelumBayar($query)

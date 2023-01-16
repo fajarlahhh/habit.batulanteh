@@ -96,7 +96,7 @@
                             </td>
                             @role('administrator|super-admin|user')
                                 <td class="with-btn-group align-middle text-right" nowrap>
-                                    @if (!$row->rekeningAir->harga_air)
+                                    @if (!$row->rekeningAir)
                                         <div class="btn-group btn-group-sm" role="group">
                                             <a href="{{ route('bacameter.datatarget.edit', ['key' => $row->getKey()]) }}"
                                                 class="btn btn-info"><i class="fas fa-sm fa-pencil-alt"></i></a>

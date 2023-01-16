@@ -1,7 +1,7 @@
 @foreach ($dataRekeningAir as $row)
     <div class="row width-full f-s-12" style="page-break-inside: avoid; height: 360px">
         <div class="col-xs-4">
-            <img src="/assets/img/logo/favicon.png" class="width-20"><strong>PERUMDAM BATU LANTEH</strong>
+            <img src="/assets/img/logo.png" class="width-20"><strong>PERUMDAM BATU LANTEH</strong>
             <table class="width-full f-s-12">
                 <tr>
                     <td colspan="3">&nbsp;</td>
@@ -118,7 +118,7 @@
         <div class="col-xs-8 p-l-40">
             <div class="row ml-5">
                 <div class="col-sm-12">
-                    <img src="/assets/img/logo/favicon.png" class="width-20"><strong class="p-t-10">PERUMDAM BATU
+                    <img src="/assets/img/logo.png" class="width-20"><strong class="p-t-10">PERUMDAM BATU
                         LANTEH</strong>
                     <table class="width-full f-s-12">
                         <tr>
@@ -226,9 +226,9 @@
                     </table>
                 </div>
                 <div class="col-sm-12">
-                    <table class="width-full f-s-10">
+                    <table class="width-full">
                         <tr>
-                            <td class="width-400">
+                            <td class="width-400 f-s-10">
                                 <ul>
                                     <li>PERUMDAM BATU LANTEH Menyatakan Struk ini Sebagai Bukti
                                         Pembayaran Yang Sah, Mohon Disimpan.</li>
@@ -252,43 +252,110 @@
             </div>
         </div>
     </div>
-    <br>
-    <br>
-    {{-- @if ($row->angsuran)
-            <div class="row width-full f-s-12" style="page-break-inside: avoid; height: 360px">
-                <div class="col-xs-4">
-                    <img src="/assets/img/logo/favicon.png" class="width-20"><strong class="p-t-10">
-                        {{ config('constants.perusahaan') }}</strong>
+@endforeach
+@foreach ($dataAngsuranRekeningAir as $row)
+    <div class="row width-full f-s-12" style="page-break-inside: avoid; height: 360px">
+        <div class="col-xs-4">
+            <img src="/assets/img/logo.png" class="width-20"><strong class="p-t-10">
+                PERUMDAM BATU LANTEH</strong>
+            <table class="width-full f-s-12">
+                <tr>
+                    <td colspan="4" class="p-l-40">STRUK PEMBAYARAN ANGSURAN REKENING AIR</td>
+                </tr>
+                <tr>
+                    <td class="width-100">Tanggal Bayar </td>
+                    <td class="width-10">:</td>
+                    <td colspan="2">
+                        {{ $row->waktu_bayar }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>No. Langganan</td>
+                    <td>:</td>
+                    <td colspan="2">
+                        {{ $row->angsuranRekeningAir->pelanggan->no_langganan }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nama</td>
+                    <td>:</td>
+                    <td colspan="2">
+                        {{ $row->angsuranRekeningAir->pelanggan->nama }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Alamat</td>
+                    <td>:</td>
+                    <td colspan="2">
+                        {{ $row->angsuranRekeningAir->pelanggan->alamat }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>Angsuran Ke</td>
+                    <td>:</td>
+                    <td colspan="2">
+                        {{ $row->urutan }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <th>:</th>
+                    <th colspan="2">Rp. {{ number_format($row->nilai) }}</th>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>Kasir</td>
+                    <td>:</td>
+                    <td>
+                        {{ $row->kasir->nama }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-xs-8 p-l-40">
+            <div class="row ml-5">
+                <div class="col-sm-12">
+                    <img src="/assets/img/logo.png" class="width-20"><strong class="p-t-10">
+                        PERUMDAM BATU LANTEH</strong>
                     <table class="width-full f-s-12">
                         <tr>
-                            <td colspan="3" class="p-l-40">ANGSURAN REKENING AIR</td>
+                            <td colspan="3">STRUK PEMBAYARAN ANGSURAN REKENING AIR</td>
                         </tr>
                         <tr>
-                            <td colspan="4">Tanggal Bayar </td>
+                            <td class="width-100">Tanggal Bayar </td>
                             <td class="width-10">:</td>
                             <td colspan="2">
-                                {{ date('Y-m-d', strtotime($row->created_at)) }}
+                                {{ $row->waktu_bayar }}
                             </td>
                         </tr>
                         <tr>
-                            <td class="width-100">No. Langganan</td>
-                            <td class="width-10">:</td>
+                            <td>No. Langganan</td>
+                            <td>:</td>
                             <td colspan="2">
-                                {{ $row->angsuran->pelanggan->no_langganan }}
+                                {{ $row->angsuranRekeningAir->pelanggan->no_langganan }}
                             </td>
                         </tr>
                         <tr>
                             <td>Nama</td>
                             <td>:</td>
                             <td colspan="2">
-                                {{ $row->angsuran->pelanggan->nama }}
+                                {{ $row->angsuranRekeningAir->pelanggan->nama }}
                             </td>
                         </tr>
                         <tr>
                             <td>Alamat</td>
                             <td>:</td>
                             <td colspan="2">
-                                {{ $row->angsuran->pelanggan->alamat }}
+                                {{ $row->angsuranRekeningAir->pelanggan->alamat }}
                             </td>
                         </tr>
                         <tr>
@@ -300,18 +367,19 @@
                             <td>Angsuran Ke</td>
                             <td>:</td>
                             <td colspan="2">
-                                {{ $row->angsuran->urutan }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                &nbsp;
+                                {{ $row->urutan }}
                             </td>
                         </tr>
                         <tr>
                             <th>Total</th>
                             <th>:</th>
-                            <th colspan="2">Rp. {{ number_format($row->angsuran->nilai) }}</th>
+                            <th colspan="2">Rp. {{ number_format($row->nilai) }}</th>
+                        </tr>
+                        <tr>
+                            <td>Terbilang</td>
+                            <td>:</td>
+                            <td colspan="2">
+                                {{ ucwords(Terbilang::make($row->nilai, ' rupiah')) }}</td>
                         </tr>
                         <tr>
                             <td colspan="4">
@@ -322,127 +390,19 @@
                             <td>Kasir</td>
                             <td>:</td>
                             <td>
-                                {{ $row->angsuran->kasir }}
+                                {{ $row->kasir->nama }}
+                            </td>
+                            <td class="text-center">
+                                <label>Direktur Utama</label>
+                                <br>
+
+
+                                <br>
+                                <u>Abdul Hakim</u>
                             </td>
                         </tr>
                     </table>
                 </div>
-                <div class="col-xs-8 p-l-40">
-                    <div class="row ml-5">
-                        <div class="col-xs-8">
-                            <img src="/assets/img/logo/favicon.png" class="width-20"><strong class="p-t-10">
-                                {{ config('constants.perusahaan') }}</strong>
-                            <table class="width-full f-s-12">
-                                <tr>
-                                    <td colspan="3">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">STRUK PEMBAYARAN ANGSURAN REKENING AIR</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">Tanggal Bayar </td>
-                                    <td class="width-10">:</td>
-                                    <td colspan="2">
-                                        {{ date('Y-m-d', strtotime($row->created_at)) }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="width-150">No. Langganan</td>
-                                    <td class="width-10">:</td>
-                                    <td colspan="2">
-                                        {{ $row->angsuran->pelanggan->no_langganan }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Nama</td>
-                                    <td>:</td>
-                                    <td colspan="2">
-                                        {{ $row->angsuran->pelanggan->nama }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Alamat</td>
-                                    <td>:</td>
-                                    <td colspan="2">
-                                        {{ $row->angsuran->pelanggan->alamat }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        &nbsp;
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Angsuran Ke</td>
-                                    <td>:</td>
-                                    <td colspan="2">
-                                        {{ $row->angsuran->urutan }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        &nbsp;
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Total</th>
-                                    <th>:</th>
-                                    <th colspan="2">Rp. {{ number_format($row->angsuran->nilai) }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Terbilang</td>
-                                    <td>:</td>
-                                    <td colspan="2">
-                                        {{ ucwords(Terbilang::make($row->angsuran->nilai, ' rupiah')) }}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        &nbsp;
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Kasir</td>
-                                    <td>:</td>
-                                    <td>
-                                        {{ $row->angsuran->kasir }}
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-xs-4">
-                            <table class="width-full m-t-40 f-s-12">
-                                <tr>
-                                    <td colspan="4">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="p-r-40 text-center">
-                                        <br>
-                                        <label class="p-r-10">{{ $data_tanda_tangan->jabatan->nm_jabatan }}</label>
-                                        <br>
-                                        <img src="data:image/png;base64, {{ DNS2D::getBarcodePNG(config('constants.tanda_tangan') . 'rekening-air/' . $data->first()->nomor, 'QRCODE') }}"
-                                            alt="barcode" class="width-80" />
-                                        <br>
-                                        <u>{{ $data_tanda_tangan->nm_pegawai }}</u>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <br>
-            <br>
-        @endif --}}
+        </div>
 @endforeach

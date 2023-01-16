@@ -59,74 +59,74 @@
                         <th>Operator</th>
                         @role('administrator|super-admin|user')
                             <th class="width-90"></th>
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $index => $row)
-                            <tr>
-                                <td class="align-middle text-nowrap">{{ $row->nomor }}</td>
-                                <td class="align-middle text-nowrap">{{ $row->created_at }}</td>
-                                <td class="align-middle">{{ $row->pelanggan->no_langganan }}</td>
-                                <td class="align-middle">{{ $row->pelanggan->nama }}</td>
-                                <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
-                                <td class="align-middle">{{ $row->pemohon }}</td>
-                                <td class="align-middle">{{ $row->keterangan }}</td>
-                                <td class="align-middle text-right">{{ number_format($row->total) }}</td>
-                                <td class="align-middle text-right">{{ number_format($row->bayar) }}</td>
-                                <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
-                                @role('administrator|super-admin|user')
-                                    <td class="with-btn-group align-middle text-right" nowrap>
-                                        <div class="btn-group btn-group-sm" role="group">
-                                            @if ($key === $row->getKey())
-                                                <a href="javascript:;" wire:click="hapus" class="btn btn-danger">Ya, Hapus</a>
-                                                <a wire:click="setKey" href="javascript:;" class="btn btn-success">Batal</a>
-                                            @else
-                                                @if ($lunas == 0)
-                                                    <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})"
-                                                        class="btn btn-danger">Hapus</a>
-                                                @endif
-                                                <button class="btn dropdown-toggle" data-toggle="dropdown"><i
-                                                        class="fas fa-angle-down"></i></button>
-                                                <div class="dropdown-menu">
-                                                    <a href="javascript:;" class="dropdown-item"
-                                                        wire:click="cetak({{ $row->getKey() }})"
-                                                        class="dropdown-item btn-cetak"> Cetak</a>
-                                                </div>
+                        @endrole
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($data as $index => $row)
+                        <tr>
+                            <td class="align-middle text-nowrap">{{ $row->nomor }}</td>
+                            <td class="align-middle text-nowrap">{{ $row->created_at }}</td>
+                            <td class="align-middle">{{ $row->pelanggan->no_langganan }}</td>
+                            <td class="align-middle">{{ $row->pelanggan->nama }}</td>
+                            <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
+                            <td class="align-middle">{{ $row->pemohon }}</td>
+                            <td class="align-middle">{{ $row->keterangan }}</td>
+                            <td class="align-middle text-right">{{ number_format($row->total) }}</td>
+                            <td class="align-middle text-right">{{ number_format($row->bayar) }}</td>
+                            <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
+                            @role('administrator|super-admin|user')
+                                <td class="with-btn-group align-middle text-right" nowrap>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        @if ($key === $row->getKey())
+                                            <a href="javascript:;" wire:click="hapus" class="btn btn-danger">Ya, Hapus</a>
+                                            <a wire:click="setKey" href="javascript:;" class="btn btn-success">Batal</a>
+                                        @else
+                                            @if ($lunas == 0)
+                                                <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})"
+                                                    class="btn btn-danger">Hapus</a>
                                             @endif
-                                        </div>
-                                    </td>
-                                @endrole
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                            <button class="btn dropdown-toggle" data-toggle="dropdown"><i
+                                                    class="fas fa-angle-down"></i></button>
+                                            <div class="dropdown-menu">
+                                                <a href="javascript:;" class="dropdown-item"
+                                                    wire:click="cetak({{ $row->getKey() }})"
+                                                    class="dropdown-item btn-cetak"> Cetak</a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </td>
+                            @endrole
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer form-inline">
+            <div class="col-md-6 col-lg-10 col-xl-10 col-xs-12">
+                {{ $data->links() }}
             </div>
-            <div class="panel-footer form-inline">
-                <div class="col-md-6 col-lg-10 col-xl-10 col-xs-12">
-                    {{ $data->links() }}
-                </div>
-                <div class="col-md-6 col-lg-2 col-xl-2 col-xs-12">
-                    <label class="pull-right">Jumlah Data : {{ $data->total() }}</label>
-                </div>
+            <div class="col-md-6 col-lg-2 col-xl-2 col-xs-12">
+                <label class="pull-right">Jumlah Data : {{ $data->total() }}</label>
             </div>
         </div>
-
-        <x-modal />
-
-        @push('scripts')
-            @if (Session::has('cetak'))
-                <script>
-                    $('#modal-cetak').modal('show');
-                </script>
-            @endif
-            <script>
-                Livewire.on('reinitialize', id => {
-                    $('.selectpicker').selectpicker();
-                });
-                Livewire.on('cetak', id => {
-                    $('#modal-cetak').modal('show');
-                });
-            </script>
-        @endpush
     </div>
+
+    <x-modal />
+
+    @push('scripts')
+        @if (Session::has('cetak'))
+            <script>
+                $('#modal-cetak').modal('show');
+            </script>
+        @endif
+        <script>
+            Livewire.on('reinitialize', id => {
+                $('.selectpicker').selectpicker();
+            });
+            Livewire.on('cetak', id => {
+                $('#modal-cetak').modal('show');
+            });
+        </script>
+    @endpush
+</div>

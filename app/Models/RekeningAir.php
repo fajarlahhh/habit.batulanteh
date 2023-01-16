@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,11 +15,6 @@ class RekeningAir extends Model
     public function pengguna()
     {
         return $this->belongsTo(Pengguna::class)->withTrashed();
-    }
-
-    public function pelanggan()
-    {
-        return $this->belongsTo(Pelanggan::class);
     }
 
     public function jalan()
@@ -79,5 +75,12 @@ class RekeningAir extends Model
     public function scopeBelumDiangsur($query)
     {
         return $query->whereDoesntHave('angsuranRekeningAirPeriode');
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope('periode', function (Builder $builder) {
+            $builder->whereHas('bacaMeter', fn($q) => $q->where('periode', '<', date('Y-m-01')));
+        });
     }
 }

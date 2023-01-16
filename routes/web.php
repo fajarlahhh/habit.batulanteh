@@ -16,6 +16,23 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', \App\Http\Livewire\Dashboard::class);
 
+    Route::prefix('administrator')->group(function () {
+        Route::prefix('datapembayaran')->group(function () {
+            Route::group(['middleware' => ['role_or_permission:administrator|administratordatapembayaranrekeningair']], function () {
+                Route::get('/rekeningair', \App\Http\Livewire\Administrator\Datapembayaran\Rekeningair::class)->name('administrator.datapembayaran.rekeningair');
+            });
+            Route::group(['middleware' => ['role_or_permission:administrator|administratordatapembayaranangsuranrekeningair']], function () {
+                Route::get('/angsuranrekeningair', \App\Http\Livewire\Administrator\Datapembayaran\Angsuranrekeningair::class)->name('administrator.datapembayaran.angsuranrekeningair');
+            });
+            Route::group(['middleware' => ['role_or_permission:administrator|administratordatapembayaranrekeningnonair']], function () {
+                Route::get('/rekeningnonair', \App\Http\Livewire\Administrator\Datapembayaran\Rekeningnonair::class)->name('administrator.datapembayaran.rekeningnonair');
+            });
+        });
+        Route::group(['middleware' => ['role_or_permission:administrator|administratorstatuspelanggan']], function () {
+            Route::get('/statuspelanggan', \App\Http\Livewire\Administrator\Statuspelanggan::class)->name('administrator.statuspelanggan');
+        });
+    });
+
     Route::prefix('bacameter')->group(function () {
         Route::group(['middleware' => ['role_or_permission:administrator|bacameterbuattarget']], function () {
             Route::get('/buattarget', \App\Http\Livewire\Bacameter\Buattarget::class)->name('bacameter.buattarget');
@@ -28,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/postingrekeningair', \App\Http\Livewire\Bacameter\Postingrekeningair::class)->name('bacameter.postingrekeningair');
         });
     });
+
     Route::prefix('pengaturan')->group(function () {
         Route::group(['middleware' => ['role_or_permission:administrator|pengaturanpengguna']], function () {
             Route::get('/pengguna', \App\Http\Livewire\Pengaturan\Pengguna\Index::class)->name('pengaturan.pengguna');
@@ -40,6 +58,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/kolektifpelanggan/edit/{key}', \App\Http\Livewire\Pengaturan\Kolektifpelanggan\Form::class)->name('pengaturan.kolektifpelanggan.edit');
         });
     });
+
     Route::prefix('cetak')->group(function () {
         Route::group(['middleware' => ['role_or_permission:administrator|cetakdspl']], function () {
             Route::get('/dspl', \App\Http\Livewire\Cetak\Dspl::class)->name('cetak.dspl');
@@ -144,6 +163,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/masterpelanggan/tambah', \App\Http\Livewire\Masterpelanggan\Form::class)->name('masterpelanggan.tambah');
         Route::get('/masterpelanggan/edit/{key}', \App\Http\Livewire\Masterpelanggan\Form::class)->name('masterpelanggan.edit');
     });
+
     Route::prefix('tagihanrekeningair')->group(function () {
         Route::group(['middleware' => ['role_or_permission:administrator|tagihanrekeningairangsuran']], function () {
             Route::get('/angsuran', \App\Http\Livewire\Tagihanrekeningair\Angsuran\Form::class)->name('tagihanrekeningair.angsuran.tambah');
@@ -153,6 +173,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/koreksi', \App\Http\Livewire\Tagihanrekeningair\Koreksi::class)->name('tagihanrekeningair.koreksi');
         });
     });
+
     Route::prefix('pembayaran')->group(function () {
         Route::group(['middleware' => ['role_or_permission:administrator|pembayaranperrekeningairpelanggan']], function () {
             Route::get('/perpelanggan', \App\Http\Livewire\Pembayaran\Rekeningair\Perpelanggan::class)->name('pembayaran.rekeningair.perpelanggan');

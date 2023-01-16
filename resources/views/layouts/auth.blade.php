@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
     <meta content="" name="description" />
     <meta content="" name="author" />
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
 
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
@@ -40,7 +41,7 @@
             <div class="right-content">
                 <div class="login-header">
                     <div class="brand">
-                        <span class="logo"></span> <b>Habit</b>
+                        <img src="/assets/img/logo.png" class="width-30"> <b>Habit</b>
                         <small>Billing System dan Baca Meter</small>
                     </div>
                     <div class="icon">
@@ -56,7 +57,13 @@
 
     <script src="/assets/js/app.min.js"></script>
     <script src="/assets/js/theme/material.min.js"></script>
-
+    <script>
+        $(document).ready(function() {
+            $(".alert").fadeTo(4000, 500).slideUp(500, function() {
+                $(this).slideUp(500);
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 

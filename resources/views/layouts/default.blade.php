@@ -8,6 +8,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
     <meta content="" name="description" />
     <meta content="" name="author" />
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
 
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
@@ -246,6 +247,13 @@
     <script src="/assets/plugins/autonumeric/autoNumeric.js"></script>
     <script src="/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".alert").fadeTo(4000, 500).slideUp(500, function() {
+                $(this).slideUp(500);
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 
