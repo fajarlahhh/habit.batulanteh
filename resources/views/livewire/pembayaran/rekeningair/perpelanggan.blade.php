@@ -10,6 +10,7 @@
     <h1 class="page-header">Pembayaran Rekening Air <small>Per Pelanggan</small></h1>
 
     <x-alert />
+
     <div wire:loading>
         <x-loading />
     </div>

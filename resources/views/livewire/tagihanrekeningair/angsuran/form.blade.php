@@ -1,11 +1,6 @@
 <div>
     @section('title', 'Angsuran Rekening Air')
 
-    @push('css')
-        <link href="/assets/plugins/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
-        <link href="/assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
-    @endpush
-
     @section('page')
         <li class="breadcrumb-item">Tagihan Rekening Air</li>
         <li class="breadcrumb-item">Angsuran </li>
@@ -14,9 +9,6 @@
 
     <h1 class="page-header"><strong>Angsuran</strong> <small>Tambah Data</small></h1>
 
-    <div wire:loading>
-        <x-loading />
-    </div>
 
     <form wire:submit.prevent="submit">
         <!-- begin nav-tabs -->
@@ -146,8 +138,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Tenor</label>
                                     <select class="form-control selectpicker" data-live-search="true"
-                                        data-style="btn-success" data-size="10" data-width="100%"
-                                        wire:model="tenor">
+                                        data-style="btn-success" data-size="10" data-width="100%" wire:model="tenor">
                                         @for ($i = 2; $i < 31; $i++)
                                             <option value="{{ $i }}">{{ $i }} Kali</option>
                                         @endfor
