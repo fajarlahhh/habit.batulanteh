@@ -10,6 +10,9 @@
     <h1 class="page-header">Pembayaran Rekening Air <small>Per Pelanggan</small></h1>
 
     <x-alert />
+    <div wire:loading>
+        <x-loading />
+    </div>
 
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
@@ -92,10 +95,11 @@
                                                 <tr
                                                     class="@if ($row['angsur'] == 1) bg-orange-transparent-7 @endif">
                                                     <td class="with-btn align-middle text-nowrap">
-                                                        @if ($row['angsur'] == 0 &&
-                                                            collect($dataRekeningAir)->where('no_langganan', $row['no_langganan'])->count() -
-                                                                $index ==
-                                                                1)
+                                                        @if (
+                                                            $row['angsur'] == 0 &&
+                                                                collect($dataRekeningAir)->where('no_langganan', $row['no_langganan'])->count() -
+                                                                    $index ==
+                                                                    1)
                                                             <a href="javascript:;"
                                                                 wire:click="hapusDataRekeningAir({{ $index }})"
                                                                 class="btn btn-xs btn-danger m-t-5">X</a>
@@ -163,8 +167,8 @@
                                                 <tr>
                                                     <td class="with-btn align-middle">
                                                         @if (collect($dataAngsuranRekeningAir)->where('no_langganan', $row['no_langganan'])->count() -
-                                                            $no ==
-                                                            1 && collect($dataAngsuranRekeningAir)->count() > 1)
+                                                                $no ==
+                                                                1 && collect($dataAngsuranRekeningAir)->count() > 1)
                                                             <a href="javascript:;"
                                                                 wire:click="hapusDataAngsuranRekeningAir({{ $index }})"
                                                                 class="btn btn-xs btn-danger m-t-5">X</a>

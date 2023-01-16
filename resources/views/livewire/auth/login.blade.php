@@ -1,4 +1,8 @@
 <div>
+    <div wire:loading>
+        <x-loading />
+    </div>
+
     <div class="login-content">
         <form wire:submit.prevent="submit" class="margin-bottom-0">
             <div class="form-group m-b-15">

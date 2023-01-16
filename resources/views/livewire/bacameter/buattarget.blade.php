@@ -14,8 +14,8 @@
 
     <x-alert />
 
-    <div wire:loading wire:target="submit" class="m-t-50 text-center width-full text-red">
-        <h5>Mohon tunggu. Sedang memproses permintaan...</h5>
+    <div wire:loading>
+        <x-loading />
     </div>
 
     <div class="panel panel-inverse" wire:loading.remove wire:target="submit" data-sortable-id="form-stuff-1">
