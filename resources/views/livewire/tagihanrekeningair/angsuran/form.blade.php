@@ -14,6 +14,10 @@
 
     <h1 class="page-header"><strong>Angsuran</strong> <small>Tambah Data</small></h1>
 
+    <div wire:loading>
+        <x-loading />
+    </div>
+
     <form wire:submit.prevent="submit">
         <!-- begin nav-tabs -->
         <ul class="nav nav-tabs" wire:ignore>
