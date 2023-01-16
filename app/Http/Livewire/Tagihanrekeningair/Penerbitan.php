@@ -140,7 +140,7 @@ class Penerbitan extends Component
                     $rekeningAir->baca_meter_id = $bacaMeter->id;
                     $rekeningAir->jalan_id = $this->pelanggan->jalan_id;
                     $rekeningAir->tarif_denda_id = $tarifDenda;
-                    $rekeningAir->tarif_lainnya_id = $tarifLainnya->id;
+                    $rekeningAir->tarif_lainnya_id = $tarifLainnya ? $tarifLainnya->id : null;
                     $rekeningAir->tarif_materai_id = $tarifMaterai ? $tarifMaterai->id : null;
                     $rekeningAir->tarif_meter_air_id = $tarifMeterAir ? $tarifMeterAir->id : null;
                     $rekeningAir->tarif_progresif_id = $tarifProgresif->id;
