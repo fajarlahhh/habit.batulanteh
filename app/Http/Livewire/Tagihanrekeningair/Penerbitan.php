@@ -36,6 +36,7 @@ class Penerbitan extends Component
     public function setPelanggan()
     {
         $this->pelanggan = Pelanggan::findOrFail($this->pelangganId);
+        $this->golongan = $this->pelanggan->golongan_id;
     }
 
     public function booted()

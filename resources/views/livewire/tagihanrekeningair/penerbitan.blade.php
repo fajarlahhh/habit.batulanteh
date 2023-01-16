@@ -140,13 +140,13 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="control-label">Golongan</label>
+                    <label for="control-label">Status Baca</label>
                     <select wire:model.defer="statusBaca" class="form-control selectpicker" data-live-search="true"
                         data-width="100%">
-                        <option selected hidden>-- Pilih Golongan --</option>
-                        @foreach (\App\Models\Golongan::orderBy('nama')->get() as $row)
-                            <option value="{{ $row->getKey() }}">{{ $row->nama }} -
-                                {{ $row->deskripsi }}
+                        <option selected hidden>-- Status Baca --</option>
+                        @foreach (\App\Models\StatusBaca::orderBy('keterangan')->get() as $row)
+                            <option value="{{ $row->getKey() }}">
+                                {{ $row->keterangan }}
                             </option>
                         @endforeach
                     </select>

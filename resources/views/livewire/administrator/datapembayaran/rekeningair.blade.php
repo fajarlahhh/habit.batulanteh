@@ -70,7 +70,7 @@
                                 {{ $row->bacaMeter->pelanggan->golongan->nama . ' - ' . $row->bacaMeter->pelanggan->golongan->deskripsi }}
                             </td>
                             <td class="align-middle">
-                                {{ number_format($row->harga_air + $row->biaya_retribusi + $row->biaya_jasa_lingkungan + $row->biaya_pemeliharaan + $row->biaya_administrasi + $row->biaya_materai + $row->biaya_ppn - $row->diskon + ($periode->addMonths(1)->addDays(24) < now() && $row->waktu_bayar == null ? $row->golongan->denda : $row->biaya_denda)) }}
+                                {{ number_format($row->harga_air + $row->biaya_retribusi + $row->biaya_jasa_lingkungan + $row->biaya_pemeliharaan + $row->biaya_administrasi + $row->biaya_materai + $row->biaya_ppn - $row->diskon + $row->biaya_denda) }}
                             </td>
                             <td class="align-middle"><small>{!! $row->kasir->nama . '<br>' . $row->waktu_bayar !!}</small></td>
                             @role('super-admin|administrator')
