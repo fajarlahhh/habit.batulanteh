@@ -11,10 +11,6 @@
 
     <x-alert />
 
-    <div wire:loading>
-        <x-loading />
-    </div>
-
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
         <div class="panel-heading ui-sortable-handle">
@@ -214,6 +210,10 @@
                 @endrole
             </div>
         </form>
+    </div>
+
+    <div wire:loading>
+        <x-loading />
     </div>
 
     <x-info />

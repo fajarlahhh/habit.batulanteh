@@ -13,31 +13,21 @@ class AngsuranRekeningAirDetail extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'angsuran_rekening_air_id', 'urutan', 'nilai', 'kasir_id', 'waktu_bayar',
+        'angsuran_rekening_air_id', 'urutan', 'nilai', 'kasir', 'waktu_bayar',
     ];
-
-    public function pengguna()
-    {
-        return $this->belongsTo(Pengguna::class, 'kasir_id');
-    }
 
     public function angsuranRekeningAir()
     {
         return $this->belongsTo(AngsuranRekeningAir::class);
     }
 
-    public function kasir()
-    {
-        return $this->belongsTo(Pengguna::class, 'kasir_id')->withTrashed();
-    }
-
     public function scopeBelumBayar($query)
     {
-        return $query->whereNull('kasir_id')->orWhereNull('waktu_bayar');
+        return $query->whereNull('kasir')->orWhereNull('waktu_bayar');
     }
 
     public function scopeSudahBayar($query)
     {
-        return $query->whereNotNull('kasir_id')->whereNotNull('waktu_bayar');
+        return $query->whereNotNull('kasir')->whereNotNull('waktu_bayar');
     }
 }

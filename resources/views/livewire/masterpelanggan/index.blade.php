@@ -71,14 +71,14 @@
                             <td class="align-middle">{{ $row->no_langganan }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->alamat }}</td>
-                            <td class="align-middle">{{ $row->jalan->nama }}</td>
+                            <td class="align-middle">{{ $row->jalan ? $row->jalan->nama : null }}</td>
                             <td class="align-middle">{{ $row->golongan->nama }}</td>
                             <td class="align-middle">{{ $row->diameter->ukuran }}</td>
-                            <td class="align-middle">{{ $row->merkWaterMeter->merk }}</td>
-                            <td class="align-middle">{{ $row->pembaca->nama }}</td>
+                            <td class="align-middle">{{ $row->merkWaterMeter ? $row->merkWaterMeter->merk : null }}</td>
+                            <td class="align-middle">{{ $row->pembaca ? $row->pembaca->nama : null }}</td>
                             <td class="align-middle">{{ $row->tanggal_pasang }}</td>
                             <td class="align-middle">{{ $row->no_body_water_meter }}</td>
-                            <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
+                            <td class="align-middle"><small>{!! $row->pengguna ? $row->pengguna->nama : null !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">

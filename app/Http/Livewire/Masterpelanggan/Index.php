@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
     public $cari, $status = '0', $key;
 

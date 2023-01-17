@@ -47,7 +47,7 @@ class Index extends Component
 
     public function render()
     {
-        $data = AngsuranRekeningAir::where(fn($q) => $q->where('nomor', 'like', '%' . $this->cari . '%')->orWhereHas('pelanggan', fn($q) => $q->where('no_langganan', 'like', '%' . $this->cari . '%')))->select('*', DB::raw('(select sum(nilai) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id) total'), DB::raw('(select sum(nilai) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id and kasir_id is not null and waktu_bayar is not null) terbayar'));
+        $data = AngsuranRekeningAir::where(fn($q) => $q->where('nomor', 'like', '%' . $this->cari . '%')->orWhereHas('pelanggan', fn($q) => $q->where('no_langganan', 'like', '%' . $this->cari . '%')))->select('*', DB::raw('(select sum(nilai) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id) total'), DB::raw('(select sum(nilai) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id and kasir is not null and waktu_bayar is not null) terbayar'));
 
         if ($this->lunas == 1) {
             $data = $data->lunas();

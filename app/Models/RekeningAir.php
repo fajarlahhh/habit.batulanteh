@@ -22,11 +22,6 @@ class RekeningAir extends Model
         return $this->belongsTo(Jalan::class)->withTrashed();
     }
 
-    public function kasir()
-    {
-        return $this->belongsTo(Pengguna::class, 'kasir_id')->withTrashed();
-    }
-
     public function golongan()
     {
         return $this->belongsTo(Golongan::class, 'golongan_id')->withTrashed();
@@ -64,12 +59,12 @@ class RekeningAir extends Model
 
     public function scopeSudahBayar($query)
     {
-        return $query->whereNotNull('kasir_id')->whereNotNull('waktu_bayar');
+        return $query->whereNotNull('kasir')->whereNotNull('waktu_bayar');
     }
 
     public function scopeBelumBayar($query)
     {
-        return $query->whereNull('kasir_id')->orWhereNull('waktu_bayar');
+        return $query->whereNull('kasir')->orWhereNull('waktu_bayar');
     }
 
     public function scopeBelumDiangsur($query)

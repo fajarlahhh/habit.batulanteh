@@ -34,16 +34,16 @@ class AngsuranRekeningAir extends Model
 
     public function scopeBelumLunas($query)
     {
-        return $query->whereRaw("(select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id and kasir_id is not null and waktu_bayar is not null) != (select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id)");
+        return $query->whereRaw("(select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id and kasir is not null and waktu_bayar is not null) != (select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id)");
     }
 
     public function scopeLunas($query)
     {
-        return $query->whereRaw("(select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id and kasir_id is not null and waktu_bayar is not null) = (select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id)");
+        return $query->whereRaw("(select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id and kasir is not null and waktu_bayar is not null) = (select count(*) from angsuran_rekening_air_detail where angsuran_rekening_air.id=angsuran_rekening_air_id)");
     }
 
     public function angsuranRekeningAirDetailTerbayar()
     {
-        return $this->hasMany(AngsuranRekeningAirDetail::class)->whereNotNull('kasir_id')->whereNotNull('waktu_bayar');
+        return $this->hasMany(AngsuranRekeningAirDetail::class)->whereNotNull('kasir')->whereNotNull('waktu_bayar');
     }
 }

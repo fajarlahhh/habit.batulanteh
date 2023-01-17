@@ -48,13 +48,13 @@ CREATE TABLE `angsuran_rekening_air_detail`  (
   `angsuran_rekening_air_id` bigint(20) NULL DEFAULT NULL,
   `urutan` tinyint(4) NULL DEFAULT NULL,
   `nilai` decimal(15, 2) NULL DEFAULT NULL,
-  `kasir_id` bigint(20) NULL DEFAULT NULL,
+  `kasir` bigint(20) NULL DEFAULT NULL,
   `waktu_bayar` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `angsuran_rekening_air_id`(`angsuran_rekening_air_id`) USING BTREE,
-  INDEX `kasir_id`(`kasir_id`) USING BTREE,
+  INDEX `kasir`(`kasir`) USING BTREE,
   CONSTRAINT `angsuran_rekening_air_detail_ibfk_1` FOREIGN KEY (`angsuran_rekening_air_id`) REFERENCES `angsuran_rekening_air` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `angsuran_rekening_air_detail_ibfk_2` FOREIGN KEY (`kasir_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `angsuran_rekening_air_detail_ibfk_2` FOREIGN KEY (`kasir`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -591,7 +591,7 @@ CREATE TABLE `rekening_air`  (
   `diskon` decimal(15, 2) NULL DEFAULT 0.00,
   `keterangan` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
   `waktu_bayar` datetime NULL DEFAULT NULL,
-  `kasir_id` bigint(20) NULL DEFAULT NULL,
+  `kasir` bigint(20) NULL DEFAULT NULL,
   `jalan_id` bigint(20) NULL DEFAULT NULL,
   `golongan_id` bigint(20) NULL DEFAULT NULL,
   `tarif_denda_id` bigint(20) NULL DEFAULT NULL,
@@ -607,7 +607,7 @@ CREATE TABLE `rekening_air`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE,
   UNIQUE INDEX `baca_meter_id`(`baca_meter_id`) USING BTREE,
-  INDEX `kasir`(`kasir_id`) USING BTREE,
+  INDEX `kasir`(`kasir`) USING BTREE,
   INDEX `waktu_bayar`(`waktu_bayar`) USING BTREE,
   INDEX `id_golongan`(`golongan_id`) USING BTREE,
   INDEX `deleted_at`(`deleted_at`) USING BTREE,
@@ -624,7 +624,7 @@ CREATE TABLE `rekening_air`  (
   CONSTRAINT `rekening_air_ibfk_13` FOREIGN KEY (`tarif_progresif_id`) REFERENCES `tarif_progresif` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `rekening_air_ibfk_3` FOREIGN KEY (`golongan_id`) REFERENCES `golongan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `rekening_air_ibfk_5` FOREIGN KEY (`baca_meter_id`) REFERENCES `baca_meter` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `rekening_air_ibfk_6` FOREIGN KEY (`kasir_id`) REFERENCES `pelanggan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `rekening_air_ibfk_6` FOREIGN KEY (`kasir`) REFERENCES `pelanggan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `rekening_air_ibfk_7` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `rekening_air_ibfk_8` FOREIGN KEY (`jalan_id`) REFERENCES `jalan` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `rekening_air_ibfk_9` FOREIGN KEY (`tarif_denda_id`) REFERENCES `tarif_denda` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE

@@ -15,10 +15,6 @@
 
     <x-alert />
 
-    <div wire:loading>
-        <x-loading />
-    </div>
-
     <form wire:submit.prevent="submit">
         <!-- begin nav-tabs -->
         <ul class="nav nav-tabs" wire:ignore>
@@ -221,6 +217,10 @@
             <!-- end tab-pane -->
         </div>
     </form>
+
+    <div wire:loading>
+        <x-loading />
+    </div>
 
     <x-info />
 

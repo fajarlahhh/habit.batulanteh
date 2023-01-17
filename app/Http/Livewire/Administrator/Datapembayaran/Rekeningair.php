@@ -50,7 +50,7 @@ class Rekeningair extends Component
     {
         ModelsRekeningAir::where('id', $this->key)->update([
             'waktu_bayar' => null,
-            'kasir_id' => null,
+            'kasir' => null,
         ]);
     }
 

@@ -50,7 +50,7 @@ class Angsuranrekeningair extends Component
     {
         AngsuranRekeningAirDetail::where('id', $this->key)->update([
             'waktu_bayar' => null,
-            'kasir_id' => null,
+            'kasir' => null,
         ]);
     }
 

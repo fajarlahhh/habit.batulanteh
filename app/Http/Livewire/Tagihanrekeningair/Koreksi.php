@@ -56,7 +56,7 @@ class Koreksi extends Component
             'biaya_materai_baru' => $q->rekeningAir->biaya_materai,
             'biaya_lainnya' => $q->rekeningAir->biaya_lainnya,
             'biaya_meter_air' => $q->rekeningAir->biaya_meter_air,
-            'kasir' => $q->rekeningAir->kasir_id ? $q->rekeningAir->kasir->nama : null,
+            'kasir' => $q->rekeningAir->kasir,
             'waktu_bayar' => $q->rekeningAir->waktu_bayar,
             'angsur' => $q->rekeningAir->angsuranRekeningAirPeriode ? 1 : 0,
             'rekening_air_id' => $q->rekeningAir->id,
