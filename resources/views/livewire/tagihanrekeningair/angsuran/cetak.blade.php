@@ -60,9 +60,9 @@
     </div>
     <p>
         Selanjutnya apabila kami tidak melunasi tepat pada waktu sebagaimana tersebut di atas, maka
-        {{ config('constant.perusahaan') }}
+        Perumdam Batu Lanteh
         berhak menutup/memutuskan aliran air minum di alamat tersebut di atas dan kami tidak akan mengajukan
-        tuntutan apapun kepada pihak {{ config('constant.perusahaan') }}.
+        tuntutan apapun kepada pihak Perumdam Batu Lanteh.
     </p>
     <br>
     <p>

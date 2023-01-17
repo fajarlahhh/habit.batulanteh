@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="/" class="navbar-brand">
-                    <b>HABIT</b> {{ config('constant.perusahaan') }}
+                    <b>HABIT</b> PERUMDAM BATU LANTEH
                 </a>
             </div>
             <ul class="navbar-nav navbar-right">

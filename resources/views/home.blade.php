@@ -20,12 +20,12 @@
             <!-- begin container -->
             <div class="container">
                 <!-- begin navbar-brand -->
-                <a href="index.html" class="navbar-brand">
-                    <span class="brand-logo"></span>
-                    <span class="brand-text">
-                        <span class="text-primary">HABIT</span> {{ config('constant.perusahaan') }}
-                    </span>
+                <a href="/" class="navbar-brand">
+                    <img src="/assets/img/logo.png">
                 </a>
+                <span class="brand-text f-s-20">
+                    <span class="text-primary">HABIT</span> PERUMDAM BATU LANTEH
+                </span>
                 <!-- end navbar-brand -->
                 <!-- begin navbar-toggle -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -48,7 +48,7 @@
             <!-- begin container -->
             <div class="container home-content">
                 <h1>Welcome to HABIT</h1>
-                <h3>{{ config('constant.perusahaan') }}</h3>
+                <h3>Perumdam Batu Lanteh</h3>
                 <p>
                     Ini adalah aplikasi yang dibangun untuk kebutuhan Billing System dan Baca Meter
                 </p>
@@ -65,7 +65,8 @@
         <div id="footer" class="footer">
             <div class="container">
                 <div class="footer-brand">
-                    <div class="footer-brand-logo"></div>
+                    <img src="/assets/img/logo.png" class="width-50">
+                    <br>
                     HABIT
                 </div>
                 <p>
