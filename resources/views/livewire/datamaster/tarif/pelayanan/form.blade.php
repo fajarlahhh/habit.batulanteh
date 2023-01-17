@@ -21,24 +21,36 @@
         <form wire:submit.prevent="submit">
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="control-label">Tanggal Berlaku</label>
-                    <input class="form-control date" type="text" autocomplete="off" readonly
-                        onchange="@this.set('tanggalBerlaku', this.value);" wire:model.defer="tanggalBerlaku" />
-                    @error('tanggalBerlaku')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label class="control-label">SK</label>
-                    <input class="form-control" type="text" autocomplete="off" wire:model.defer="sk" />
-                    @error('sk')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Nama</label>
-                    <input class="form-control" type="text" autocomplete="off" wire:model.defer="nama" />
-                    @error('nama')
+                    <label for="control-label">Jenis Pelayanan</label>
+                    <select wire:model.defer="jenis" class="form-control selectpicker" data-live-search="true"
+                        data-width="100%">
+                        <option selected hidden>-- Pilih Pelayanan/Sangsi --</option>
+                        <option value="Biaya penyambungan kembali 3 bulan tercabut">Biaya penyambungan kembali
+                            3 bulan tercabut</option>
+                        <option value="Biaya penyambungan kembali 6 bulan tercabut">Biaya penyambungan kembali
+                            6 bulan tercabut</option>
+                        <option value="Biaya penyambungan kembali diatas 6 bulan/sudah dibongkar">
+                            Biaya penyambungan kembali diatas 6 bulan/sudah dibongkar
+                        </option>
+                        <option value="Biaya buka segel penutupan sementara atas permintaan pelanggan">Biaya buka
+                            segel penutupan sementara atas permintaan pelanggan</option>
+                        <option value="Biaya ganti meter air">Biaya ganti meter air
+                        </option>
+                        <option value="Biaya balik nama/alih hak">Biaya balik nama/alih hak</option>
+                        <option value="Biaya administrasi depo air minum isi ulang">Biaya administrasi depo air minum
+                            isi ulang</option>
+                        <option value="Biaya pemindahan meter air">Biaya pemindahan meter air</option>
+                        <option value="Biaya administrasi rekomendasi pembangunan perumahan">Biaya administrasi
+                            rekomendasi pembangunan perumahan</option>
+                        <option value="Biaya tangki 4 m3 luar kota">Biaya tangki 4 m3 luar kota</option>
+                        <option value="Biaya tangki 4 m3 dalam kota">Biaya tangki 4 m3 dalam kota</option>
+                        <option value="Denda pencurian air">Denda pencurian air</option>
+                        <option value="Denda pemindahan meter tanpa sepengetahuan Perumdam Batu Lanteh">Denda pemindahan
+                            meter tanpa sepengetahuan Perumdam Batu Lanteh</option>
+                        <option value="Denda sambungan gelap/penyadapan">Denda sambungan gelap/penyadapan
+                        </option>
+                    </select>
+                    @error('jenis')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -84,20 +96,8 @@
 
     @push('scripts')
         <script>
-            $('.date').datepicker({
-                todayHighlight: true,
-                format: 'yyyy-mm-dd',
-                orientation: "bottom",
-                autoclose: true
-            });
-
             Livewire.on('reinitialize', () => {
-                $('.date').datepicker({
-                    todayHighlight: true,
-                    format: 'yyyy-mm-dd',
-                    orientation: "bottom",
-                    autoclose: true
-                });
+                $('.selectpicker').selectpicker()
             });
         </script>
     @endpush

@@ -70,7 +70,7 @@ class Postingrekeningair extends Component
                     $biayaMaterai = 0;
                     $biayaPpn = 0;
                     $diskon = 0;
-                    $sisa = $m3 = $row->stand_ini - $row->stand_lalu;
+                    $sisa = $m3 = $row->pakai;
                     $tarifProgresif = $row->pelanggan->golongan->tarifProgresif->tarifProgresifDetail;
 
                     if ($tarifProgresif->count() > 0) {

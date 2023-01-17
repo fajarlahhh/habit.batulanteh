@@ -48,9 +48,7 @@
                 <thead>
                     <tr>
                         <th class="width-60">No.</th>
-                        <th>Tanggal Berlaku</th>
-                        <th>SK</th>
-                        <th>Nama</th>
+                        <th>Jenis</th>
                         <th>Keterangan</th>
                         <th>Diameter</th>
                         <th>Nilai</th>
@@ -64,9 +62,7 @@
                     @foreach ($data as $i => $row)
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
-                            <td class="align-middle">{{ $row->tanggal_berlaku }}</td>
-                            <td class="align-middle">{{ $row->sk }}</td>
-                            <td class="align-middle">{{ $row->nama }}</td>
+                            <td class="align-middle">{{ $row->jenis }}</td>
                             <td class="align-middle">{{ $row->keterangan }}</td>
                             <td class="align-middle">{{ $row->diameter ? $row->diameter->ukuran : null }}</td>
                             <td class="align-middle">{{ number_format($row->nilai) }}</td>

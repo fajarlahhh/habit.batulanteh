@@ -7,12 +7,11 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $key, $tanggalBerlaku, $sk, $nama, $keterangan, $nilai, $data, $diameterId;
+    public $key, $tanggalBerlaku, $jenis, $keterangan, $nilai, $data, $diameterId;
 
     protected $rules = [
         'tanggalBerlaku' => 'required|date',
-        'sk' => 'required',
-        'nama' => 'required',
+        'jenis' => 'required',
         'keterangan' => 'required',
         'nilai' => 'required|numeric',
     ];
@@ -22,8 +21,7 @@ class Form extends Component
         $this->validate();
 
         $this->data->tanggal_berlaku = $this->tanggalBerlaku;
-        $this->data->sk = $this->sk;
-        $this->data->nama = $this->nama;
+        $this->data->jenis = $this->jenis;
         $this->data->keterangan = $this->keterangan;
         $this->data->nilai = $this->nilai;
         $this->data->save();
@@ -37,8 +35,7 @@ class Form extends Component
         if ($this->key) {
             $this->data = TarifPelayananSangsi::findOrFail($this->key);
             $this->tanggalBerlaku = $this->data->tanggal_berlaku;
-            $this->sk = $this->data->sk;
-            $this->nama = $this->data->nama;
+            $this->jenis = $this->data->jenis;
             $this->keterangan = $this->data->keterangan;
             $this->nilai = $this->data->nilai;
             $this->diameterId = $this->data->diameter_id;

@@ -29,6 +29,11 @@ class BacaMeter extends Model
         return $this->hasOne(RekeningAir::class);
     }
 
+    public function getPakaiAttribute()
+    {
+        return $this->stand_ini - $this->stand_lalu;
+    }
+
     protected static function booted()
     {
         static::addGlobalScope('periode', function (Builder $builder) {

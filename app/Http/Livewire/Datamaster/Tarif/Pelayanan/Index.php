@@ -36,7 +36,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.datamaster.tarif.pelayanan.index', [
-            'data' => TarifPelayananSangsi::with('pengguna')->where(fn($q) => $q->where('sk', 'like', '%' . $this->cari . '%')->orWhere('keterangan', 'like', '%' . $this->cari . '%'))->when($this->exist == '2', fn($q) => $q->onlyTrashed())->orderBy('tanggal_berlaku', 'desc')->get(),
+            'data' => TarifPelayananSangsi::with('pengguna')->where(fn($q) => $q->where('jenis', 'like', '%' . $this->cari . '%'))->when($this->exist == '2', fn($q) => $q->onlyTrashed())->orderBy('jenis', 'asc')->get(),
         ]);
     }
 }

@@ -161,7 +161,7 @@ return [
             ], [
                 'url' => '/datamaster/tarif/pelayanan',
                 'id' => 'datamastertarifpelayanan',
-                'title' => 'Pelayanan',
+                'title' => 'Pelayanan/Sangsi',
             ], [
                 'url' => '/datamaster/tarif/progresif',
                 'id' => 'datamastertarifprogresif',
