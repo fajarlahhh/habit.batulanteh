@@ -61,9 +61,9 @@
                     <label for="control-label">Diameter</label>
                     <select wire:model.defer="kecamatanId" class="form-control selectpicker" data-live-search="true"
                         data-width="100%">
-                        <option selected hidden>-- Pilih Kecamatan --</option>
-                        @foreach (\App\Models\Kecamatan::orderBy('nama')->get() as $row)
-                            <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
+                        <option selected hidden>-- Pilih Diameter --</option>
+                        @foreach (\App\Models\Diameter::orderBy('ukuran')->get() as $row)
+                            <option value="{{ $row->getKey() }}">{{ $row->ukuran }}</option>
                         @endforeach
                     </select>
                     @error('kecamatanId')

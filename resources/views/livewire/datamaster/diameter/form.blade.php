@@ -27,7 +27,7 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label class="control-label">Biaya Pemasangan</label>
                     <input class="form-control currency" type="number" autocomplete="off" step="any"
                         wire:model.defer="biayaPemasangan" />
@@ -50,7 +50,7 @@
                     @error('biayaPindahMeter')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> --}}
             </div>
             <div class="panel-footer">
                 @role('administrator|super-admin')

@@ -119,7 +119,7 @@ return [
             'sub_menu' => [[
                 'url' => '/datamaster/regional/jalan',
                 'id' => 'datamasterregionaljalan',
-                'title' => 'Jalan/Gang/Perumahan',
+                'title' => 'Jalan',
             ], [
                 'url' => '/datamaster/regional/kecamatan',
                 'id' => 'datamasterregionalkecamatan',
@@ -190,11 +190,11 @@ return [
             'caret' => true,
             'id' => 'pembayaranrekeningair',
             'sub_menu' => [[
-                'url' => '/pembayaran/kolektif',
+                'url' => '/pembayaran/rekeningair/kolektif',
                 'id' => 'pembayaranrekeningairkolektif',
                 'title' => 'Kolektif',
             ], [
-                'url' => '/pembayaran/perpelanggan',
+                'url' => '/pembayaran/rekeningair/perpelanggan',
                 'id' => 'pembayaranrekeningairperpelanggan',
                 'title' => 'Per Pelanggan',
             ]],

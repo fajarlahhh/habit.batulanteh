@@ -48,9 +48,9 @@
                     <tr>
                         <th class="width-60">No.</th>
                         <th>Ukuran</th>
-                        <th>Biaya Pemasangan</th>
+                        {{-- <th>Biaya Pemasangan</th>
                         <th>Biaya Ganti Meter</th>
-                        <th>Biaya Pindah Meter</th>
+                        <th>Biaya Pindah Meter</th> --}}
                         <th>Operator</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
@@ -62,9 +62,9 @@
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle">{{ $row->ukuran }}</td>
-                            <td class="align-middle">{{ number_format($row->biaya_pemasangan) }}</td>
+                            {{-- <td class="align-middle">{{ number_format($row->biaya_pemasangan) }}</td>
                             <td class="align-middle">{{ number_format($row->biaya_ganti_meter) }}</td>
-                            <td class="align-middle">{{ number_format($row->biaya_pindah_meter) }}</td>
+                            <td class="align-middle">{{ number_format($row->biaya_pindah_meter) }}</td> --}}
                             <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>

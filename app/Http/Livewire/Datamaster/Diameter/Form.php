@@ -11,9 +11,9 @@ class Form extends Component
 
     protected $rules = [
         'ukuran' => 'required',
-        'biayaPemasangan' => 'required|numeric',
-        'biayaGantiMeter' => 'required|numeric',
-        'biayaPindahMeter' => 'required|numeric',
+        // 'biayaPemasangan' => 'required|numeric',
+        // 'biayaGantiMeter' => 'required|numeric',
+        // 'biayaPindahMeter' => 'required|numeric',
     ];
 
     public function submit()

@@ -178,11 +178,16 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('pembayaran')->group(function () {
-        Route::group(['middleware' => ['role_or_permission:administrator|pembayaranperrekeningairpelanggan']], function () {
-            Route::get('/perpelanggan', \App\Http\Livewire\Pembayaran\Rekeningair\Perpelanggan::class)->name('pembayaran.rekeningair.perpelanggan');
+        Route::prefix('rekeningair')->group(function () {
+            Route::group(['middleware' => ['role_or_permission:administrator|pembayaranrekeningairperpelanggan']], function () {
+                Route::get('/perpelanggan', \App\Http\Livewire\Pembayaran\Rekeningair\Perpelanggan::class)->name('pembayaran.rekeningair.perpelanggan');
+            });
+            Route::group(['middleware' => ['role_or_permission:administrator|pembayaranrekeningairkolektif']], function () {
+                Route::get('/kolektif', \App\Http\Livewire\Pembayaran\Rekeningair\Kolektif::class)->name('pembayaran.rekeningair.kolektif');
+            });
         });
-        Route::group(['middleware' => ['role_or_permission:administrator|pembayaranperrekeningairkolektif']], function () {
-            Route::get('/kolektif', \App\Http\Livewire\Pembayaran\Rekeningair\Kolektif::class)->name('pembayaran.rekeningair.kolektif');
+        Route::group(['middleware' => ['role_or_permission:administrator|pembayaranrekeningnonair']], function () {
+            Route::get('/rekeningnonair', \App\Http\Livewire\Pembayaran\Rekeningnonair::class)->name('pembayaran.rekeningnonair');
         });
     });
 });

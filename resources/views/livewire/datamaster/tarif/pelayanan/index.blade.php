@@ -68,7 +68,7 @@
                             <td class="align-middle">{{ $row->sk }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->keterangan }}</td>
-                            <td class="align-middle">{{ $row->diameter->ukuran }}</td>
+                            <td class="align-middle">{{ $row->diameter ? $row->diameter->ukuran : null }}</td>
                             <td class="align-middle">{{ number_format($row->nilai) }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
                             @role('administrator|super-admin')
