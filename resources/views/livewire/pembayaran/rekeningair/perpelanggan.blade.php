@@ -48,7 +48,7 @@
                         <div class="form-group">
                             <label class="control-label f-w-700">Bayar</label>
                             <input class="form-control f-w-700 f-s-20 hitung " type="number" id="bayar"
-                                wire:model.lazy="bayar" autocomplete="off" />
+                                wire:model.defer="bayar" autocomplete="off" />
                             @error('bayar')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

@@ -24,41 +24,38 @@
                 <div class="row width-full">
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="control-label">Cari Pelanggan</label>
-                            <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
-                                wire:model.lazy="pelangganId">
-                                <option selected hidden>-- Pilih Pelanggan --</option>
-                                @foreach (\App\Models\Pelanggan::all() as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} -
-                                        {{ $row->nama }}
+                            <label class="control-label">Pelayanan/Sangsi</label>
+                            <select class="form-control selectpicker" style="width: 100%;" data-size="10"
+                                data-live-search="true" wire:model.lazy="pelayananSangsiId">
+                                <option selected hidden>-- Pilih Pelayanan/Sangsi --</option>
+                                @foreach (\App\Models\TarifPelayananSangsi::orderBy('jenis')->get() as $row)
+                                    <option value="{{ $row->getKey() }}">
+                                        {{ $row->jenis . ($row->diameter ? ' ' . $row->diameter->ukuran : '') }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('pelangganId')
+                            @error('pelayananSangsiId')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Nama</label>
-                            <input class="form-control f-w-700 f-s-20 hitung" type="text" wire:model.defer="nama"
-                                autocomplete="off" readonly />
-                            @error('nama')
+                            <label class="control-label">Tagihan</label>
+                            <input class="form-control f-w-700 f-s-20 hitung" type="text" id="tagihan"
+                                wire:model.defer="tagihan" autocomplete="off" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label f-w-700">Bayar</label>
+                            <input class="form-control f-w-700 f-s-20 hitung " type="number" id="bayar"
+                                wire:model.defer="bayar" autocomplete="off" />
+                            @error('bayar')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Alamat</label>
-                            <input class="form-control f-w-700 f-s-20 hitung" type="text" wire:model.defer="alamat"
-                                autocomplete="off" readonly />
-                            @error('alamat')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">No. Hp</label>
-                            <input class="form-control f-w-700 f-s-20 hitung" type="text" wire:model.defer="noHp"
-                                autocomplete="off" readonly />
-                            @error('noHp')
+                            <label class="control-label f-w-700">Sisa</label>
+                            <input class="form-control bg-red text-white f-w-700 f-s-14 numbering" type="text"
+                                id="sisa" value="0" autocomplete="off" readonly wire:ignore />
+                            @error('sisa')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -66,41 +63,45 @@
                     <div class="col-lg-8">
                         <div class="note note-primary">
                             <div class="note-content width-10">
+                                @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan != null)
+                                    <div class="form-group">
+                                        <label class="control-label">Cari Pelanggan</label>
+                                        <select class="form-control selectpicker" style="width: 100%;"
+                                            data-live-search="true" wire:model.lazy="pelangganId">
+                                            <option selected hidden>-- Pilih Pelanggan --</option>
+
+                                            @foreach (\App\Models\Pelanggan::where('status', $tarifPelayananSangsi->pelanggan)->get() as $row)
+                                                <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} -
+                                                    {{ $row->nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('pelangganId')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                @endif
                                 <div class="form-group">
-                                    <label class="control-label">Pelayanan/Sangsi</label>
-                                    <select class="form-control selectpicker" style="width: 100%;"
-                                        data-live-search="true" wire:model.lazy="tarifPelayananSangsi">
-                                        <option selected hidden>-- Pilih Pelayanan/Sangsi --</option>
-                                        @foreach (\App\Models\TarifPelayananSangsi::all() as $row)
-                                            <option value="{{ $row->getKey() }}">
-                                                {{ $row->nama }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('tarifPelayananSangsi')
+                                    <label class="control-label">Nama</label>
+                                    <input class="form-control = hitung" type="text" wire:model.defer="nama"
+                                        @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan == 1) readonly @endif autocomplete="off" />
+                                    @error('nama')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Tagihan</label>
-                                    <input class="form-control f-w-700 f-s-20 hitung" type="text" id="tagihan"
-                                        value="{{ number_format(collect($dataRekeningAir)->where('angsur', 0)->sum(fn($q) => $q['tagihan'] + $q['denda']) + collect($dataAngsuranRekeningAir)->sum('nilai')) }}"
-                                        autocomplete="off" readonly />
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label f-w-700">Bayar</label>
-                                    <input class="form-control f-w-700 f-s-20 hitung " type="number" id="bayar"
-                                        wire:model.lazy="bayar" autocomplete="off" />
-                                    @error('bayar')
+                                    <label class="control-label">Alamat</label>
+                                    <input class="form-control = hitung" type="text" wire:model.defer="alamat"
+                                        autocomplete="off" @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan == 1) readonly @endif />
+                                    @error('alamat')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label f-w-700">Sisa</label>
-                                    <input class="form-control bg-red text-white f-w-700 f-s-14 numbering"
-                                        type="text" id="sisa" value="0" autocomplete="off" readonly
-                                        wire:ignore />
-                                    @error('sisa')
+                                    <label class="control-label">No. Hp</label>
+                                    <input class="form-control = hitung" type="text" wire:model.defer="noHp"
+                                        autocomplete="off" @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan == 1) readonly @endif />
+                                    @error('noHp')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
