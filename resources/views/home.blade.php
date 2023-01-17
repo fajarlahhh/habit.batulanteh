@@ -21,11 +21,10 @@
             <div class="container">
                 <!-- begin navbar-brand -->
                 <a href="/" class="navbar-brand">
-                    <img src="/assets/img/logo.png">
+                    <span class="brand-text f-s-20">
+                        <span class="text-primary">HABIT</span> BILLING SYSTEM
+                    </span>
                 </a>
-                <span class="brand-text f-s-20">
-                    <span class="text-primary">HABIT</span> PERUMDAM BATU LANTEH
-                </span>
                 <!-- end navbar-brand -->
                 <!-- begin navbar-toggle -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -47,6 +46,8 @@
             <!-- end content-bg -->
             <!-- begin container -->
             <div class="container home-content">
+                <img src="/assets/img/logo.png" class="width-100">
+                <br>
                 <h1>Welcome to HABIT</h1>
                 <h3>Perumdam Batu Lanteh</h3>
                 <p>
