@@ -55,6 +55,21 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label for="control-label">Jenis Pelanggan</label>
+                    <select wire:model.defer="pelanggan" class="form-control selectpicker" data-live-search="true"
+                        data-width="100%">
+                        <option selected hidden>-- Pilih Jenis Pelanggan --</option>
+                        <option value="">Non Pelanggan</option>
+                        <option value="1">Pelanggan Aktif</option>
+                        <option value="2">Pelanggan Putus Sementara</option>
+                        <option value="3">Pelanggan Putus Sementara Permintaan Sendiri</option>
+                        <option value="4">Pelanggan Putus Rampung</option>
+                    </select>
+                    @error('pelanggan')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label class="control-label">Keterangan</label>
                     <input class="form-control" type="text" autocomplete="off" wire:model.defer="keterangan" />
                     @error('keterangan')
@@ -87,7 +102,7 @@
                 @role('administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
-                <a href="{{ route('datamaster.tarif.lainnya') }}" class="btn btn-danger">Batal</a>
+                <a href="{{ route('datamaster.tarif.pelayanan') }}" class="btn btn-danger">Batal</a>
             </div>
         </form>
     </div>

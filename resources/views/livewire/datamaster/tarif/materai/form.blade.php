@@ -63,7 +63,7 @@
                 @role('administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
-                <a href="{{ route('datamaster.tarif.denda') }}" class="btn btn-danger">Batal</a>
+                <a href="{{ route('datamaster.tarif.materai') }}" class="btn btn-danger">Batal</a>
             </div>
         </form>
     </div>

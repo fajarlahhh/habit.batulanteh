@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $key, $tanggalBerlaku, $jenis, $keterangan, $nilai, $data, $diameterId;
+    public $key, $tanggalBerlaku, $jenis, $keterangan, $nilai, $data, $diameterId, $pelanggan;
 
     protected $rules = [
         'tanggalBerlaku' => 'required|date',
@@ -24,6 +24,7 @@ class Form extends Component
         $this->data->jenis = $this->jenis;
         $this->data->keterangan = $this->keterangan;
         $this->data->nilai = $this->nilai;
+        $this->data->pelanggan = $this->pelanggan;
         $this->data->save();
 
         session()->flash('success', 'Berhasil menyimpan data');
@@ -37,6 +38,7 @@ class Form extends Component
             $this->tanggalBerlaku = $this->data->tanggal_berlaku;
             $this->jenis = $this->data->jenis;
             $this->keterangan = $this->data->keterangan;
+            $this->pelanggan = $this->data->pelanggan;
             $this->nilai = $this->data->nilai;
             $this->diameterId = $this->data->diameter_id;
         } else {
