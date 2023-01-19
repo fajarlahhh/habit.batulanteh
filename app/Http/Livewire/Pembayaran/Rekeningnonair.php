@@ -19,7 +19,7 @@ class Rekeningnonair extends Component
 
     public function updatedPelangganId()
     {
-        if ($this->tarifPelayananSangsi->pelanggan == 1) {
+        if ($this->tarifPelayananSangsi->pelanggan != null) {
             $this->pelanggan = Pelanggan::findOrFail($this->pelangganId);
             $this->nama = $this->pelanggan->nama;
             $this->alamat = $this->pelanggan->alamat;

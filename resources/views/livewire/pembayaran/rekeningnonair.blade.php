@@ -25,8 +25,8 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label class="control-label">Pelayanan/Sangsi</label>
-                            <select class="form-control selectpicker" style="width: 100%;" data-size="10"
-                                data-live-search="true" wire:model.lazy="pelayananSangsiId">
+                            <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
+                                wire:model.lazy="pelayananSangsiId">
                                 <option selected hidden>-- Pilih Pelayanan/Sangsi --</option>
                                 @foreach (\App\Models\TarifPelayananSangsi::orderBy('jenis')->get() as $row)
                                     <option value="{{ $row->getKey() }}">
@@ -66,7 +66,7 @@
                                 @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan != null)
                                     <div class="form-group">
                                         <label class="control-label">Cari Pelanggan</label>
-                                        <select class="form-control selectpicker" style="width: 100%;"
+                                        <select class="form-control selectpicker" style="width: 100%;" data-size="10"
                                             data-live-search="true" wire:model.lazy="pelangganId">
                                             <option selected hidden>-- Pilih Pelanggan --</option>
 
@@ -84,7 +84,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Nama</label>
                                     <input class="form-control = hitung" type="text" wire:model.defer="nama"
-                                        @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan == 1) readonly @endif autocomplete="off" />
+                                        @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan != null) readonly @endif autocomplete="off" />
                                     @error('nama')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -92,7 +92,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Alamat</label>
                                     <input class="form-control = hitung" type="text" wire:model.defer="alamat"
-                                        autocomplete="off" @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan == 1) readonly @endif />
+                                        autocomplete="off" @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan != null) readonly @endif />
                                     @error('alamat')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -100,7 +100,7 @@
                                 <div class="form-group">
                                     <label class="control-label">No. Hp</label>
                                     <input class="form-control = hitung" type="text" wire:model.defer="noHp"
-                                        autocomplete="off" @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan == 1) readonly @endif />
+                                        autocomplete="off" @if ($tarifPelayananSangsi && $tarifPelayananSangsi->pelanggan != null) readonly @endif />
                                     @error('noHp')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
