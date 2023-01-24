@@ -62,7 +62,7 @@
                         <option value="">Non Pelanggan</option>
                         <option value="1">Pelanggan Aktif</option>
                         <option value="2">Pelanggan Putus Sementara</option>
-                        <option value="3">Pelanggan Putus Sementara Permintaan Sendiri</option>
+                        <option value="3">Pelanggan Putus Sementara Permintaan Pelanggan</option>
                         <option value="4">Pelanggan Putus Rampung</option>
                     </select>
                     @error('pelanggan')

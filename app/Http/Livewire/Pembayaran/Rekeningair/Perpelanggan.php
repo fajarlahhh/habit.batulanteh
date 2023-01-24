@@ -104,7 +104,7 @@ class Perpelanggan extends Component
                 }
             }
 
-            $cetak = view('livewire.pembayaran.rekeningair.cetak', [
+            $cetak = view('cetak.nota-rekeningair', [
                 'dataRekeningAir' => RekeningAir::with('bacaMeter')->whereIn('id', collect($this->dataRekeningAir)->where('angsur', 0)->pluck('rekening_air_id')->all())->sudahBayar()->get(),
                 'dataAngsuranRekeningAir' => AngsuranRekeningAirDetail::with('angsuranRekeningAir')
                     ->whereIn('urutan', collect($this->dataAngsuranRekeningAir)->pluck('urutan')->all())

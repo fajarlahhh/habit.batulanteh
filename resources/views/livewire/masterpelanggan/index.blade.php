@@ -27,7 +27,7 @@
                                 <option value="0">Semua</option>
                                 <option value="1">Aktif</option>
                                 <option value="2">Putus Sementara</option>
-                                <option value="3">Putus Sementara Permintaan Sendiri</option>
+                                <option value="3">Putus Sementara Permintaan Pelanggan</option>
                                 <option value="4">Putus Rampung</option>
                             </select>
                         </div>&nbsp;

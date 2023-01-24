@@ -7,7 +7,7 @@
         <li class="breadcrumb-item active">Angsuran Rekening Air</li>
     @endsection
 
-    <h1 class="page-header">Data Pembayaran Angsuran Rekening Air</h1>
+    <h1 class="page-header">Data Pembayaran <small>Angsuran Rekening Air</small></h1>
 
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->

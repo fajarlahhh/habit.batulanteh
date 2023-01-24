@@ -33,7 +33,7 @@
                                 <option selected hidden>-- Pilih Status --</option>
                                 <option value="1">Aktif</option>
                                 <option value="2">Putus Sementara</option>
-                                <option value="3">Putus Sementara Permintaan Sendiri</option>
+                                <option value="3">Putus Sementara Permintaan Pelanggan</option>
                                 <option value="4">Putus Rampung</option>
                             </select>
                             @error('status')
@@ -164,12 +164,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-footer">
-                    @role('administrator|super-admin')
-                        <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
-                    @endrole
-                    <a href="{{ route('datamaster.regional.jalan') }}" class="btn btn-danger">Batal</a>
-                </div>
+            </div>
+            <div class="panel-footer">
+                @role('administrator|super-admin')
+                    <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
+                @endrole
+                <a href="{{ route('datamaster.regional.jalan') }}" class="btn btn-danger">Batal</a>
             </div>
         </form>
     </div>

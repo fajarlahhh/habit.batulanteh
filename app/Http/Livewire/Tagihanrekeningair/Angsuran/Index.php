@@ -27,7 +27,7 @@ class Index extends Component
 
     public function cetak($id)
     {
-        $cetak = view('livewire.tagihanrekeningair.angsuran.cetak', [
+        $cetak = view('cetak.form-angsuran', [
             'data' => AngsuranRekeningAir::with('angsuranRekeningAirDetail')->with('angsuranRekeningAirPeriode.rekeningAir.bacaMeter')->findOrFail($id),
         ])->render();
         session()->flash('cetak', $cetak);

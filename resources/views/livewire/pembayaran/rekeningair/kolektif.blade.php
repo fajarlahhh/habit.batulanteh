@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <label class="control-label">Cari Kolektif</label>
                             <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
-                                wire:model.lazy="kolektifId">
+                                data-size="10" wire:model.lazy="kolektifId">
                                 <option selected hidden>-- Pilih Kolektif --</option>
                                 @foreach (\App\Models\Kolektif::all() as $row)
                                     <option value="{{ $row->getKey() }}">

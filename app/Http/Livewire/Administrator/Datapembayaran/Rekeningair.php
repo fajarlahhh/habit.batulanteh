@@ -28,7 +28,7 @@ class Rekeningair extends Component
 
     public function cetak($id)
     {
-        $cetak = view('livewire.pembayaran.rekeningair.cetak', [
+        $cetak = view('cetak.nota-rekeningair', [
             'dataRekeningAir' => ModelsRekeningAir::with('bacaMeter')->where('id', $id)->sudahBayar()->get(),
             'dataAngsuranRekeningAir' => collect([]),
         ])->render();

@@ -28,7 +28,7 @@ class Angsuranrekeningair extends Component
 
     public function cetak($id)
     {
-        $cetak = view('livewire.pembayaran.rekeningair.cetak', [
+        $cetak = view('cetak.nota-rekeningair', [
             'dataRekeningAir' => collect([]),
             'dataAngsuranRekeningAir' => AngsuranRekeningAirDetail::with('angsuranRekeningAir')->where('id', $id)->get(),
         ])->render();

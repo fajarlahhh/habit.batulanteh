@@ -712,7 +712,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `pelanggan`;
 CREATE TABLE `pelanggan` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '1 - Aktif\r\n2 - Putus Sementara\r\n3 - Putus Sementara Permintaan Sendiri\r\n4 - Putus Rampung',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '1 - Aktif\r\n2 - Putus Sementara\r\n3 - Putus Sementara Permintaan Pelanggan\r\n4 - Putus Rampung',
   `status` tinyint(4) DEFAULT 1,
   `ktp` varchar(255) DEFAULT NULL,
   `no_langganan` varchar(255) DEFAULT NULL,

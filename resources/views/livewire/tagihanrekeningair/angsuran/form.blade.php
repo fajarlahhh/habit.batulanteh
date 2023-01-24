@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label class="control-label">Cari Pelanggan</label>
                         <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
-                            wire:model.lazy="pelangganId">
+                            data-size="10" wire:model.lazy="pelangganId">
                             <option selected hidden>-- Pilih Pelanggan --</option>
                             @foreach (\App\Models\Pelanggan::whereDoesntHave('angsuranRekeningAir', fn($q) => $q->belumLunas())->get() as $row)
                                 <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} - {{ $row->nama }}

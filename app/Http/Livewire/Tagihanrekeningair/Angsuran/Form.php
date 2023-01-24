@@ -99,7 +99,7 @@ class Form extends Component
                 'rekening_air_id' => $q['rekening_air_id'],
             ])->toArray());
 
-            $cetak = view('livewire.tagihanrekeningair.angsuran.cetak', [
+            $cetak = view('cetak.form-angsuran', [
                 'data' => AngsuranRekeningAir::with('angsuranRekeningAirDetail')->with('angsuranRekeningAirPeriode.rekeningAir.bacaMeter')->findOrFail($data->id),
             ])->render();
             session()->flash('cetak', $cetak);

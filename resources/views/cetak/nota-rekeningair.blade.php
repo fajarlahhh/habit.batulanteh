@@ -239,12 +239,10 @@
                                 </ul>
                             </td>
                             <td class="text-center">
-                                <label>Direktur Utama</label>
+                                Direktur Utama<br>
+                                <img src="/assets/img/ttd.png" alt="" class="height-70">
                                 <br>
-
-
-                                <br>
-                                <u>Abdul Hakim</u>
+                                <u>H. Abdul Hakim</u>
                             </td>
                         </tr>
                     </table>
@@ -393,12 +391,10 @@
                                 {{ $row->kasir->nama }}
                             </td>
                             <td class="text-center">
-                                <label>Direktur Utama</label>
+                                Direktur Utama<br>
+                                <img src="/assets/img/ttd.png" alt="" class="height-70">
                                 <br>
-
-
-                                <br>
-                                <u>Abdul Hakim</u>
+                                <u>H. Abdul Hakim</u>
                             </td>
                         </tr>
                     </table>
