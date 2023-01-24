@@ -110,7 +110,7 @@
                     <td>Kasir</td>
                     <td>:</td>
                     <td>
-                        {{ $row->kasir->nama }}
+                        {{ $row->kasir }}
                     </td>
                 </tr>
             </table>
@@ -172,7 +172,7 @@
                             <td>Kasir</td>
                             <td>:</td>
                             <td colspan="2">
-                                {{ $row->kasir->nama }}
+                                {{ $row->kasir }}
                             </td>
                         </tr>
                         <tr>
@@ -240,7 +240,9 @@
                             </td>
                             <td class="text-center">
                                 Direktur Utama<br>
-                                <img src="/assets/img/ttd.png" alt="" class="height-70">
+                                <img src="/assets/img/ttd.png" alt="" class="height-70 position-absolute">
+                                <br>
+                                <br>
                                 <br>
                                 <u>H. Abdul Hakim</u>
                             </td>
@@ -314,7 +316,7 @@
                     <td>Kasir</td>
                     <td>:</td>
                     <td>
-                        {{ $row->kasir->nama }}
+                        {{ $row->kasir }}
                     </td>
                 </tr>
             </table>
@@ -385,14 +387,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Kasir</td>
-                            <td>:</td>
-                            <td>
-                                {{ $row->kasir->nama }}
+                            <td class="align-top">Kasir</td>
+                            <td class="align-top">:</td>
+                            <td class="align-top width-300">
+                                {{ $row->kasir }}
                             </td>
                             <td class="text-center">
                                 Direktur Utama<br>
-                                <img src="/assets/img/ttd.png" alt="" class="height-70">
+                                <img src="/assets/img/ttd.png" alt="" class="height-70 position-absolute">
+                                <br>
+                                <br>
                                 <br>
                                 <u>H. Abdul Hakim</u>
                             </td>

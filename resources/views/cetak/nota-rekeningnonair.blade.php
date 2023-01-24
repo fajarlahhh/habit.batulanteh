@@ -199,14 +199,16 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Kasir</td>
-                        <td>:</td>
-                        <td class="width-300">
+                        <td class="align-top">Kasir</td>
+                        <td class="align-top">:</td>
+                        <td class="align-top width-300">
                             {{ $dataRekeningNonAir->kasir }}
                         </td>
                         <td>
                             Direktur Utama<br>
-                            <img src="/assets/img/ttd.png" alt="" class="height-70">
+                            <img src="/assets/img/ttd.png" alt="" class="height-70 position-absolute">
+                            <br>
+                            <br>
                             <br>
                             <u>H. Abdul Hakim</u>
                         </td>

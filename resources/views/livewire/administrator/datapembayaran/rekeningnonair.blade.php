@@ -47,7 +47,7 @@
                         <th>No. Langganan</th>
                         <th>Nama</th>
                         <th>Alamat</th>
-                        <th>Golongan</th>
+                        <th>No. Hp</th>
                         <th>Tagihan</th>
                         <th>Kasir</th>
                         @role('super-admin|administrator')
@@ -60,12 +60,10 @@
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle text-nowrap">{{ $row->created_at }}</td>
-                            <td class="align-middle">{{ $row->pelanggan->no_langganan }}</td>
-                            <td class="align-middle">{{ $row->pelanggan->nama }}</td>
-                            <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
-                            <td class="align-middle">
-                                {{ $row->pelanggan->golongan->nama . ' - ' . $row->pelanggan->golongan->deskripsi }}
-                            </td>
+                            <td class="align-middle">{{ $row->pelanggan ? $row->pelanggan->no_langganan : '' }}</td>
+                            <td class="align-middle">{{ $row->nama }}</td>
+                            <td class="align-middle">{{ $row->alamat }}</td>
+                            <td class="align-middle">{{ $row->no_hp }}</td>
                             <td class="align-middle">{{ number_format($row->nilai) }}</td>
                             <td class="align-middle">{{ $row->kasir }}</td>
                             @role('super-admin|administrator')
