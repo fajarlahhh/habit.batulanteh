@@ -66,7 +66,7 @@
                             <td class="align-middle">
                                 {{ $row->pelanggan->golongan->nama . ' - ' . $row->pelanggan->golongan->deskripsi }}
                             </td>
-                            <td class="align-middle">{{ $row->nilai }}</td>
+                            <td class="align-middle">{{ number_format($row->nilai) }}</td>
                             <td class="align-middle">{{ $row->kasir }}</td>
                             @role('super-admin|administrator')
                                 <td class="with-btn-group align-middle text-right" nowrap>
