@@ -21,7 +21,7 @@
         <form wire:submit.prevent="submit">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="control-label">Cari Pelanggan</label>
                             <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
@@ -66,7 +66,7 @@
                                 autocomplete="off" readonly />
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="note note-secondary">
                             <div class="note-content">
                                 <div class="form-group">
@@ -82,46 +82,48 @@
                                 "
                                         autocomplete="off" readonly />
                                 </div>
-                                <hr>
-                                <div class="form-group">
-                                    <label class="control-label">Ubah Status Pelanggan</label>
-                                    <div class="row ml-5">
-                                        <div class="col-md-6">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="status1" name="status" value="1"
-                                                    wire:model.defer="status" class="custom-control-input">
-                                                <label class="custom-control-label" for="status1">Aktif</label>
+                                @if ($pelanggan)
+                                    <hr>
+                                    <div class="form-group">
+                                        <label class="control-label">Ubah Status Pelanggan</label>
+                                        <div class="row ml-1">
+                                            <div class="col-md-6">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="status1" name="status" value="1"
+                                                        wire:model.defer="status" class="custom-control-input">
+                                                    <label class="custom-control-label" for="status1">Aktif</label>
+                                                </div>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="status2" name="status" value="2"
+                                                        wire:model.defer="status" class="custom-control-input">
+                                                    <label class="custom-control-label" for="status2">Putus
+                                                        Sementara</label>
+                                                </div>
                                             </div>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="status2" name="status" value="2"
-                                                    wire:model.defer="status" class="custom-control-input">
-                                                <label class="custom-control-label" for="status2">Putus
-                                                    Sementara</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="status3" name="status" value="3"
-                                                    wire:model.defer="status" class="custom-control-input">
-                                                <label class="custom-control-label" for="status3">Putus Sementara
-                                                    Permintaan Sendiri</label>
-                                            </div>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="status4" name="status" value="4"
-                                                    wire:model.defer="status" class="custom-control-input">
-                                                <label class="custom-control-label" for="status4">Putus
-                                                    Rampung</label>
+                                            <div class="col-md-6">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="status3" name="status" value="3"
+                                                        wire:model.defer="status" class="custom-control-input">
+                                                    <label class="custom-control-label" for="status3">Putus Sementara
+                                                        Permintaan Sendiri</label>
+                                                </div>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="status4" name="status" value="4"
+                                                        wire:model.defer="status" class="custom-control-input">
+                                                    <label class="custom-control-label" for="status4">Putus
+                                                        Rampung</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Catatan</label>
-                                    <textarea class="form-control" rows="3" wire:model.defer="catatan"></textarea>
-                                    @error('catatan')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Catatan</label>
+                                        <textarea class="form-control" rows="3" wire:model.defer="catatan"></textarea>
+                                        @error('catatan')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
