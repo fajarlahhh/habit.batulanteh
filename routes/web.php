@@ -155,7 +155,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['middleware' => ['role_or_permission:administrator|informasipelanggan']], function () {
-        Route::get('/informasipelanggan', \App\Http\Livewire\Informasipelanggan\Index::class);
+        Route::get('/informasipelanggan', \App\Http\Livewire\Informasipelanggan::class);
     });
 
     Route::group(['middleware' => ['role_or_permission:administrator|masterpelanggan']], function () {

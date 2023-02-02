@@ -22,9 +22,15 @@ class Index extends Component
         $this->tahun = $this->tahun ?: date('Y');
     }
 
+    public function booted()
+    {
+        $this->emit('reinitialize');
+    }
+
     public function render()
     {
         return view('livewire.bacameter.datatarget.index', [
+            'i' => ($this->page - 1) * 10,
             'data' => BacaMeter::with('pengguna')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->where(fn($q) => $q->orWhereHas('pelanggan', fn($q) => $q->where('nama', 'like', '%' . $this->cari . '%')->where('no_langganan', 'like', '%' . $this->cari . '%')))->paginate(10),
         ]);
     }

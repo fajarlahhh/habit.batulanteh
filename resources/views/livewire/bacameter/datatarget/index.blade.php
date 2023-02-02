@@ -14,29 +14,29 @@
         <!-- begin panel-heading -->
         <div class="panel-heading">
             <div class="row width-full">
-                <div class="col-xl-1 col-sm-1">
+                <div class="col-xl-2 col-sm-2">
                     @role('administrator|super-admin')
                         <div class="form-inline">
                             <a class="btn btn-primary" href="{{ route('bacameter.buattarget') }}">Buat Data </a>
                         </div>
                     @endrole
                 </div>
-                <div class="col-xl-11 col-sm-11">
+                <div class="col-xl-10 col-sm-10">
                     <div class="form-inline pull-right">
                         <div class="form-group">
                             <select class="form-control selectpicker" wire:model="bulan" data-live-search="true"
                                 data-style="btn-info" data-width="100%">
-                                @for ($i = 1; $i <= 12; $i++)
-                                    <option value="{{ sprintf('%02s', $i) }}">
-                                        {{ DateTime::createFromFormat('!m', $i)->format('F') }}</option>
+                                @for ($m = 1; $m <= 12; $m++)
+                                    <option value="{{ sprintf('%02s', $m) }}">
+                                        {{ DateTime::createFromFormat('!m', $m)->format('F') }}</option>
                                 @endfor
                             </select>
                         </div>&nbsp;
                         <div class="form-group">
                             <select class="form-control selectpicker" wire:model="tahun" data-live-search="true"
                                 data-style="btn-info" data-width="100%">
-                                @for ($i = 2016; $i <= date('Y'); $i++)
-                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @for ($y = 2016; $y <= date('Y'); $y++)
+                                    <option value="{{ $y }}">{{ $y }}</option>
                                 @endfor
                             </select>
                         </div>&nbsp;
@@ -75,14 +75,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $i => $row)
+                    @foreach ($data as $index => $row)
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle">{{ $row->pelanggan->no_langganan }}</td>
                             <td class="align-middle">{{ $row->pelanggan->nama }}</td>
                             <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
-                            <td class="align-middle">{{ $row->pelanggan->jalan->nama }}</td>
-                            <td class="align-middle">{{ $row->pelanggan->pembaca->nama }}</td>
+                            <td class="align-middle">{{ $row->pelanggan->jalan ? $row->pelanggan->jalan->nama : '' }}
+                            </td>
+                            <td class="align-middle">
+                                {{ $row->pelanggan->pembaca ? $row->pelanggan->pembaca->nama : '' }}
+                            </td>
                             <td class="align-middle">{{ $row->pelanggan->no_body_water_meter }}</td>
                             <td class="align-middle">{{ $row->tanggal_baca }}</td>
                             <td class="align-middle">{{ $row->stand_lalu }}</td>
@@ -117,6 +120,10 @@
                 <label class="pull-right">Jumlah Data : {{ $data->total() }}</label>
             </div>
         </div>
+    </div>
+
+    <div wire:loading>
+        <x-loading />
     </div>
 
     @push('scripts')
