@@ -52,6 +52,7 @@
                         <th>Nama</th>
                         <th>Deskripsi</th>
                         <th>Level</th>
+                        <th>Token</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
                         @endrole
@@ -64,7 +65,9 @@
                             <td class="align-middle">{{ $row->uid }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->deskripsi }}</td>
-                            <td class="align-middle">{{ $row->getRoleNames() ? $row->getRoleNames()->first() : null }}</td>
+                            <td class="align-middle">{{ $row->getRoleNames() ? $row->getRoleNames()->first() : null }}
+                            </td>
+                            <td class="align-middle">{{ $row->api_token }}</td>
                             <td class="with-btn-group align-middle text-right" nowrap>
                                 @role('administrator|super-admin')
                                     <div class="btn-group btn-group-sm" role="group">

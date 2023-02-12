@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Pengaturan\Pengguna;
 use App\Models\Pengguna;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -28,6 +29,7 @@ class Form extends Component
                 $this->data->kata_sandi = Hash::make($this->uid);
             }
             $this->data->nama = $this->nama;
+            $this->data->api_token = Str::random(60);
             $this->data->deskripsi = $this->deskripsi;
             $this->data->save();
 
