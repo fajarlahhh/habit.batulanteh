@@ -40,12 +40,12 @@
                                 <div class="form-group">
                                     <label class="control-label">Jalan</label>
                                     <input class="form-control" type="text" disabled
-                                        value="{{ $data->pelanggan->jalan->nama }}" />
+                                        value="{{ $data->pelanggan->jalan ? $data->pelanggan->jalan->nama : '' }}" />
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Pembaca</label>
                                     <input class="form-control" type="text" disabled
-                                        value="{{ $data->pelanggan->pembaca->nama }}" />
+                                        value="{{ $data->pelanggan->pembaca ? $data->pelanggan->pembaca->nama : '' }}" />
                                 </div>
                             </div>
                         </div>
