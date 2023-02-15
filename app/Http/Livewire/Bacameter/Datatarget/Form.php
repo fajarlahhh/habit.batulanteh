@@ -36,7 +36,7 @@ class Form extends Component
 
         $edit = true;
 
-        if ($this->data->rekeningAir->harga_air) {
+        if ($this->data->rekeningAir) {
             session()->flash('danger', 'Gagal menyimpan data. Tagihan rekening air untuk data ini sudah diterbitkan');
             $edit = false;
         }
