@@ -31,7 +31,7 @@ class Form extends Component
             'noBodyWaterMeter' => 'required',
             'standIni' => 'required|numeric',
             'tanggalBaca' => 'required|date',
-            'statusBaca' => 'required|numeric',
+            'statusBaca' => 'required',
         ]);
 
         $edit = true;
