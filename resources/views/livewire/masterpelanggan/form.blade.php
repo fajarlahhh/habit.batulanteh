@@ -74,7 +74,8 @@
                                 data-live-search="true">
                                 <option selected hidden>-- Pilih Jalan --</option>
                                 @foreach (\App\Models\Jalan::orderBy('nama')->get() as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}
+                                    <option value="{{ $row->getKey() }}">{{ $row->nama }},
+                                        {{ $row->kelurahan->nama }}, {{ $row->kelurahan->kecamatan->nama }}
                                     </option>
                                 @endforeach
                             </select>
