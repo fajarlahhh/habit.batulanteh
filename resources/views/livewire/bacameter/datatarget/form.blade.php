@@ -69,7 +69,7 @@
                         <div class="form-group">
                             <label class="control-label">Tanggal Baca</label>
                             <input class="form-control date" type="text" autocomplete="off" readonly
-                                onchange="@this.set('tanggalBaca', this.value);" wire:model.defer="tanggalBaca" />
+                                wire:model.defer="tanggalBaca" />
                             @error('tanggalBaca')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
