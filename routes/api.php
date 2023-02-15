@@ -22,9 +22,11 @@ Route::middleware(['cors'])->get('/', function () {
     ]);
 });
 
+Route::prefix('master')->group(function () {
+    Route::middleware(['cors', 'apitoken'])->get('/statusbaca', [StatusbacaController::class, 'index']);
+});
 Route::middleware(['cors'])->post('/login', [\App\Http\Controllers\PenggunaController::class, 'login']);
 
-Route::middleware(['cors'])->post('/statusbaca', [StatusbacaController::class, 'index']);
 
 Route::middleware(['cors'])->post('/bacameter/upload', [BacameterController::class, 'upload']);
 Route::middleware(['cors'])->post('/bacameter/target', [BacameterController::class, 'index']);

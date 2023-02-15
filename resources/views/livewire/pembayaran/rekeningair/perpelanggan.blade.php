@@ -137,7 +137,7 @@
                                 <strong>Jumlah : {{ collect($dataRekeningAir)->count() }}</strong>
                             </div>
                         </div>
-                        <div class="note note-warning">
+                        {{-- <div class="note note-warning">
                             <div class="note-content width-10">
                                 <h5>Angsuran</h5>
                                 <div class="height-250 overflow-auto table-responsive">
@@ -164,8 +164,9 @@
                                                 <tr>
                                                     <td class="with-btn align-middle">
                                                         @if (collect($dataAngsuranRekeningAir)->where('no_langganan', $row['no_langganan'])->count() -
-                                                                $no ==
-                                                                1 && collect($dataAngsuranRekeningAir)->count() > 1)
+        $no ==
+        1 &&
+    collect($dataAngsuranRekeningAir)->count() > 1)
                                                             <a href="javascript:;"
                                                                 wire:click="hapusDataAngsuranRekeningAir({{ $index }})"
                                                                 class="btn btn-xs btn-danger m-t-5">X</a>
@@ -199,7 +200,7 @@
                                 </div>
                                 <strong>Jumlah : {{ collect($dataAngsuranRekeningAir)->count() }}</strong>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
