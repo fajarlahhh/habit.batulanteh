@@ -72,7 +72,7 @@
                             <td class="align-middle">
                                 {{ number_format($row->harga_air + $row->biaya_retribusi + $row->biaya_jasa_lingkungan + $row->biaya_pemeliharaan + $row->biaya_administrasi + $row->biaya_materai + $row->biaya_ppn - $row->diskon + $row->biaya_denda) }}
                             </td>
-                            <td class="align-middle"><small>{!! $row->kasir->nama . '<br>' . $row->waktu_bayar !!}</small></td>
+                            <td class="align-middle"><small>{!! $row->kasir . '<br>' . $row->waktu_bayar !!}</small></td>
                             @role('super-admin|administrator')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">
