@@ -43,7 +43,7 @@ class Buattarget extends Component
         ]);
 
         DB::transaction(function ($q) {
-            BacaMeter::whereNull('tanggal_baca')->forceDelete();
+            BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun.'-'.$this->bulan.'-01')->forceDelete();
             $pelanggan = Pelanggan::with('rekeningAirTerakhir')->whereIn('status', [1, 3])->get();
             $data = [];
             foreach ($pelanggan as $key => $row) {
