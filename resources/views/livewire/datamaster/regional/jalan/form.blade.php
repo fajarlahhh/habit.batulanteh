@@ -33,7 +33,8 @@
                         data-width="100%">
                         <option selected hidden>-- Pilih Kelurahan --</option>
                         @foreach (\App\Models\Kelurahan::orderBy('nama')->get() as $row)
-                            <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
+                            <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }},
+                                {{ $row->kecamatan->nama }}</option>
                         @endforeach
                     </select>
                     @error('kelurahan')
