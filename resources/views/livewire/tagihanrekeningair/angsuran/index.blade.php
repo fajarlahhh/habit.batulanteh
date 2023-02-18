@@ -74,7 +74,7 @@
                             <td class="align-middle">{{ $row->keterangan }}</td>
                             <td class="align-middle text-right">{{ number_format($row->total) }}</td>
                             <td class="align-middle text-right">{{ number_format($row->bayar) }}</td>
-                            <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
+                            <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin|user')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">

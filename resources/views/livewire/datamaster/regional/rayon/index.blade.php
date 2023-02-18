@@ -1,13 +1,13 @@
 <div>
-    @section('title', 'Denda')
+    @section('title', 'Rayon')
 
     @section('page')
         <li class="breadcrumb-item">Data Master</li>
-        <li class="breadcrumb-item">Tarif</li>
-        <li class="breadcrumb-item active">Denda</li>
+        <li class="breadcrumb-item">Regional</li>
+        <li class="breadcrumb-item active">Rayon</li>
     @endsection
 
-    <h1 class="page-header">Denda</h1>
+    <h1 class="page-header">Rayon</h1>
 
     <x-alert />
 
@@ -18,7 +18,7 @@
                 <div class="col-xl-1 col-sm-1">
                     @role('administrator|super-admin')
                         <div class="form-inline">
-                            <a class="btn btn-primary" href="{{ route('datamaster.tarif.denda.tambah') }}">Tambah</a>
+                            <a class="btn btn-primary" href="{{ route('datamaster.regional.rayon.tambah') }}">Tambah</a>
                         </div>
                     @endrole
                 </div>
@@ -48,10 +48,9 @@
                 <thead>
                     <tr>
                         <th class="width-60">No.</th>
-                        <th>Tanggal Berlaku</th>
-                        <th>SK</th>
+                        <th>Nama</th>
                         <th>Keterangan</th>
-                        <th>Nilai</th>
+                        <th>Jalan</th>
                         <th>Operator</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
@@ -62,34 +61,29 @@
                     @foreach ($data as $i => $row)
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
-                            <td class="align-middle">{{ $row->tanggal_berlaku }}</td>
-                            <td class="align-middle">{{ $row->sk }}</td>
+                            <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->keterangan }}</td>
-                            <td class="align-middle">{{ number_format($row->nilai) }}</td>
+                            <td class="align-middle">
+                                <ul>
+                                    @foreach ($row->rayonDetail as $subRow)
+                                        <li>{{ $subRow->jalan->nama }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">
-                                        @if ($row->trashed())
-                                            @if ($key === $row->getKey())
-                                                <button wire:click="restore" class="btn btn-success">Ya, Restore</button>
-                                                <button wire:click="setKey" class="btn btn-danger">Batal</button>
-                                            @else
-                                                <button wire:click="setKey({{ $row->getKey() }})"
-                                                    class="btn btn-grey">Restore</button>
-                                            @endif
+                                        @if ($key === $row->getKey())
+                                            <button wire:click="hapus" class="btn btn-warning">Ya, Hapus</button>
+                                            <button wire:click="hapusPermanen" class="btn btn-danger">Ya, Hapus
+                                                Permanen</button>
+                                            <button wire:click="setKey" class="btn btn-success">Batal</button>
                                         @else
-                                            @if ($key === $row->getKey())
-                                                <button wire:click="hapus" class="btn btn-warning">Ya, Hapus</button>
-                                                <button wire:click="hapusPermanen" class="btn btn-danger">Ya, Hapus
-                                                    Permanen</button>
-                                                <button wire:click="setKey" class="btn btn-success">Batal</button>
-                                            @else
-                                                <a href="{{ route('datamaster.tarif.denda.edit', ['key' => $row->getKey()]) }}"
-                                                    class="btn btn-info"><i class="fas fa-sm fa-pencil-alt"></i></a>
-                                                <button wire:click="setKey({{ $row->getKey() }})" class="btn btn-danger"><i
-                                                        class="fas fa-sm fa-trash-alt"></i></button>
-                                            @endif
+                                            <a href="{{ route('datamaster.regional.rayon.edit', ['key' => $row->getKey()]) }}"
+                                                class="btn btn-info"><i class="fas fa-sm fa-pencil-alt"></i></a>
+                                            <button wire:click="setKey({{ $row->getKey() }})" class="btn btn-danger"><i
+                                                    class="fas fa-sm fa-trash-alt"></i></button>
                                         @endif
                                     </div>
                                 </td>

@@ -44,12 +44,12 @@ class Buattarget extends Component
 
         DB::transaction(function ($q) {
             BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun.'-'.$this->bulan.'-01')->forceDelete();
-            $pelanggan = Pelanggan::with('rekeningAirTerakhir')->whereIn('status', [1, 3])->get();
+            $pelanggan = Pelanggan::with('bacaMeterTerakhir')->whereNotIn('id', BacaMeter::where('periode', $this->tahun.'-'.$this->bulan.'-01')->get()->pluck('pelanggan_id')->all())->whereIn('status', [1, 3])->get();
             $data = [];
             foreach ($pelanggan as $key => $row) {
                 array_push($data, [
                     'periode' => $this->tahun . '-' . $this->bulan . '-01',
-                    'stand_lalu' => $row->rekening_air_terakhir ? $row->rekening_air_terakhir->stand_ini : 0,
+                    'stand_lalu' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->stand_ini : 0,
                     'latitude' => $row->latitude,
                     'longitude' => $row->longitude,
                     'pelanggan_id' => $row->id,
@@ -66,7 +66,7 @@ class Buattarget extends Component
             }
 
             BacaMeter::where('pelanggan_id', $pelanggan->where('status', 3)->pluck('id')->all())->where('periode', $this->tahun . '-' . $this->bulan . '-01')->update([
-                'stand_ini' => 0,
+                'stand_ini' => DB::raw('stand_lalu'),
                 'status_baca' => 'PUTUS SEMENTAR PERMINTAAN SENDIRI',
                 'tanggal_baca' => now(),
             ]);

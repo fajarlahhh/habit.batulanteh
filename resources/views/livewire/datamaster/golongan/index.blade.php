@@ -61,7 +61,7 @@
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->deskripsi }}</td>
-                            <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
+                            <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">

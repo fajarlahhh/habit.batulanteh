@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Livewire\Pengaturan\Kolektifpelanggan;
+namespace App\Http\Livewire\Datamaster\Regional\Rayon;
 
+use App\Models\Jalan;
+use App\Models\Rayon;
 use Livewire\Component;
-use App\Models\Kolektif;
-use App\Models\Pelanggan;
-use App\Models\KolektifDetail;
+use App\Models\RayonDetail;
 use Illuminate\Support\Facades\DB;
 
 class Form extends Component
 {
-    public $detail = [], $nama, $keterangan, $data, $key, $dataPelanggan;
+    public $detail = [], $nama, $keterangan, $data, $key, $dataJalan;
 
     protected $queryString = ['key'];
 
@@ -18,7 +18,7 @@ class Form extends Component
         'nama' => 'required',
         'keterangan' => 'required',
         'detail' => 'required',
-        'detail.*.pelanggan_id' => 'required|numeric|distinct',
+        'detail.*.jalan_id' => 'required|numeric|distinct',
     ];
 
     public function submit()
@@ -29,24 +29,22 @@ class Form extends Component
             $this->data->keterangan = $this->keterangan;
             $this->data->save();
 
-            KolektifDetail::where('kolektif_id', $this->data->id)->delete();
-            KolektifDetail::insert(collect($this->detail)->map(fn($q) => [
-                'kolektif_id' => $this->data->id,
-                'pelanggan_id' => $q['pelanggan_id'],
-                'penanggung_jawab' => $q['penanggung_jawab'],
+            RayonDetail::where('rayon_id', $this->data->id)->delete();
+            RayonDetail::insert(collect($this->detail)->map(fn($q) => [
+                'rayon_id' => $this->data->id,
+                'jalan_id' => $q['jalan_id'],
             ])->toArray());
             session()->flash('success', 'Berhasil menyimpan data');
         });
 
-        return redirect(route('pengaturan.kolektifpelanggan'));
+        return redirect(route('datamaster.regional.rayon'));
     }
 
     public function tambahDetail()
     {
         $this->detail[] = [
-            'kolektif_id' => null,
-            'pelanggan_id' => null,
-            'penanggung_jawab' => null,
+            'rayon_id' => null,
+            'jalan_id' => null,
         ];
     }
 
@@ -62,19 +60,19 @@ class Form extends Component
 
     public function mount()
     {
-        $this->dataPelanggan = Pelanggan::all();
+        $this->dataJalan = Jalan::all();
         if ($this->key) {
-            $this->data = Kolektif::findOrFail($this->key);
+            $this->data = Rayon::findOrFail($this->key);
             $this->nama = $this->data->nama;
             $this->keterangan = $this->data->keterangan;
-            $this->detail = $this->data->kolektifDetail->toArray();
+            $this->detail = $this->data->rayonDetail->toArray();
         } else {
-            $this->data = new Kolektif();
+            $this->data = new Rayon();
         }
     }
 
     public function render()
     {
-        return view('livewire.pengaturan.kolektifpelanggan.form');
+        return view('livewire.datamaster.regional.rayon.form');
     }
 }

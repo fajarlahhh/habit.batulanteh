@@ -65,7 +65,7 @@
                             {{-- <td class="align-middle">{{ number_format($row->biaya_pemasangan) }}</td>
                             <td class="align-middle">{{ number_format($row->biaya_ganti_meter) }}</td>
                             <td class="align-middle">{{ number_format($row->biaya_pindah_meter) }}</td> --}}
-                            <td class="align-middle"><small>{!! $row->pengguna->nama !!}</small></td>
+                            <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">

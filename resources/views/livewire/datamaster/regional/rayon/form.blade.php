@@ -1,12 +1,13 @@
 <div>
-    @section('title', 'Kolektif Pelanggan')
+    @section('title', 'Rayon')
     @section('page')
-        <li class="breadcrumb-item">Pengaturan</li>
-        <li class="breadcrumb-item">Kolektif Pelanggan</li>
+        <li class="breadcrumb-item">Data Master</li>
+        <li class="breadcrumb-item">Regional</li>
+        <li class="breadcrumb-item">Rayon</li>
         <li class="breadcrumb-item active">{{ $key ? 'Edit' : 'Tambah' }} Data</li>
     @endsection
 
-    <h1 class="page-header">Kolektif Pelanggan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
+    <h1 class="page-header">Rayon <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
 
     <div wire:loading>
         <x-loading />
@@ -46,26 +47,21 @@
                                 <h4>Detail</h4>
                                 <table class="table">
                                     <tr>
-                                        <td>Pelanggan</td>
-                                        <td>Penanggung Jawab</td>
+                                        <td>Jalan</td>
                                         <td class="width-10"></td>
                                     </tr>
                                     @foreach ($detail as $key => $row)
                                         <tr>
                                             <td class="with-form-control">
                                                 <select class="form-control selectpicker" data-live-search="true"
-                                                    data-width="100%"
-                                                    wire:model="detail.{{ $key }}.pelanggan_id">
-                                                    <option selected hidden>-- Pilih Pelanggan --</option>
-                                                    @foreach ($dataPelanggan as $row)
+                                                    data-width="100%" wire:model="detail.{{ $key }}.jalan_id">
+                                                    <option selected hidden>-- Pilih Jalan --</option>
+                                                    @foreach ($dataJalan as $row)
                                                         <option value="{{ $row->getKey() }}">
-                                                            {{ $row->no_langganan . ' - ' . $row->nama }}</option>
+                                                            {{ $row->nama . ', ' . $row->kelurahan->nama . ', ' . $row->kelurahan->kecamatan->nama }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
-                                            </td>
-                                            <td class="with-form-control">
-                                                <input type="text" class="form-control"
-                                                    wire:model.defer="detail.{{ $key }}.penanggung_jawab">
                                             </td>
                                             <td class="with-btn align-middle">
                                                 <a href="javascript:;" wire:click="hapusDetail({{ $key }})"
@@ -93,7 +89,7 @@
                 @role('administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
-                <a href="{{ route('pengaturan.kolektifpelanggan') }}" class="btn btn-danger">Batal</a>
+                <a href="{{ route('datamaster.regional.rayon') }}" class="btn btn-danger">Batal</a>
             </div>
         </form>
     </div>

@@ -128,6 +128,10 @@ return [
                 'url' => '/datamaster/regional/kelurahan',
                 'id' => 'datamasterregionalkelurahan',
                 'title' => 'Kelurahan',
+            ],[
+                'url' => '/datamaster/regional/rayon',
+                'id' => 'datamasterregionalrayon',
+                'title' => 'Rayon',
             ], [
                 'url' => '/datamaster/regional/unitpelayanan',
                 'id' => 'datamasterregionalunitpelayanan',
