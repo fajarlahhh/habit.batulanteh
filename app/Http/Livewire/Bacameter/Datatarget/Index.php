@@ -31,7 +31,10 @@ class Index extends Component
     {
         return view('livewire.bacameter.datatarget.index', [
             'i' => ($this->page - 1) * 10,
-            'data' => BacaMeter::with('pengguna')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->where(fn($q) => $q->orWhereHas('pelanggan', fn($q) => $q->where('nama', 'like', '%' . $this->cari . '%')->where('no_langganan', 'like', '%' . $this->cari . '%')))->paginate(10),
-        ]);
+            'data' => BacaMeter::with('pengguna')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->where(fn ($q) => $q->orWhereHas('pelanggan', fn ($q) => $q->where('nama', 'like', '%' . $this->cari . '%')->where('no_langganan', 'like', '%' . $this->cari . '%')))->paginate(10),
+        ])
+            ->extends('livewire.main', [
+                'sidebarTwo' => true,
+            ]);
     }
 }

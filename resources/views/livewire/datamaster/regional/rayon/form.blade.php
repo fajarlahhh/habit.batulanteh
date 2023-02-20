@@ -27,6 +27,13 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
+                            <label class="control-label">Kode</label>
+                            <input class="form-control" type="text" autocomplete="off" wire:model.defer="kode" />
+                            @error('kode')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label class="control-label">Nama</label>
                             <input class="form-control" type="text" autocomplete="off" wire:model.defer="nama" />
                             @error('nama')
@@ -44,17 +51,14 @@
                     <div class="col-md-8">
                         <div class="note note-secondary">
                             <div class="note-content">
-                                <h4>Detail</h4>
+                                <h4>Jalan</h4>
                                 <table class="table">
-                                    <tr>
-                                        <td>Jalan</td>
-                                        <td class="width-10"></td>
-                                    </tr>
                                     @foreach ($detail as $key => $row)
                                         <tr>
                                             <td class="with-form-control">
                                                 <select class="form-control selectpicker" data-live-search="true"
-                                                    data-width="100%" wire:model="detail.{{ $key }}.jalan_id">
+                                                    data-width="100%"
+                                                    wire:model.defer="detail.{{ $key }}.jalan_id">
                                                     <option selected hidden>-- Pilih Jalan --</option>
                                                     @foreach ($dataJalan as $row)
                                                         <option value="{{ $row->getKey() }}">
@@ -63,14 +67,14 @@
                                                     @endforeach
                                                 </select>
                                             </td>
-                                            <td class="with-btn align-middle">
+                                            <td class="with-btn align-middle width-10">
                                                 <a href="javascript:;" wire:click="hapusDetail({{ $key }})"
-                                                    class="btn btn-xs btn-danger">x</a>
+                                                    class="btn btn-danger">X</a>
                                             </td>
                                         </tr>
                                     @endforeach
                                     <tr>
-                                        <td colspan="5" class="text-center with-btn">
+                                        <td colspan="2" class="text-center with-btn">
                                             <a href="javascript:;" class="btn btn-sm btn-primary"
                                                 wire:click="tambahDetail">Tambah</a>
                                             @error('detail')

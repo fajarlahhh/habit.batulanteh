@@ -23,6 +23,16 @@ class Pengguna extends Authenticatable
         'remember_token',
     ];
 
+    public function ruteBaca()
+    {
+        return $this->hasMany(RuteBaca::class, 'pembaca_id');
+    }
+
+    public function scopePembaca($query)
+    {
+        return $query->whereHas('ruteBaca');
+    }
+
     public function getAuthPassword()
     {
         return $this->kata_sandi;

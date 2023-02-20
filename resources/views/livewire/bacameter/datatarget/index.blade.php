@@ -122,6 +122,18 @@
         </div>
     </div>
 
+    <div id="sidebar-right" class="sidebar sidebar-right">
+        <!-- begin sidebar scrollbar -->
+        <div data-scrollbar="true" data-height="100%">
+            <!-- begin sidebar user -->
+            <ul class="nav m-t-10">
+
+            </ul>
+            <!-- end sidebar user -->
+        </div>
+        <!-- end sidebar scrollbar -->
+    </div>
+    <div class="sidebar-bg sidebar-right"></div>
     <div wire:loading>
         <x-loading />
     </div>

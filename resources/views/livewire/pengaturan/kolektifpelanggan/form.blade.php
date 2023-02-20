@@ -43,7 +43,6 @@
                     <div class="col-md-8">
                         <div class="note note-secondary">
                             <div class="note-content">
-                                <h4>Detail</h4>
                                 <table class="table">
                                     <tr>
                                         <td>Pelanggan</td>
@@ -55,7 +54,7 @@
                                             <td class="with-form-control">
                                                 <select class="form-control selectpicker" data-live-search="true"
                                                     data-width="100%"
-                                                    wire:model="detail.{{ $key }}.pelanggan_id">
+                                                    wire:model.defer="detail.{{ $key }}.pelanggan_id">
                                                     <option selected hidden>-- Pilih Pelanggan --</option>
                                                     @foreach ($dataPelanggan as $row)
                                                         <option value="{{ $row->getKey() }}">
@@ -67,14 +66,14 @@
                                                 <input type="text" class="form-control"
                                                     wire:model.defer="detail.{{ $key }}.penanggung_jawab">
                                             </td>
-                                            <td class="with-btn align-middle">
+                                            <td class="with-btn align-middle width-10">
                                                 <a href="javascript:;" wire:click="hapusDetail({{ $key }})"
-                                                    class="btn btn-xs btn-danger">x</a>
+                                                    class="btn btn-danger">X</a>
                                             </td>
                                         </tr>
                                     @endforeach
                                     <tr>
-                                        <td colspan="5" class="text-center with-btn">
+                                        <td colspan="3" class="text-center with-btn">
                                             <a href="javascript:;" class="btn btn-sm btn-primary"
                                                 wire:click="tambahDetail">Tambah</a>
                                             @error('detail')
