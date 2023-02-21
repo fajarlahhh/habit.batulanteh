@@ -53,7 +53,7 @@ class Form extends Component
                 if ($this->fotoUpload) {
                     File::delete(Storage::url($this->data->foto));
                     $namaFile = date('YmdHims') . time() . uniqid() . '.' . $this->fotoUpload->getClientOriginalExtension();
-                    Storage::putFileAs('public/bacameter', $this->fotoUpload, $namaFile);
+                    Storage::putFileAs('public/bacameter/', $this->fotoUpload, $namaFile);
                     $this->data->foto = 'public/bacameter/' . $namaFile;
                 }
                 $this->data->save();

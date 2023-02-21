@@ -52,6 +52,18 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
+                            <label for="control-label">Foto</label>
+                            <input class="form-control" type="file" accept="image/*" autocomplete="off"
+                                wire:model="fotoUpload" />
+                            @if ($data->foto)
+                            <br>
+                                <img src="{{ Storage::url($data->foto) }}" alt="" class="width-full">
+                            @endif
+                            @error('fotoUpload')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label class="control-label">No. Body WM</label>
                             <input class="form-control" type="text" autocomplete="off"
                                 wire:model.defer="noBodyWaterMeter" />
@@ -86,26 +98,14 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="control-label">Foto</label>
-                            <input class="form-control" type="file" accept="image/*" autocomplete="off"
-                                wire:model.defer="fotoUpload" />
-                            <br>
-                            @if ($data->foto)
-                                <img src="{{ Storage::url($data->foto) }}" alt="" class="width-full">
-                            @endif
-                            @error('fotoUpload')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
                     </div>
                 </div>
-                <div class="panel-footer">
-                    @role('administrator|super-admin')
-                        <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
-                    @endrole
-                    <a href="{{ route('datamaster.regional.jalan') }}" class="btn btn-danger">Batal</a>
-                </div>
+            </div>
+            <div class="panel-footer">
+                @role('administrator|super-admin')
+                    <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
+                @endrole
+                <a href="{{ route('bacameter.datatarget') }}" class="btn btn-danger">Batal</a>
             </div>
         </form>
     </div>
