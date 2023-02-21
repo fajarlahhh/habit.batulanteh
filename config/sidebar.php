@@ -65,6 +65,10 @@ return [
             'url' => '/bacameter/postingrekeningair',
             'id' => 'bacameterpostingrekeningair',
             'title' => 'Posting Rekening Air',
+        ], [
+            'url' => '/bacameter/riwayat',
+            'id' => 'bacameterriwayat',
+            'title' => 'Riwayat',
         ]],
     ], [
         'icon' => 'fas fa-file',
@@ -232,18 +236,20 @@ return [
         'url' => 'javascript:;',
         'caret' => true,
         'id' => 'tagihanrekeningair',
-        'sub_menu' => [[
-            'url' => '/tagihanrekeningair/angsuran',
-            'id' => 'tagihanrekeningairangsuran',
-            'title' => 'Angsuran',
-        ], [
-            'url' => '/tagihanrekeningair/koreksi',
-            'id' => 'tagihanrekeningairkoreksi',
-            'title' => 'Koreksi',
-        ], [
-            'url' => '/tagihanrekeningair/penerbitan',
-            'id' => 'tagihanrekeningairpenerbitan',
-            'title' => 'Penerbitan',
-        ]],
+        'sub_menu' => [
+            //     [
+            //     'url' => '/tagihanrekeningair/angsuran',
+            //     'id' => 'tagihanrekeningairangsuran',
+            //     'title' => 'Angsuran',
+            // ],
+            [
+                'url' => '/tagihanrekeningair/koreksi',
+                'id' => 'tagihanrekeningairkoreksi',
+                'title' => 'Koreksi',
+            ], [
+                'url' => '/tagihanrekeningair/penerbitan',
+                'id' => 'tagihanrekeningairpenerbitan',
+                'title' => 'Penerbitan',
+            ]],
     ]],
 ];

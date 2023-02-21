@@ -6,6 +6,7 @@
         <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
         @yield('page')
     </ol>
+    @yield ('subcontent')
     {{ $slot }}
 @endsection
 

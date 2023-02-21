@@ -153,15 +153,11 @@ class Koreksi extends Component
 
             foreach (collect($this->dataRekeningAir)->where('update', 1)->all() as $index => $row) {
                 RekeningAir::where('id', $row['rekening_air_id'])->belumBayar()->update([
+                    'stand_lalu' => $row['stand_lalu_baru'],
+                    'stand_ini' => $row['stand_ini_baru'],
                     'harga_air' => $row['harga_air_baru'],
                     'golongan_id' => $row['golongan_id_baru'],
                     'biaya_materai' => $row['biaya_materai_baru'],
-                    'pengguna_id' => auth()->id(),
-                    'updated_at' => now(),
-                ]);
-                BacaMeter::where('id', $row['baca_meter_id'])->update([
-                    'stand_lalu' => $row['stand_lalu_baru'],
-                    'stand_ini' => $row['stand_ini_baru'],
                     'pengguna_id' => auth()->id(),
                     'updated_at' => now(),
                 ]);

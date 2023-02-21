@@ -23,7 +23,10 @@
 
     @livewireStyles
 </head>
-
+@php
+	$sidebarTwo = (!empty($sidebarTwo)) ? $sidebarTwo : '';
+	$pageContainerClass = (!empty($sidebarTwo)) ? 'page-with-two-sidebar ' : '';
+@endphp
 <body>
     <!-- begin #page-loader -->
     <div id="page-loader" class="fade show">
@@ -32,7 +35,7 @@
     <!-- end #page-loader -->
 
     <!-- begin #page-container -->
-    <div id="page-container" class="fade page-sidebar-fixed page-header-fixed page-with-wide-sidebar">
+    <div id="page-container" class="fade page-sidebar-fixed page-header-fixed page-with-wide-sidebar {{ $pageContainerClass }}">
         <!-- begin #header -->
         <div id="header" class="header navbar-default">
             <!-- begin navbar-header -->

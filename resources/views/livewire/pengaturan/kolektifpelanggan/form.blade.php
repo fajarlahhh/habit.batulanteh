@@ -53,7 +53,7 @@
                                         <tr>
                                             <td class="with-form-control">
                                                 <select class="form-control selectpicker" data-live-search="true"
-                                                    data-width="100%"
+                                                    data-width="100%" data-size="10"
                                                     wire:model.defer="detail.{{ $key }}.pelanggan_id">
                                                     <option selected hidden>-- Pilih Pelanggan --</option>
                                                     @foreach ($dataPelanggan as $row)

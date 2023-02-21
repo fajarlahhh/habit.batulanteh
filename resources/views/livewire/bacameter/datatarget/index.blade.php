@@ -127,7 +127,18 @@
         <div data-scrollbar="true" data-height="100%">
             <!-- begin sidebar user -->
             <ul class="nav m-t-10">
-
+                <li class="nav-widget text-white">
+                    {{-- <div class="form-group">
+                        <input type="checkbox" wire:model="tanggal_baca_checkbox" wire:change="tanggalBaca"
+                            {{ $tanggal_baca != null ? 'checked' : '' }} value="1"
+                            style="margin-top: 2px; position: fixed;" />
+                        <label class="control-label m-l-20">Tanggal Baca</label>
+                        <div class="input-group">
+                            <input type="text" readonly class="form-control date1 form-control-sm"
+                                wire:model="tanggal_baca" {{ $tanggal_baca == null ? 'disabled' : '' }} />
+                        </div>
+                    </div> --}}
+                </li>
             </ul>
             <!-- end sidebar user -->
         </div>

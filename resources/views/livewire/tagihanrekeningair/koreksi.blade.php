@@ -37,7 +37,7 @@
                 <div class="width-full">
                     <div class="form-group">
                         <label class="control-label">Cari Pelanggan</label>
-                        <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
+                        <select class="form-control selectpicker" style="width: 100%;" data-live-search="true" data-size="10"
                             wire:model.lazy="pelangganId">
                             <option selected hidden>-- Pilih Pelanggan --</option>
                             @foreach (\App\Models\Pelanggan::all() as $row)
