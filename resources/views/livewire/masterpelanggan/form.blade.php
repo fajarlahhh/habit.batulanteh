@@ -6,7 +6,7 @@
     @endsection
 
     <h1 class="page-header">Master Pelanggan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
-
+    
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <div class="panel-heading">
             <h4 class="panel-title">Form</h4>
@@ -69,11 +69,11 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="control-label">Jalan/Gang/Perumahan</label>
+                            <label for="control-label">Jalan</label>
                             <select wire:model.defer="jalan" class="form-control selectpicker" data-width="100%"
                                 data-live-search="true">
                                 <option selected hidden>-- Pilih Jalan --</option>
-                                @foreach (\App\Models\Jalan::orderBy('nama')->get() as $row)
+                                @foreach (\App\Models\Jalan::orderBy('nama')->whereHas('rayon')->get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->nama }},
                                         {{ $row->kelurahan->nama }}, {{ $row->kelurahan->kecamatan->nama }}
                                     </option>
@@ -147,20 +147,6 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="control-label">Petugas Baca Meter</label>
-                                    <select wire:model.defer="pembaca" class="form-control selectpicker"
-                                        data-live-search="true" data-size="10" data-width="100%">
-                                        <option selected hidden>-- Pilih Petugas Baca Meter --</option>
-                                        @foreach (\App\Models\Pengguna::orderBy('nama')->get() as $row)
-                                            <option value="{{ $row->getKey() }}">{{ $row->nama }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('pembaca')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -170,11 +156,17 @@
                 @role('administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
-                <a href="{{ route('datamaster.regional.jalan') }}" class="btn btn-danger">Batal</a>
+                <a href="{{ route('masterpelanggan') }}" class="btn btn-danger">Batal</a>
             </div>
         </form>
     </div>
+
     <x-info />
+
+    <div wire:loading>
+        <x-loading />
+    </div>
+    
     @push('scripts')
         <script>
             $('.date').datepicker({

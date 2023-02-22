@@ -19,7 +19,17 @@ class BacaMeter extends Model
         return $this->belongsTo(Pelanggan::class);
     }
 
+    public function jalan()
+    {
+        return $this->belongsTo(Jalan::class);
+    }
+
     public function pengguna()
+    {
+        return $this->belongsTo(Pengguna::class)->withTrashed();
+    }
+
+    public function pembaca()
     {
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }

@@ -45,7 +45,7 @@
             </div>
             <!-- end content-bg -->
             <!-- begin container -->
-            <div class="container home-content">
+            <div class="container home-content" style="top: 40%">
                 <img src="/assets/img/logo.png" class="width-100">
                 <br>
                 <h1>Welcome to HABIT</h1>

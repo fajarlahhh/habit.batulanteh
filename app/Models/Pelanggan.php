@@ -51,11 +51,6 @@ class Pelanggan extends Model
         return $this->belongsTo(MerkWaterMeter::class);
     }
 
-    public function pembaca()
-    {
-        return $this->belongsTo(Pengguna::class)->withTrashed();
-    }
-
     public function pengguna()
     {
         return $this->belongsTo(Pengguna::class)->withTrashed();

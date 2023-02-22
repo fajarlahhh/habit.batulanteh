@@ -24,6 +24,13 @@
                 <div class="col-xl-10 col-sm-10">
                     <div class="form-inline pull-right">
                         <div class="form-group">
+                            <select class="form-control selectpicker" wire:model="statusBaca" data-style="btn-info"
+                                data-width="100%">
+                                <option value="0">BELUM BACA</option>
+                                <option value="1">SUDAH BACA</option>
+                            </select>
+                        </div>&nbsp;
+                        <div class="form-group">
                             <select class="form-control selectpicker" wire:model="bulan" data-live-search="true"
                                 data-style="btn-info" data-width="100%">
                                 @for ($m = 1; $m <= 12; $m++)
@@ -81,11 +88,9 @@
                             <td class="align-middle">{{ $row->pelanggan->no_langganan }}</td>
                             <td class="align-middle">{{ $row->pelanggan->nama }}</td>
                             <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
-                            <td class="align-middle">{{ $row->pelanggan->jalan ? $row->pelanggan->jalan->nama : '' }}
+                            <td class="align-middle">{{ $row->jalan->kelurahan->kecamatan->unitPelayanan->nama }}
                             </td>
-                            <td class="align-middle">
-                                {{ $row->pelanggan->pembaca ? $row->pelanggan->pembaca->nama : '' }}
-                            </td>
+                            <td class="align-middle">{{ $row->pembaca->nama }}</td>
                             <td class="align-middle">{{ $row->pelanggan->no_body_water_meter }}</td>
                             <td class="align-middle">{{ $row->tanggal_baca }}</td>
                             <td class="align-middle">{{ $row->stand_lalu }}</td>
@@ -128,16 +133,54 @@
             <!-- begin sidebar user -->
             <ul class="nav m-t-10">
                 <li class="nav-widget text-white">
-                    {{-- <div class="form-group">
-                        <input type="checkbox" wire:model="tanggal_baca_checkbox" wire:change="tanggalBaca"
-                            {{ $tanggal_baca != null ? 'checked' : '' }} value="1"
-                            style="margin-top: 2px; position: fixed;" />
-                        <label class="control-label m-l-20">Tanggal Baca</label>
-                        <div class="input-group">
-                            <input type="text" readonly class="form-control date1 form-control-sm"
-                                wire:model="tanggal_baca" {{ $tanggal_baca == null ? 'disabled' : '' }} />
+                    @if ($statusBaca == 1)
+                        <div class="form-group">
+                            <label class="control-label">Tanggal Baca</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control form-control"
+                                    min="{{ $tahun . '-' . $bulan . '-01' }}"
+                                    max="{{ date('Y-m-t', strtotime($tahun . '-' . $bulan . '-01')) }}"
+                                    wire:model.lazy="tanggalBaca" />
+                            </div>
                         </div>
-                    </div> --}}
+                    @endif
+                    <div class="form-group">
+                        <label class="control-label">Unit Pelayanan</label>
+                        <select class="form-control selectpicker" wire:model="unitPelayanan"
+                            data-container="#sidebar-right" data-live-search="true" data-size="10" data-width="100%">
+                            <option value="">SEMUA UNIT PELAYANAN</option>
+                            @foreach ($dataUnitPelayanan as $row)
+                                <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Rayon</label>
+                        <select class="form-control selectpicker" wire:model="rayon" data-container="#sidebar-right"
+                            data-live-search="true" data-size="10" data-width="100%">
+                            <option value="">SEMUA RAYON</option>
+                            @if ($unitPelayanan)
+                                @foreach (\App\Models\Rayon::whereHas(
+        'rayonDetail',
+        fn($q) => $q->whereIn(
+            'jalan_id',
+            \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'),
+        ),
+    )->get() as $row)
+                                    <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Pemakaian</label>
+                        <select class="form-control selectpicker" wire:model="pemakaian"
+                            data-container="#sidebar-right" data-live-search="true" data-size="10" data-width="100%">
+                            <option value="">SEMUA PEMAKAIAN</option>
+                            <option value="1">< 0</option>
+                            <option value="2">>= 0</option>
+                        </select>
+                    </div>
                 </li>
             </ul>
             <!-- end sidebar user -->
@@ -145,6 +188,7 @@
         <!-- end sidebar scrollbar -->
     </div>
     <div class="sidebar-bg sidebar-right"></div>
+
     <div wire:loading>
         <x-loading />
     </div>

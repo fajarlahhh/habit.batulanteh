@@ -15,7 +15,7 @@ class Form extends Component
     protected $queryString = ['key'];
 
     protected $rules = [
-        'kode' => 'required',
+        'kode' => 'required|digits:4',
         'nama' => 'required',
         'detail' => 'required',
         'detail.*.jalan_id' => 'required|numeric|distinct',

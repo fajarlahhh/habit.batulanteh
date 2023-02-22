@@ -73,14 +73,14 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Stand Ini</label>
-                            <input class="form-control" type="text" autocomplete="off" wire:model.defer="standIni" />
+                            <input class="form-control" type="number" autocomplete="off" wire:model.defer="standIni" />
                             @error('standIni')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label class="control-label">Tanggal Baca</label>
-                            <input class="form-control date" type="text" autocomplete="off" readonly
+                            <input class="form-control" type="date" min="{{ date('Y-m-d') }}" max="{{ date('Y-m-t') }}" autocomplete="off" 
                                 wire:model.defer="tanggalBaca" />
                             @error('tanggalBaca')
                                 <span class="text-danger">{{ $message }}</span>
@@ -98,6 +98,23 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="alert alert-warning">
+                            <h4>Diinputkan ketika ada pergantian water meter di bulan ini</h4>
+                            <div class="form-group">
+                                <label class="control-label">Stand Angkat</label>
+                                <input class="form-control" type="number" autocomplete="off" wire:model.defer="standAngkat" />
+                                @error('standAngkat')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Stand Pasang</label>
+                                <input class="form-control" type="number" autocomplete="off" wire:model.defer="standPasang" />
+                                @error('standPasang')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,7 +126,13 @@
             </div>
         </form>
     </div>
+
     <x-info />
+
+    <div wire:loading>
+        <x-loading />
+    </div>
+    
     @push('scripts')
         <script>
             $('.date').datepicker({

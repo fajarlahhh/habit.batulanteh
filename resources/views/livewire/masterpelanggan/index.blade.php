@@ -55,7 +55,6 @@
                         <th>Golongan</th>
                         <th>Diameter</th>
                         <th>Merk WM</th>
-                        <th>Pembaca</th>
                         <th>Tgl. Pasang</th>
                         <th>No. Body WM</th>
                         <th>Operator</th>
@@ -75,7 +74,6 @@
                             <td class="align-middle">{{ $row->golongan->nama }}</td>
                             <td class="align-middle">{{ $row->diameter->ukuran }}</td>
                             <td class="align-middle">{{ $row->merkWaterMeter ? $row->merkWaterMeter->merk : null }}</td>
-                            <td class="align-middle">{{ $row->pembaca ? $row->pembaca->nama : null }}</td>
                             <td class="align-middle">{{ $row->tanggal_pasang }}</td>
                             <td class="align-middle">{{ $row->no_body_water_meter }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna ? $row->pengguna->nama : null !!}</small></td>
@@ -107,6 +105,10 @@
                 <label class="pull-right">Jumlah Data : {{ $data->total() }}</label>
             </div>
         </div>
+    </div>
+
+    <div wire:loading>
+        <x-loading />
     </div>
 
     @push('scripts')

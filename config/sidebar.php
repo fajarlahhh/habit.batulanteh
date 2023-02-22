@@ -29,19 +29,21 @@ return [
             'caret' => true,
             'title' => 'Data Pembayaran',
             'id' => 'administratordatapembayaran',
-            'sub_menu' => [[
-                'url' => '/administrator/datapembayaran/angsuranrekeningair',
-                'id' => 'administratordatapembayaranangsuranrekeningair',
-                'title' => 'Angsuran Rekening Air',
-            ], [
-                'url' => '/administrator/datapembayaran/rekeningair',
-                'id' => 'administratordatapembayaranrekeningair',
-                'title' => 'Rekening Air',
-            ], [
-                'url' => '/administrator/datapembayaran/rekeningnonair',
-                'id' => 'administratordatapembayaranrekeningnonair',
-                'title' => 'Rekening Non Air',
-            ]],
+            'sub_menu' => [
+                //     [
+                //     'url' => '/administrator/datapembayaran/angsuranrekeningair',
+                //     'id' => 'administratordatapembayaranangsuranrekeningair',
+                //     'title' => 'Angsuran Rekening Air',
+                // ],
+                [
+                    'url' => '/administrator/datapembayaran/rekeningair',
+                    'id' => 'administratordatapembayaranrekeningair',
+                    'title' => 'Rekening Air',
+                ], [
+                    'url' => '/administrator/datapembayaran/rekeningnonair',
+                    'id' => 'administratordatapembayaranrekeningnonair',
+                    'title' => 'Rekening Non Air',
+                ]],
         ], [
             'url' => '/administrator/statuspelanggan',
             'id' => 'administratorstatuspelanggan',

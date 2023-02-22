@@ -17,4 +17,9 @@ class Kecamatan extends Model
     {
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }
+
+    public function unitPelayanan()
+    {
+        return $this->belongsTo(UnitPelayanan::class);
+    }
 }

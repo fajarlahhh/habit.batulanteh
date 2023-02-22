@@ -105,6 +105,10 @@
 
     <x-modal />
 
+    <div wire:loading>
+        <x-loading />
+    </div>
+
     @push('scripts')
         <script>
             Livewire.on('cetak', id => {

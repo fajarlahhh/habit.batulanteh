@@ -2,13 +2,22 @@
 
 namespace App\Http\Livewire\Masterpelanggan;
 
-use App\Models\Jalan;
 use App\Models\Pelanggan;
+use App\Models\Rayon;
 use Livewire\Component;
 
 class Form extends Component
 {
-    public $data, $key, $ktp, $status, $noLangganan, $nama, $alamat, $noHp, $tanggalPasang, $noBodyWaterMeter, $golongan, $jalan, $merkWaterMeter, $diameter, $pembaca;
+    public $data, $key, $ktp, $status, $noLangganan, $nama, $alamat, $noHp, $tanggalPasang, $noBodyWaterMeter, $golongan, $jalan, $merkWaterMeter, $diameter;
+
+    public function setArea()
+    {
+        $data = Rayon::whereHas('rayonDetail', fn($q) => $q->where('jalan_id', $this->jalan))->get();
+        if ($data->count() > 0) {
+            return $data->first()->kode;
+        }
+        return null;
+    }
 
     public function submit()
     {
@@ -24,11 +33,11 @@ class Form extends Component
             'golongan' => 'required|numeric',
             'merkWaterMeter' => 'required|numeric',
             'diameter' => 'required|numeric',
-            'pembaca' => 'required|numeric',
         ]);
 
+        $area = $this->setArea();
+
         if (!$this->key) {
-            $area = str_replace('.', '', Jalan::findOrFail($this->jalan)->kelurahan->kecamatan->kode);
             $pelanggan = Pelanggan::where('jalan_id', $this->jalan)->orderBy('id', 'desc')->first();
             $this->noLangganan = $area . '00001';
             if ($pelanggan) {
@@ -36,7 +45,7 @@ class Form extends Component
             }
             $this->data->no_langganan = $this->noLangganan;
         }
-
+        
         $this->data->ktp = $this->ktp;
         $this->data->status = $this->status;
         $this->data->nama = $this->nama;
@@ -48,7 +57,6 @@ class Form extends Component
         $this->data->jalan_id = $this->jalan;
         $this->data->merk_water_meter_id = $this->merkWaterMeter;
         $this->data->diameter_id = $this->diameter;
-        $this->data->pembaca_id = $this->pembaca;
         $this->data->save();
 
         session()->flash('success', 'Berhasil menyimpan data');
@@ -71,7 +79,6 @@ class Form extends Component
             $this->jalan = $this->data->jalan_id;
             $this->merkWaterMeter = $this->data->merk_water_meter_id;
             $this->diameter = $this->data->diameter_id;
-            $this->pembaca = $this->data->pembaca_id;
         } else {
             $this->data = new Pelanggan();
             $this->tanggalPasang = date('Y-m-d');

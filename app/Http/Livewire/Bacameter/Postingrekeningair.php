@@ -57,6 +57,11 @@ class Postingrekeningair extends Component
             $posting = false;
         }
 
+        if (BacaMeter::select('golongan_id')->whereNotIn('golongan_id', TarifProgresif::select('golongan_id')->groupBy('golongan_id')->get()->pluck('golongan_id'))->groupBy('golongan_id')->get()->count() > 0) {
+            session()->flash('danger', 'Terdapat target baca yang belum memiliki stand ini');
+            $posting = false;
+        }
+
         if ($posting == true) {
             DB::transaction(function ($q) {
                 RekeningAir::belumBayar()->whereHas('bacaMeter', fn($q) => $q->where('periode', $this->tahun . "-" . $this->bulan . "-01"))->forceDelete();
@@ -66,11 +71,12 @@ class Postingrekeningair extends Component
                 $dataRekeningAir = [];
 
                 foreach ($dataBacaMeter as $key => $row) {
+                    $pakai =  $row->stand_pasang ($row->stand_ini - $row->stand_pasang) - ($row->stand_angkat - $row->stand_lalu);
                     $hargaAir = 0;
                     $biayaMaterai = 0;
                     $biayaPpn = 0;
                     $diskon = 0;
-                    $sisa = $m3 = $row->pakai;
+                    $sisa = $m3 = $pakai;
                     $tarifProgresif = $row->pelanggan->golongan->tarifProgresif->tarifProgresifDetail;
 
                     if ($tarifProgresif->count() > 0) {

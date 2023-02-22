@@ -21,4 +21,9 @@ class Rayon extends Model
     {
         return $this->hasMany(RayonDetail::class);
     }
+
+    public function ruteBaca()
+    {
+        return $this->hasONe(RuteBaca::class);
+    }
 }

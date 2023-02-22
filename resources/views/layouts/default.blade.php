@@ -246,7 +246,7 @@
     <script src="/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
     <script>
         $(document).ready(function() {
-            $(".alert").fadeTo(4000, 500).slideUp(500, function() {
+            $(".alert-session").fadeTo(4000, 500).slideUp(500, function() {
                 $(this).slideUp(500);
             });
         });

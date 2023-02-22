@@ -21,9 +21,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::group(['middleware' => ['role_or_permission:administrator|administratordatapembayaranrekeningair']], function () {
                 Route::get('/rekeningair', \App\Http\Livewire\Administrator\Datapembayaran\Rekeningair::class)->name('administrator.datapembayaran.rekeningair');
             });
-            Route::group(['middleware' => ['role_or_permission:administrator|administratordatapembayaranangsuranrekeningair']], function () {
-                Route::get('/angsuranrekeningair', \App\Http\Livewire\Administrator\Datapembayaran\Angsuranrekeningair::class)->name('administrator.datapembayaran.angsuranrekeningair');
-            });
+            // Route::group(['middleware' => ['role_or_permission:administrator|administratordatapembayaranangsuranrekeningair']], function () {
+            //     Route::get('/angsuranrekeningair', \App\Http\Livewire\Administrator\Datapembayaran\Angsuranrekeningair::class)->name('administrator.datapembayaran.angsuranrekeningair');
+            // });
             Route::group(['middleware' => ['role_or_permission:administrator|administratordatapembayaranrekeningnonair']], function () {
                 Route::get('/rekeningnonair', \App\Http\Livewire\Administrator\Datapembayaran\Rekeningnonair::class)->name('administrator.datapembayaran.rekeningnonair');
             });

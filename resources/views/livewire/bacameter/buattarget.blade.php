@@ -14,11 +14,7 @@
 
     <x-alert />
 
-    <div wire:loading>
-        <x-loading />
-    </div>
-
-    <div class="panel panel-inverse" wire:loading.remove wire:target="submit" data-sortable-id="form-stuff-1">
+    <div class="panel panel-inverse" wire:target="submit" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
         <div class="panel-heading ui-sortable-handle">
             <h4 class="panel-title">Form</h4>
@@ -73,7 +69,12 @@
             </div>
         </form>
     </div>
+
     <x-info />
+
+    <div wire:loading>
+        <x-loading />
+    </div>
     @push('scripts')
         <script>
             Livewire.on('reinitialize', id => {

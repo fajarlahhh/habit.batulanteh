@@ -22,4 +22,9 @@ class Jalan extends Model
     {
         return $this->belongsTo(Kelurahan::class);
     }
+
+    public function rayonDetail()
+    {
+        return $this->hasOne(RayonDetail::class);
+    }
 }

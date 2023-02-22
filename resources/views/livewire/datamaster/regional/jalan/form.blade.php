@@ -1,13 +1,13 @@
 <div>
-    @section('title', 'Jalan/Gang/Perumahan')
+    @section('title', 'Jalan')
     @section('page')
         <li class="breadcrumb-item">Data Master</li>
         <li class="breadcrumb-item">Regional</li>
-        <li class="breadcrumb-item">Jalan/Gang/Perumahan</li>
+        <li class="breadcrumb-item">Jalan</li>
         <li class="breadcrumb-item active">{{ $key ? 'Edit' : 'Tambah' }} Data</li>
     @endsection
 
-    <h1 class="page-header">Jalan/Gang/Perumahan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
+    <h1 class="page-header">Jalan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
 
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
@@ -46,8 +46,6 @@
                     <select wire:model.defer="jenis" class="form-control selectpicker" data-width="100%">
                         <option selected hidden>-- Pilih Jenis --</option>
                         <option value="Jalan">Jalan</option>
-                        <option value="Gang">Gang</option>
-                        <option value="Perumahan">Perumahan</option>
                     </select>
                     @error('jenis')
                         <span class="text-danger">{{ $message }}</span>

@@ -137,11 +137,11 @@
         </form>
     </div>
 
+    <x-info />
+
     <div wire:loading>
         <x-loading />
     </div>
-
-    <x-info />
 
     @push('scripts')
         <script>

@@ -1,8 +1,4 @@
 <div>
-    <div wire:loading>
-        <x-loading />
-    </div>
-
     <div class="login-content">
         <form wire:submit.prevent="submit" class="margin-bottom-0">
             <div class="form-group m-b-15">
@@ -31,5 +27,9 @@
                 &copy; Color Admin All Right Reserved 2020
             </p>
         </form>
+    </div>
+
+    <div wire:loading>
+        <x-loading />
     </div>
 </div>

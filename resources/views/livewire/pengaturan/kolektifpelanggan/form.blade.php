@@ -8,10 +8,6 @@
 
     <h1 class="page-header">Kolektif Pelanggan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
 
-    <div wire:loading>
-        <x-loading />
-    </div>
-
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
         <div class="panel-heading">
@@ -98,6 +94,10 @@
     </div>
 
     <x-info />
+
+    <div wire:loading>
+        <x-loading />
+    </div>
 
     @push('scripts')
         <script>

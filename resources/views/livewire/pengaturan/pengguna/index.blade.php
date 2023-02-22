@@ -110,6 +110,10 @@
         </div>
     </div>
 
+    <div wire:loading>
+        <x-loading />
+    </div>
+
     @push('scripts')
         <script>
             Livewire.on('reinitialize', id => {
