@@ -121,10 +121,10 @@
                         <tr>
                             <td class="text-nowrap width-100">Golongan</td>
                             <td class="width-10">:</td>
-                            <td>{{ $pelanggan ? $pelanggan->golongan->nama . ' - ' . $pelanggan->golongan->keterangan : null }}
+                            <td>{{ $pelanggan ? $pelanggan->golongan->nama . ' - ' . $pelanggan->golongan->deskripsi : null }}
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-nowrap width-100">Angsuran</td>
                             <td class="width-10">:</td>
                             <td>{!! $pelanggan
@@ -132,7 +132,7 @@
                                     ? "<strong class='text-danger'>YA</strong>"
                                     : null)
                                 : null !!}</td>
-                        </tr>
+                        </tr> --}}
                     </table>
                 </div>
                 <div class="col-lg-6">
@@ -144,18 +144,37 @@
                                 </th>
                             </tr>
                             <tr>
-                            <tr>
                                 <td class="text-nowrap width-100">Jalan</td>
                                 <td class="width-10">:</td>
                                 <td>
-                                    {{ $pelanggan && $pelanggan->jalan ? $pelanggan->jalan->nama . ', ' . $pelanggan->jalan->kelurahan->nama . ', ' . $pelanggan->jalan->kelurahan->kecamatan->nama . ', ' . $pelanggan->jalan->kelurahan->kecamatan->kabupaten->nama : null }}
+                                    {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->nama : null }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-nowrap width-100">Kelurahan</td>
+                                <td class="width-10">:</td>
+                                <td>
+                                    {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->kelurahan->nama  : null }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-nowrap width-100">Kecamatan</td>
+                                <td class="width-10">:</td>
+                                <td>
+                                    {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->kelurahan->kecamatan->nama : null }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-nowrap width-100">Rayon</td>
+                                <td class="width-10">:</td>
+                                <td>
+                                    {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->rayonDetail->rayon->nama : null }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-nowrap width-100">Pembaca Meter</td>
                                 <td class="width-10">:</td>
-                                <td>{{ $pelanggan && $pelanggan->pembaca ? $pelanggan->pembaca->nama : null }}</td>
-                            </tr>
+                                <td>{{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->rayonDetail->rayon->ruteBaca->pembaca->nama : null }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3">

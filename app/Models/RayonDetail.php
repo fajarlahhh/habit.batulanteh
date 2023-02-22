@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\PenggunaTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RayonDetail extends Model
 {
-    use HasFactory;
+    use HasFactory, PenggunaTrait;
 
     protected $table = 'rayon_detail';
-    public $timestamps = false;
 
     protected $fillable = [
         'rayon_id', 'jalan_id'
