@@ -41,7 +41,6 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                @if ($key)
                 <div class="row">
                     <div class="col-md-5">
                         <div class="note note-secondary">
@@ -83,7 +82,7 @@
                     <div class="col-md-5">
                         <div class="note note-secondary">
                             <div class="note-content">
-                                <h4>Data Jalan di Rayon {{$nama}}</h4>
+                                <h4>Data Jalan di Rayon Ini</h4>
                                 <div class="table-responsive height-400">
                                     <table class="table">
                                         <thead>
@@ -115,7 +114,6 @@
                         </div>
                     </div>
                 </div>
-                @endif
             </div>
             <div class="panel-footer">
                 @role('administrator|super-admin')

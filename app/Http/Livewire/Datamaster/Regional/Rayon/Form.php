@@ -46,7 +46,6 @@ class Form extends Component
         $data = collect($this->dataJalan)->where('jalan_id', $jalan)->first();
         unset($this->dataJalan[$id]);
         $this->detail[] = [
-            'rayon_id' => null,
             'jalan_id' => $jalan,
             'nama' => $data['nama'],
             'nama_kelurahan' => $data['nama_kelurahan'],

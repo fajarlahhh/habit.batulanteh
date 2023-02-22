@@ -49,8 +49,7 @@
                     <tr>
                         <th class="width-60">No.</th>
                         <th>UID</th>
-                        <th>Nama</th>
-                        <th>Deskripsi</th>
+                        <th>Nama Petugas</th>
                         <th>Rayon</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
@@ -62,8 +61,7 @@
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle">{{ $row->uid }}</td>
-                            <td class="align-middle">{{ $row->nama }}</td>
-                            <td class="align-middle">{{ $row->deskripsi }}</td>
+                            <td class="align-middle">{{ $row->nama }} - {{ $row->deskripsi }}</td>
                             <td class="align-middle">
                                 <ul>
                                     @foreach ($row->ruteBaca as $subRow)

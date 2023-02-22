@@ -32,21 +32,30 @@ class Form extends Component
                 'created_at' => now(),
                 'updated_at' => now(),
             ])->toArray());
+            session()->flash('success', 'Berhasil menyimpan data');
         });
 
         return redirect(route('datamaster.regional.rutebaca'));
     }
 
-    public function tambahDetail()
+    public function tambahDetail($id, $rayon)
     {
+        $data = collect($this->dataRayon)->where('rayon_id', $rayon)->first();
+        unset($this->dataRayon[$id]);
         $this->detail[] = [
-            'rayon_id' => null,
+            'rayon_id' => $rayon,
+            'nama' => $data['nama'],
         ];
     }
 
-    public function hapusDetail($i)
+    public function hapusDetail($id, $rayon)
     {
-        unset($this->detail[$i]);
+        $data = collect($this->detail)->where('rayon_id', $rayon)->first();
+        unset($this->detail[$id]);
+        $this->dataRayon[] = [
+            'rayon_id' => $rayon,
+            'nama' => $data['nama'],
+        ];
     }
 
     public function booted()
@@ -56,12 +65,18 @@ class Form extends Component
 
     public function mount()
     {
-        $this->dataRayon = Rayon::all();
+        $this->dataRayon = Rayon::whereNotIn('id', RuteBaca::all()->pluck('rayon_id'))->get()->map(fn($q) => [
+            'rayon_id' => $q->id,
+            'nama' => $q->nama,
+        ])->toArray();
         $this->dataPengguna = Pengguna::whereNotIn('id', RuteBaca::all()->pluck('pembaca_id')->all())->get();
         if ($this->key) {
             $this->data = Pengguna::findOrFail($this->key);
             $this->pembacaId = $this->data->id;
-            $this->detail = $this->data->ruteBaca->toArray();
+            $this->detail = $this->data->ruteBaca->map(fn($q) => [
+                'rayon_id' => $q->id,
+                'nama' => $q->rayon->nama,
+            ])->toArray();
         }
     }
 
