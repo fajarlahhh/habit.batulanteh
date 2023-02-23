@@ -95,7 +95,7 @@
                             <td class="align-middle">{{ $row->tanggal_baca }}</td>
                             <td class="align-middle">{{ $row->stand_lalu }}</td>
                             <td class="align-middle">{{ $row->stand_ini }}</td>
-                            <td class="align-middle">{{ $row->stand_ini - $row->stand_lalu }}</td>
+                            <td class="align-middle">{{ $row->stand_ini || $row->stand_lalu ? $row->stand_ini - $row->stand_pasang + $row->stand_angkat - $row->stand_lalu : $row->stand_ini - $row->stand_lalu }}</td>
                             <td class="align-middle">{{ $row->status_baca }}</td>
                             <td class="align-middle">
                                 @if ($row->foto)

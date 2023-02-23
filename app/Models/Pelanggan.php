@@ -61,6 +61,11 @@ class Pelanggan extends Model
         return $this->hasMany(BacaMeter::class)->orderBy('periode', 'asc');
     }
 
+    public function rekeningAir()
+    {
+        return $this->hasMany(RekeningAir::class)->orderBy('periode', 'asc');
+    }
+
     public function tagihan()
     {
         return $this->hasMany(BacaMeter::class)->whereHas('rekeningAir')->orderBy('periode', 'desc');

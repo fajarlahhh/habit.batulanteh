@@ -14,7 +14,7 @@
 
     <x-alert />
 
-    <div class="panel panel-inverse" wire:loading.remove wire:target="submit" data-sortable-id="form-stuff-1">
+    <div class="panel panel-inverse" wire:target="submit" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
         <div class="panel-heading ui-sortable-handle">
             <h4 class="panel-title">Form</h4>
@@ -57,14 +57,9 @@
                     @enderror
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer" wire:loading.remove>
                 @role('user|administrator|super-admin')
-                    @if ($proses)
-                        <input type="submit" value="Lanjutkan" class="btn btn-success" />
-                        <a href="javascript:;" class="btn btn-danger" wire:click="setProses">Batal</a>
-                    @else
-                        <a href="javascript:;" class="btn btn-success" wire:click="setProses(1)">Submit</a>
-                    @endif
+                <input type="submit" value="Submit" class="btn btn-success" />
                 @endrole
             </div>
         </form>
@@ -75,7 +70,7 @@
     <div wire:loading>
         <x-loading />
     </div>
-    
+
     @push('scripts')
         <script>
             Livewire.on('reinitialize', id => {

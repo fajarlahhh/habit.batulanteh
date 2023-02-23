@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class Koreksi extends Component
 {
-    public $pelanggan, $catatan, $pelangganId, $dataRekeningAir = [], $tahun, $dataTarifProgresif, $dataTarifMaterai, $dataBacaMeter;
+    public $pelanggan, $catatan, $pelangganId, $dataRekeningAir = [], $tahun, $dataTarifProgresif, $dataTarifMaterai;
 
     public function mount()
     {
@@ -36,22 +36,26 @@ class Koreksi extends Component
 
     public function setPelanggan()
     {
-        $this->pelanggan = Pelanggan::with(['bacaMeter' => fn($q) => $q->with(['rekeningAir' => fn($r) => $r->with('golongan')->with('angsuranRekeningAirPeriode')])->whereHas('rekeningAir')])->with('angsuranRekeningAir.angsuranRekeningAirDetail')->findOrFail($this->pelangganId);
-        $this->dataBacaMeter = $this->pelanggan->bacaMeter;
+        $this->pelanggan = Pelanggan::with('rekeningAir.golongan')->findOrFail($this->pelangganId);
+        $this->dataRekeningAir = $this->pelanggan->rekeningAir;
         $this->setDataRekeningAir();
     }
 
     public function setDataRekeningAir()
     {
         $this->dataRekeningAir = [];
-        $this->dataRekeningAir = $this->dataBacaMeter->filter(fn($q) => false !== stristr($q->periode, $this->tahun))->map(fn($q) => [
+        $this->dataRekeningAir = collect($this->dataRekeningAir)->filter(fn($q) => false !== stristr($q->periode, $this->tahun))->map(fn($q) => [
             'periode' => $q->periode,
             'stand_lalu_lama' => $q->stand_lalu,
             'stand_ini_lama' => $q->stand_ini,
-            'harga_air_lama' => $q->rekeningAir->harga_air,
-            'biaya_materai_lama' => $q->rekeningAir->biaya_materai,
+            'stand_angkat_lama' => $q->stand_angkat,
+            'stand_pasang_lama' => $q->stand_pasang,
+            'harga_air_lama' => $q->harga_air,
+            'biaya_materai_lama' => $q->biaya_materai,
             'stand_lalu_baru' => $q->stand_lalu,
             'stand_ini_baru' => $q->stand_ini,
+            'stand_angkat_baru' => $q->stand_angkat,
+            'stand_pasang_baru' => $q->stand_pasang,
             'harga_air_baru' => $q->rekeningAir->harga_air,
             'biaya_materai_baru' => $q->rekeningAir->biaya_materai,
             'biaya_lainnya' => $q->rekeningAir->biaya_lainnya,

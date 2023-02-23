@@ -9,7 +9,6 @@ use App\Models\RekeningAir;
 use App\Models\TarifDenda;
 use App\Models\TarifMaterai;
 use App\Models\TarifProgresif;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -26,20 +25,6 @@ class Postingrekeningair extends Component
         $this->tarifMaterai = TarifMaterai::where('tanggal_berlaku', '<=', date('Y-m-d'))->orderBy('tanggal_berlaku', 'desc')->first();
     }
 
-    public function setProses($proses = null)
-    {
-        $this->validate([
-            "bulan" => "required",
-            "tahun" => "required",
-        ]);
-
-        if (RekeningAir::whereHas('bacaMeter', fn($q) => $q->where('periode', $this->tahun . "-" . $this->bulan . "-01"))->count() > 0) {
-            session()->flash('danger', 'Data rekening air periode ' . $this->tahun . '-' . $this->bulan . ' ini sudah ada');
-        }
-
-        $this->proses = $proses;
-    }
-
     public function submit()
     {
         ini_set('max_execution_time', 0);
@@ -52,12 +37,18 @@ class Postingrekeningair extends Component
         ]);
         $posting = true;
 
-        if (Pelanggan::select('golongan_id')->whereNotIn('golongan_id', TarifProgresif::select('golongan_id')->groupBy('golongan_id')->get()->pluck('golongan_id'))->groupBy('golongan_id')->get()->count() > 0) {
-            session()->flash('danger', 'Terdapat golongan pelanggan yang tidak memiliki tarif progresif');
+        $golongan = Pelanggan::whereNotIn('golongan_id', TarifProgresif::select('golongan_id')->groupBy('golongan_id')->get()->pluck('golongan_id'))->get();
+        if ($golongan->count() > 0) {
+            session()->flash('danger', 'Tarif pelanggan ' . $golongan->pluck('no_langganan')->implode(', ') . ' tidak ada');
             $posting = false;
         }
 
-        if (BacaMeter::select('golongan_id')->whereNotIn('golongan_id', TarifProgresif::select('golongan_id')->groupBy('golongan_id')->get()->pluck('golongan_id'))->groupBy('golongan_id')->get()->count() > 0) {
+        if (RekeningAir::withoutGlobalScopes()->where('periode', $this->tahun . "-" . $this->bulan . "-01")->count() > 0) {
+            session()->flash('danger', 'Data rekening air periode ' . $this->tahun . '-' . $this->bulan . ' ini sudah ada');
+            $posting = false;
+        }
+
+        if (BacaMeter::whereNull('stand_ini')->get()->count() > 0) {
             session()->flash('danger', 'Terdapat target baca yang belum memiliki stand ini');
             $posting = false;
         }
@@ -66,12 +57,12 @@ class Postingrekeningair extends Component
             DB::transaction(function ($q) {
                 RekeningAir::belumBayar()->whereHas('bacaMeter', fn($q) => $q->where('periode', $this->tahun . "-" . $this->bulan . "-01"))->forceDelete();
 
-                $dataBacaMeter = BacaMeter::whereHas('rekeningAir', fn($q) => $q->belumBayar())->with('pelanggan.golongan.tarifProgresif.tarifProgresifDetail')->with('pelanggan.diameter.tarifMeterAir.tarifMeterAirDetail')->with('pelanggan.tarifLainnya.tarifLainnyaDetail')->where('periode', $this->tahun . "-" . $this->bulan . "-01")->get();
+                $dataBacaMeter = BacaMeter::with('pelanggan.golongan.tarifProgresif.tarifProgresifDetail')->with('pelanggan.diameter.tarifMeterAir.tarifMeterAirDetail')->with('pelanggan.tarifLainnya.tarifLainnyaDetail')->where('periode', $this->tahun . "-" . $this->bulan . "-01")->get();
 
                 $dataRekeningAir = [];
 
                 foreach ($dataBacaMeter as $key => $row) {
-                    $pakai =  $row->stand_pasang ($row->stand_ini - $row->stand_pasang) - ($row->stand_angkat - $row->stand_lalu);
+                    $pakai = $row->stand_pasang || $row->stand_angkat ? ($row->stand_ini - $row->stand_pasang) + ($row->stand_angkat - $row->stand_lalu) : $row->stand_ini - $row->stand_lalu;
                     $hargaAir = 0;
                     $biayaMaterai = 0;
                     $biayaPpn = 0;
@@ -103,16 +94,24 @@ class Postingrekeningair extends Component
                         }
                     }
 
+                    if (!$row->pelanggan->diameter) {
+                        dd($row->pelanggan);
+                    }
                     $biayaLainnya = $row->pelanggan->tarifLainnya ? $row->pelanggan->tarifLainnya->tarifLainnyaDetail->sum('nilai') : 0;
                     $biayaMeterAir = $row->pelanggan->diameter->tarifMeterAir ? $row->pelanggan->diameter->tarifMeterAir->tarifMeterAirDetail->sum('nilai') : 0;
 
-                    if ($this->tarifMaterai->count() > 0) {
+                    if ($this->tarifMaterai) {
                         if ($hargaAir >= $this->tarifMaterai->min_harga_air) {
                             $biayaMaterai = $this->tarifMaterai->nilai;
                         }
                     }
 
                     array_push($dataRekeningAir, [
+                        'periode' => $this->tahun . '-' . $this->bulan . '-01',
+                        'stand_lalu' => $row->stand_lalu,
+                        'stand_ini' => $row->stand_ini,
+                        'stand_angkat' => $row->stand_angkat,
+                        'stand_pasang' => $row->stand_pasang,
                         'harga_air' => $hargaAir,
                         'biaya_denda' => 0,
                         'biaya_lainnya' => $biayaLainnya,
@@ -123,8 +122,9 @@ class Postingrekeningair extends Component
                         'golongan_id' => $row->pelanggan->golongan_id,
                         'baca_meter_id' => $row->id,
                         'jalan_id' => $row->pelanggan->jalan_id,
+                        'pelanggan_id' => $row->pelanggan_id,
+                        'rayon_id' => $row->rayon_id,
                         'tarif_denda_id' => $this->tarifDenda ? $this->tarifDenda->id : null,
-                        'tarif_lainnya_id' => $row->pelanggan->tarif_lainnya_id,
                         'tarif_materai_id' => $this->tarifMaterai ? $this->tarifMaterai->id : null,
                         'tarif_meter_air_id' => $row->pelanggan->diameter->tarifMeterAir ? $row->pelanggan->diameter->tarifMeterAir->id : null,
                         'tarif_progresif_id' => $row->pelanggan->golongan->tarifProgresif->id,
@@ -135,40 +135,34 @@ class Postingrekeningair extends Component
                 }
 
                 $rekeningAir = collect($dataRekeningAir)->chunk(2000);
-
                 foreach ($rekeningAir as $row) {
                     RekeningAir::insert($row->toArray());
                 }
-
                 Ira::where('periode', $this->tahun . '-' . $this->bulan . '-01')->delete();
 
-                $dataRekening = Pelanggan::where('tanggal_pasang', '<', Carbon::parse($this->tahun . '-' . $this->bulan . '-01')->format('Y-m-d'))->with(['bacaMeterTerakhir' => fn($q) => $q->where('periode', $this->tahun . '-' . $this->bulan . '-01')])->with('bacaMeterTerakhir.rekeningAir')->with('jalan')->get();
+                $ira = collect($dataRekeningAir)->map(fn($q) => [
+                    'periode' => $this->tahun . '-' . $this->bulan . '-01',
+                    'stand_lalu' => $q['stand_lalu'],
+                    'stand_ini' => $q['stand_ini'],
+                    'stand_angkat' => $q['stand_angkat'],
+                    'stand_pasang' => $q['stand_pasang'],
+                    'harga_air' => $q['harga_air'],
+                    'biaya_denda' => $q['biaya_denda'],
+                    'biaya_lainnya' => $q['biaya_lainnya'],
+                    'biaya_meter_air' => $q['biaya_meter_air'],
+                    'biaya_materai' => $q['biaya_materai'],
+                    'biaya_ppn' => $q['biaya_ppn'],
+                    'diskon' => $q['diskon'],
+                    'golongan_id' => $q['golongan_id'],
+                    'jalan_id' => $q['jalan_id'],
+                    'rayon_id' => $q['rayon_id'],
+                    'pelanggan_id' => $q['pelanggan_id'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ])->chunk(1000);
 
-                $dataIra = [];
-                foreach ($dataRekening as $row) {
-                    array_push($dataIra, [
-                        'status_pelanggan' => $row->status,
-                        'periode' => $this->tahun . '-' . $this->bulan . '-01',
-                        'stand_lalu' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->stand_lalu : null,
-                        'stand_ini' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->stand_ini : null,
-                        'harga_air' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->harga_air : 0,
-                        'biaya_denda' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_denda : 0,
-                        'biaya_lainnya' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_lainnya : 0,
-                        'biaya_meter_air' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_meter_air : 0,
-                        'biaya_materai' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_materai : 0,
-                        'biaya_ppn' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->biaya_ppn : 0,
-                        'diskon' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->diskon : 0,
-                        'golongan_id' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->golongan_id : 0,
-                        'jalan_id' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->rekeningAir->jalan_id : 0,
-                        'pelanggan_id' => $row->getKey(),
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
-                }
-
-                $chunk = collect($dataIra)->chunk(1000);
-                foreach ($chunk as $rekap) {
-                    Ira::insert($rekap->toArray());
+                foreach ($ira as $row) {
+                    Ira::insert($row->toArray());
                 }
 
                 session()->flash('success', 'Data rekening air dan IRA periode ' . $this->tahun . '-' . $this->bulan . ' berhasil diposting');

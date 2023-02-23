@@ -17,6 +17,11 @@ class RekeningAir extends Model
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }
 
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
+
     public function jalan()
     {
         return $this->belongsTo(Jalan::class)->withTrashed();
@@ -75,7 +80,7 @@ class RekeningAir extends Model
     protected static function booted()
     {
         static::addGlobalScope('periode', function (Builder $builder) {
-            $builder->whereHas('bacaMeter', fn($q) => $q->where('periode', '<', date('Y-m-01')));
+            $builder->where('periode', '<', date('Y-m-01'));
         });
     }
 }

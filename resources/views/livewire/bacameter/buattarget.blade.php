@@ -57,7 +57,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer" wire:loading.remove>
                 @role('user|administrator|super-admin')
                     @if ($proses)
                         <input type="submit" value="Lanjutkan" class="btn btn-success" />

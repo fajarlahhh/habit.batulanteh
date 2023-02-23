@@ -19,7 +19,7 @@ class Kolektif extends Component
     {
         $this->dataRekeningAir = [];
         $this->dataAngsuranRekeningAir = [];
-        $this->dataPelanggan = Pelanggan::whereHas('kolektifDetail', fn($q) => $q->where('kolektif_id', $this->kolektifId))->with(['bacaMeter' => fn($q) => $q->with(['rekeningAir' => fn($r) => $r->with('golongan')->with('angsuranRekeningAirPeriode')])->whereHas('rekeningAir', fn($q) => $q->belumBayar())])->with(['angsuranRekeningAir' => fn($q) => $q->belumLunas()->with(['angsuranRekeningAirDetail' => fn($r) => $r->belumBayar()])])->get();
+        $this->dataPelanggan = Pelanggan::whereHas('kolektifDetail', fn($q) => $q->where('kolektif_id', $this->kolektifId))->with('rekeningAir', fn($q) => $q->belumBayar()->with('golongan'))->get();
         $this->setDataRekeningAir();
         $this->setDataAngsuranRekeningAir();
     }
@@ -27,12 +27,11 @@ class Kolektif extends Component
     public function setDataRekeningAir()
     {
         foreach ($this->dataPelanggan as $key => $row) {
-            foreach ($row->bacaMeter->whereNotIn('baca_meter_id', collect($this->dataRekeningAir)->pluck('baca_meter_id'))->all() as $key => $subRow) {
+            foreach ($row->bacaMeter->whereNotIn('id', collect($this->dataRekeningAir)->pluck('id'))->all() as $key => $subRow) {
                 $periode = new Carbon($subRow->periode);
                 $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $subRow->rekeningAir->tarifDenda->nilai : 0;
                 $this->dataRekeningAir[] = [
-                    'baca_meter_id' => $subRow->id,
-                    'rekening_air_id' => $subRow->rekeningAir->id,
+                    'id' => $subRow->id,
                     'pelanggan_id' => $subRow->pelanggan_id,
                     'no_langganan' => $subRow->pelanggan->no_langganan,
                     'nama' => $subRow->pelanggan->nama,
@@ -76,7 +75,7 @@ class Kolektif extends Component
         ]);
         DB::transaction(function () {
             foreach (collect($this->dataRekeningAir)->where('angsur', 0)->all() as $key => $row) {
-                RekeningAir::where('id', $row['rekening_air_id'])->whereNull('waktu_bayar')->update([
+                RekeningAir::where('id', $row['id'])->whereNull('waktu_bayar')->update([
                     'kasir' => auth()->user()->uid,
                     'waktu_bayar' => now(),
                     'biaya_denda' => $row['denda'],
@@ -102,7 +101,7 @@ class Kolektif extends Component
             }
 
             $cetak = view('cetak.nota-rekeningair', [
-                'dataRekeningAir' => RekeningAir::with('bacaMeter')->whereIn('id', collect($this->dataRekeningAir)->where('angsur', 0)->pluck('rekening_air_id')->all())->sudahBayar()->get(),
+                'dataRekeningAir' => RekeningAir::with('bacaMeter')->whereIn('id', collect($this->dataRekeningAir)->where('angsur', 0)->pluck('id')->all())->sudahBayar()->get(),
                 'dataAngsuranRekeningAir' => AngsuranRekeningAirDetail::with('angsuranRekeningAir')
                     ->whereIn('urutan', collect($this->dataAngsuranRekeningAir)->pluck('urutan')->all())
                     ->whereIn('angsuran_rekening_air_id', collect($this->dataAngsuranRekeningAir)->pluck('angsuran_rekening_air_id')->all())

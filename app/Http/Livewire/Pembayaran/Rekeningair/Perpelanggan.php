@@ -22,7 +22,7 @@ class Perpelanggan extends Component
 
     public function setPelanggan()
     {
-        $this->pelanggan = Pelanggan::with(['bacaMeter' => fn($q) => $q->with(['rekeningAir' => fn($r) => $r->with('golongan')->with('angsuranRekeningAirPeriode')])->whereHas('rekeningAir', fn($q) => $q->belumBayar())])->with(['angsuranRekeningAir' => fn($q) => $q->belumLunas()->with(['angsuranRekeningAirDetail' => fn($r) => $r->belumBayar()])])->findOrFail($this->pelangganId);
+        $this->pelanggan = Pelanggan::with(['rekeningAir' => fn($r) => $r->belumBayar()->with('golongan')])->findOrFail($this->pelangganId);
         $this->setDataRekeningAir();
         $this->setDataAngsuranRekeningAir();
         $this->reset(['pelangganId']);
@@ -30,22 +30,21 @@ class Perpelanggan extends Component
 
     public function setDataRekeningAir()
     {
-        if ($this->pelanggan->bacaMeter->count() > 0) {
-            foreach ($this->pelanggan->bacaMeter->whereNotIn('baca_meter_id', collect($this->dataRekeningAir)->pluck('baca_meter_id'))->all() as $key => $row) {
+        if ($this->pelanggan->rekeningAir->count() > 0) {
+            foreach ($this->pelanggan->rekeningAir->whereNotIn('id', collect($this->dataRekeningAir)->pluck('id'))->all() as $key => $row) {
                 $periode = new Carbon($row->periode);
                 $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->rekeningAir->tarifDenda->nilai : 0;
                 $this->dataRekeningAir[] = [
-                    'baca_meter_id' => $row->id,
-                    'rekening_air_id' => $row->rekeningAir->id,
+                    'id' => $row->id,
                     'pelanggan_id' => $row->pelanggan_id,
                     'no_langganan' => $row->pelanggan->no_langganan,
                     'nama' => $row->pelanggan->nama,
                     'alamat' => $row->pelanggan->alamat,
                     'periode' => $row->periode,
-                    'golongan' => $row->rekeningAir->golongan->nama,
-                    'angsur' => $row->rekeningAir->angsuranRekeningAirPeriode ? 1 : 0,
+                    'golongan' => $row->golongan->nama,
+                    'angsur' => $row->angsuranRekeningAirPeriode ? 1 : 0,
                     'pakai' => $row->stand_ini - $row->stand_lalu,
-                    'tagihan' => $row->rekeningAir->harga_air + $row->rekeningAir->biaya_denda + $row->rekeningAir->biaya_lainnya + $row->rekeningAir->biaya_meter_air + $row->rekeningAir->biaya_materai,
+                    'tagihan' => $row->harga_air + $row->biaya_denda + $row->biaya_lainnya + $row->biaya_meter_air + $row->biaya_materai,
                     'denda' => $denda,
                 ];
             }
@@ -79,7 +78,7 @@ class Perpelanggan extends Component
         ]);
         DB::transaction(function () {
             foreach (collect($this->dataRekeningAir)->where('angsur', 0)->all() as $key => $row) {
-                RekeningAir::where('id', $row['rekening_air_id'])->whereNull('waktu_bayar')->update([
+                RekeningAir::where('id', $row['id'])->whereNull('waktu_bayar')->update([
                     'kasir' => auth()->user()->uid,
                     'waktu_bayar' => now(),
                     'biaya_denda' => $row['denda'],
@@ -105,7 +104,7 @@ class Perpelanggan extends Component
             }
 
             $cetak = view('cetak.nota-rekeningair', [
-                'dataRekeningAir' => RekeningAir::with('bacaMeter')->whereIn('id', collect($this->dataRekeningAir)->where('angsur', 0)->pluck('rekening_air_id')->all())->sudahBayar()->get(),
+                'dataRekeningAir' => RekeningAir::with('bacaMeter')->whereIn('id', collect($this->dataRekeningAir)->where('angsur', 0)->pluck('id')->all())->sudahBayar()->get(),
                 'dataAngsuranRekeningAir' => AngsuranRekeningAirDetail::with('angsuranRekeningAir')
                     ->whereIn('urutan', collect($this->dataAngsuranRekeningAir)->pluck('urutan')->all())
                     ->whereIn('angsuran_rekening_air_id', collect($this->dataAngsuranRekeningAir)->pluck('angsuran_rekening_air_id')->all())

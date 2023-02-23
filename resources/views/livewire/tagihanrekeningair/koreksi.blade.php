@@ -37,8 +37,8 @@
                 <div class="width-full">
                     <div class="form-group">
                         <label class="control-label">Cari Pelanggan</label>
-                        <select class="form-control selectpicker" style="width: 100%;" data-live-search="true" data-size="10"
-                            wire:model.lazy="pelangganId">
+                        <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
+                            data-size="10" wire:model.lazy="pelangganId">
                             <option selected hidden>-- Pilih Pelanggan --</option>
                             @foreach (\App\Models\Pelanggan::all() as $row)
                                 <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} - {{ $row->nama }}
@@ -94,7 +94,7 @@
                         @endfor
                     </select>
                 </div>
-                <div class="overflow-auto table-responsive">
+                <div class="overflow-auto table-responsive height-400 overflow-auto">
                     <table class="table">
                         <thead>
                             <tr>
@@ -102,6 +102,8 @@
                                 <th>Golongan</th>
                                 <th class="width-150">Stand Lalu</th>
                                 <th class="width-150">Stand Ini</th>
+                                <th class="width-150">Stand Angkat</th>
+                                <th class="width-150">Stand Pasang</th>
                                 <th class="width-100">Pakai</th>
                                 <th>Harga Air</th>
                                 <th>Materai</th>
@@ -126,7 +128,7 @@
                                                 wire:model="dataRekeningAir.{{ $index }}.golongan_id_baru"
                                                 @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled @else 
                                                 wire:change="setHargaAir({{ $index }})" @endif
-                                                data-width="100%">
+                                                data-size="10" data-width="100%">
                                                 <option hidden selected>--Pilih Golongan--</option>
                                                 @foreach (\App\Models\Golongan::all() as $subRow)
                                                     <option value="{{ $subRow->getKey() }}">
@@ -160,8 +162,28 @@
                                     </td>
                                     <td class="with-btn">
                                         <div class="form-group m-0">
+                                            <input class="form-control" type="number"
+                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_angkat_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_angkat_baru" wire:change="setHargaAir({{ $index }})" @endif
+                                                autocomplete="off" />
+                                            @error('dataRekeningAir.' . $index . '.stand_angkat_baru')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </td>
+                                    <td class="with-btn">
+                                        <div class="form-group m-0">
+                                            <input class="form-control" type="number"
+                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_pasang_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_pasang_baru" wire:change="setHargaAir({{ $index }})" @endif
+                                                autocomplete="off" />
+                                            @error('dataRekeningAir.' . $index . '.stand_pasang_baru')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </td>
+                                    <td class="with-btn">
+                                        <div class="form-group m-0">
                                             <input class="form-control" type="text"
-                                                value="{{ $row['stand_ini_baru'] - $row['stand_lalu_baru'] }}"
+                                                value="{{ $row['stand_angkat_baru'] || $row['stand_pasang_baru'] ? $row['stand_ini'] - $row['stand_pasang'] + $row['stand_angkat'] - $row['stand_lalu'] : $row['stand_ini_baru'] - $row['stand_lalu_baru'] }}"
                                                 autocomplete="off" readonly />
                                         </div>
                                     </td>
@@ -211,7 +233,9 @@
                 </div>
                 <br>
                 @role('user|administrator|super-admin')
-                    <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
+                    <div wire:loading.remove>
+                        <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
+                    </div>
                 @endrole
             </div>
             <!-- end tab-pane -->

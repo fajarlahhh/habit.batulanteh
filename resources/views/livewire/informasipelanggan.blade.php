@@ -2,7 +2,6 @@
     @section('title', 'Informasi Pelanggan')
 
     @section('page')
-        <li class="breadcrumb-item">Pembayaran</li>
         <li class="breadcrumb-item active">Informasi Pelanggan</li>
     @endsection
 
@@ -35,6 +34,12 @@
         </li>
         <li class="nav-items">
             <a href="#default-tab-3" data-toggle="tab" class="nav-link">
+                <span class="d-sm-none">Baca Meter</span>
+                <span class="d-sm-block d-none">Baca Meter</span>
+            </a>
+        </li>
+        <li class="nav-items">
+            <a href="#default-tab-4" data-toggle="tab" class="nav-link">
                 <span class="d-sm-none">Log Pelanggan</span>
                 <span class="d-sm-block d-none">Log Pelanggan</span>
             </a>
@@ -124,6 +129,12 @@
                             <td>{{ $pelanggan ? $pelanggan->golongan->nama . ' - ' . $pelanggan->golongan->deskripsi : null }}
                             </td>
                         </tr>
+                        <tr>
+                            <td class="text-nowrap width-100">Kolektif</td>
+                            <td class="width-10">:</td>
+                            <td>{{ $pelanggan ? ($pelanggan->kolektifDetail ? $pelanggan->kolektifDetail->kolektif->nama : null) : null }}
+                            </td>
+                        </tr>
                         {{-- <tr>
                             <td class="text-nowrap width-100">Angsuran</td>
                             <td class="width-10">:</td>
@@ -137,90 +148,85 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="note note-secondary">
-                        <table class="table table-borderless">
-                            <tr>
-                                <th colspan="3">
-                                    Lokasi
-                                </th>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap width-100">Jalan</td>
-                                <td class="width-10">:</td>
-                                <td>
-                                    {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->nama : null }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap width-100">Kelurahan</td>
-                                <td class="width-10">:</td>
-                                <td>
-                                    {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->kelurahan->nama  : null }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap width-100">Kecamatan</td>
-                                <td class="width-10">:</td>
-                                <td>
-                                    {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->kelurahan->kecamatan->nama : null }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap width-100">Rayon</td>
-                                <td class="width-10">:</td>
-                                <td>
-                                    {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->rayonDetail->rayon->nama : null }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap width-100">Pembaca Meter</td>
-                                <td class="width-10">:</td>
-                                <td>{{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->rayonDetail->rayon->ruteBaca->pembaca->nama : null }}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    &nbsp;
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="3">
-                                    Data Water Meter
-                                </th>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap width-100">Merk</td>
-                                <td class="width-10">:</td>
-                                <td>{{ $pelanggan && $pelanggan->merkWaterMeter ? $pelanggan->merkWaterMeter->merk : null }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap width-100">No. Body</td>
-                                <td class="width-10">:</td>
-                                <td>{{ $pelanggan ? $pelanggan->no_body_water_meter : null }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap width-100">Diameter</td>
-                                <td class="width-10">:</td>
-                                <td>{{ $pelanggan && $pelanggan->diameter ? $pelanggan->diameter->ukuran : null }}</td>
-                            </tr>
-                        </table>
+                        <div class="note-content">
+                            <h4>Lokasi</h4>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-nowrap width-100">Jalan</td>
+                                    <td class="width-10">:</td>
+                                    <td>
+                                        {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->nama : null }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-nowrap width-100">Kelurahan</td>
+                                    <td class="width-10">:</td>
+                                    <td>
+                                        {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->kelurahan->nama : null }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-nowrap width-100">Kecamatan</td>
+                                    <td class="width-10">:</td>
+                                    <td>
+                                        {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->kelurahan->kecamatan->nama : null }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-nowrap width-100">Rayon</td>
+                                    <td class="width-10">:</td>
+                                    <td>
+                                        {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->rayonDetail->rayon->nama : null }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-nowrap width-100">Petugas Baca Meter</td>
+                                    <td class="width-10">:</td>
+                                    <td>{{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->rayonDetail->rayon->ruteBaca->pembaca->nama : null }}
+                                    </td>
+                                </tr>
+                            </table>
+                            <h4>Data Water Meter</h4>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-nowrap width-100">Merk</td>
+                                    <td class="width-10">:</td>
+                                    <td>{{ $pelanggan && $pelanggan->merkWaterMeter ? $pelanggan->merkWaterMeter->merk : null }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-nowrap width-100">No. Body</td>
+                                    <td class="width-10">:</td>
+                                    <td>{{ $pelanggan ? $pelanggan->no_body_water_meter : null }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-nowrap width-100">Diameter</td>
+                                    <td class="width-10">:</td>
+                                    <td>{{ $pelanggan && $pelanggan->diameter ? $pelanggan->diameter->ukuran : null }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="default-tab-2" wire:ignore.self>
             <div class="table-responsive width-full overflow-auto height-400">
-                <table class="table table-striped">
-                    <tr>
-                        <th>Periode</th>
-                        <th>Golongan</th>
-                        <th>Stand Ini</th>
-                        <th>Pakai</th>
-                        <th>Status Baca</th>
-                        <th>Tagihan</th>
-                        <th>Denda</th>
-                        <th>Total</th>
-                        <th>Pembayaran</th>
-                    </tr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Periode</th>
+                            <th>Golongan</th>
+                            <th>Stand Ini</th>
+                            <th>Pakai</th>
+                            <th>Status Baca</th>
+                            <th>Tagihan</th>
+                            <th>Denda</th>
+                            <th>Total</th>
+                            <th>Pembayaran</th>
+                        </tr>
+                    </thead>
                     @php
                         $tunggakan = 0;
                         $lembar = 0;
@@ -246,7 +252,7 @@
                             @endphp
                             <tr
                                 class="{{ $row->angsuranRekeningAirPeriode ? 'bg-yellow-transparent-5' : (!$row->kasir || !$row->waktu_bayar ? ($row->keterangan ? 'bg-purple-transparent-7' : 'bg-red-transparent-5') : null) }}">
-                                <td>{{ $row->periode }}</td>
+                                <td>{{ date('F Y', strtotime($row->periode)) }}</td>
                                 <td>{{ $row->golongan ? $row->golongan->nama : null }}</td>
                                 <td>{{ number_format($row->stand_ini) }}</td>
                                 <td>{{ number_format($row->stand_ini - $row->stand_lalu) }}</td>
@@ -275,6 +281,49 @@
             </table>
         </div>
         <div class="tab-pane fade" id="default-tab-3" wire:ignore.self>
+            <div class="table-responsive width-full overflow-auto height-600">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Periode</th>
+                            <th>Pembaca</th>
+                            <th>Stand Lalu</th>
+                            <th>Stand Ini</th>
+                            <th>Stand Angkat</th>
+                            <th>Stand Pasang</th>
+                            <th>Pakai</th>
+                            <th>Status Baca</th>
+                            <th>Tanggal Baca</th>
+                            <th>Foto</th>
+                        </tr>
+                        @if ($pelanggan)
+                            @foreach ($pelanggan->bacaMeter as $key => $row)
+                                <tr>
+                                    <td class="align-middle">{{ date('F Y', strtotime($row->periode)) }}</td>
+                                    <td class="align-middle">{{ $row->pembaca->nama }}</td>
+                                    <td class="align-middle">{{ number_format($row->stand_lalu) }}</td>
+                                    <td class="align-middle">{{ number_format($row->stand_ini) }}</td>
+                                    <td class="align-middle">{{ number_format($row->stand_angkat) }}</td>
+                                    <td class="align-middle">{{ number_format($row->stand_pasang) }}</td>
+                                    <td class="align-middle">
+                                        {{ number_format($row->stand_pasang || $row->stand_angkat ? $row->stand_ini - $row->stand_pasang - ($row->stand_angkat - $row->stand_lalu) : $row->stand_ini - $row->stand_lalu) }}
+                                    </td>
+                                    <td class="align-middle">{{ $row->status_baca }}</td>
+                                    <td class="align-middle">{{ $row->tanggal_baca }}</td>
+                                    <td>
+                                        @if ($row->foto)
+                                            <a href="javascript:;"><img src="{{ Storage::url($row->foto) }}"
+                                                    class='height-50' /></a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="default-tab-4" wire:ignore.self>
             <div class="table-responsive width-full overflow-auto height-600">
 
             </div>

@@ -57,6 +57,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/kolektifpelanggan/tambah', \App\Http\Livewire\Pengaturan\Kolektifpelanggan\Form::class)->name('pengaturan.kolektifpelanggan.tambah');
             Route::get('/kolektifpelanggan/edit/{key}', \App\Http\Livewire\Pengaturan\Kolektifpelanggan\Form::class)->name('pengaturan.kolektifpelanggan.edit');
         });
+        Route::group(['middleware' => ['role_or_permission:administrator|pengaturanrutebaca']], function () {
+            Route::get('/rutebaca', \App\Http\Livewire\Pengaturan\Rutebaca\Index::class)->name('pengaturan.rutebaca');
+            Route::get('/rutebaca/tambah', \App\Http\Livewire\Pengaturan\Rutebaca\Form::class)->name('pengaturan.rutebaca.tambah');
+            Route::get('/rutebaca/edit/{key}', \App\Http\Livewire\Pengaturan\Rutebaca\Form::class)->name('pengaturan.rutebaca.edit');
+        });
     });
 
     Route::prefix('cetak')->group(function () {
@@ -118,11 +123,6 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('/rayon', \App\Http\Livewire\Datamaster\Regional\Rayon\Index::class)->name('datamaster.regional.rayon');
                 Route::get('/rayon/tambah', \App\Http\Livewire\Datamaster\Regional\Rayon\Form::class)->name('datamaster.regional.rayon.tambah');
                 Route::get('/rayon/edit/{key}', \App\Http\Livewire\Datamaster\Regional\Rayon\Form::class)->name('datamaster.regional.rayon.edit');
-            });
-            Route::group(['middleware' => ['role_or_permission:administrator|datamasterregionalrutebaca']], function () {
-                Route::get('/rutebaca', \App\Http\Livewire\Datamaster\Regional\Rutebaca\Index::class)->name('datamaster.regional.rutebaca');
-                Route::get('/rutebaca/tambah', \App\Http\Livewire\Datamaster\Regional\Rutebaca\Form::class)->name('datamaster.regional.rutebaca.tambah');
-                Route::get('/rutebaca/edit/{key}', \App\Http\Livewire\Datamaster\Regional\Rutebaca\Form::class)->name('datamaster.regional.rutebaca.edit');
             });
             Route::group(['middleware' => ['role_or_permission:administrator|datamasterregionalunitpelayanan']], function () {
                 Route::get('/unitpelayanan', \App\Http\Livewire\Datamaster\Regional\Unitpelayanan\Index::class)->name('datamaster.regional.unitpelayanan');

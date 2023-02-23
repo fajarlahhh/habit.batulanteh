@@ -67,10 +67,6 @@ return [
             'url' => '/bacameter/postingrekeningair',
             'id' => 'bacameterpostingrekeningair',
             'title' => 'Posting Rekening Air',
-        ], [
-            'url' => '/bacameter/riwayat',
-            'id' => 'bacameterriwayat',
-            'title' => 'Riwayat',
         ]],
     ], [
         'icon' => 'fas fa-file',
@@ -138,10 +134,6 @@ return [
                 'url' => '/datamaster/regional/rayon',
                 'id' => 'datamasterregionalrayon',
                 'title' => 'Rayon',
-            ], [
-                'url' => '/datamaster/regional/rutebaca',
-                'id' => 'datamasterregionalrutebaca',
-                'title' => 'Rute Baca',
             ], [
                 'url' => '/datamaster/regional/unitpelayanan',
                 'id' => 'datamasterregionalunitpelayanan',
@@ -231,6 +223,10 @@ return [
             'url' => '/pengaturan/pengguna',
             'id' => 'pengaturanpengguna',
             'title' => 'Pengguna',
+        ], [
+            'url' => '/pengaturan/rutebaca',
+            'id' => 'pengaturanrutebaca',
+            'title' => 'Rute Baca',
         ]],
     ], [
         'icon' => 'fas fa-file-invoice',

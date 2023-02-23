@@ -204,7 +204,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer" wire:loading.remove>
                 @role('user|administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                     <a class="btn btn-danger" href="/pembayaran/rekeningair/perpelanggan">Reset</a>
