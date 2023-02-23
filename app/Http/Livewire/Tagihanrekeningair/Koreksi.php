@@ -37,14 +37,13 @@ class Koreksi extends Component
     public function setPelanggan()
     {
         $this->pelanggan = Pelanggan::with('rekeningAir.golongan')->findOrFail($this->pelangganId);
-        $this->dataRekeningAir = $this->pelanggan->rekeningAir;
-        $this->setDataRekeningAir();
+        $this->setDataRekeningAir($this->pelanggan->rekeningAir);
     }
 
-    public function setDataRekeningAir()
+    public function setDataRekeningAir($data)
     {
         $this->dataRekeningAir = [];
-        $this->dataRekeningAir = collect($this->dataRekeningAir)->filter(fn($q) => false !== stristr($q->periode, $this->tahun))->map(fn($q) => [
+        $this->dataRekeningAir = collect($data)->filter(fn($q) => false !== stristr($q->periode, $this->tahun))->map(fn($q) => [
             'periode' => $q->periode,
             'stand_lalu_lama' => $q->stand_lalu,
             'stand_ini_lama' => $q->stand_ini,
