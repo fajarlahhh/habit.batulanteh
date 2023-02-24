@@ -17,4 +17,9 @@ class UnitPelayanan extends Model
     {
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }
+
+    public function kecamatan()
+    {
+        return $this->hasMany(Kecamatan::class);
+    }
 }

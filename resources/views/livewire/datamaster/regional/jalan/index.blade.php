@@ -50,7 +50,7 @@
                         <th class="width-60">No.</th>
                         <th>Nama</th>
                         <th>Jenis</th>
-                        <th>Lingkungan</th>
+                        <th>Kelurahan</th>
                         <th>Operator</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
@@ -64,11 +64,11 @@
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->jenis }}</td>
                             <td class="align-middle">
-                                <ul>
-                                    @foreach ($row->jalanLingkungan as $subRow)
-                                        <li>{{ $subRow->lingkungan->nama }}</li>
+                                <ol type="a">
+                                    @foreach ($row->jalanKelurahan as $subRow)
+                                        <li>{{ $subRow->kelurahan->nama }}</li>
                                     @endforeach
-                                </ul>
+                                </ol>
                             </td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin')

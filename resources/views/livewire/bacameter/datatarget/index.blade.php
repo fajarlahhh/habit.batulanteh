@@ -67,9 +67,7 @@
                         <th>No. Langganan</th>
                         <th>Nama</th>
                         <th>Alamat</th>
-                        <th>Jalan</th>
                         <th>Pembaca</th>
-                        <th>No. Body WM</th>
                         <th>Tanggal Baca</th>
                         <th>Stand Lalu</th>
                         <th>Stand Ini</th>
@@ -88,10 +86,7 @@
                             <td class="align-middle">{{ $row->pelanggan->no_langganan }}</td>
                             <td class="align-middle">{{ $row->pelanggan->nama }}</td>
                             <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
-                            <td class="align-middle">{{ $row->jalan->kelurahan->kecamatan->unitPelayanan->nama }}
-                            </td>
                             <td class="align-middle">{{ $row->pembaca->nama }}</td>
-                            <td class="align-middle">{{ $row->pelanggan->no_body_water_meter }}</td>
                             <td class="align-middle">{{ $row->tanggal_baca }}</td>
                             <td class="align-middle">{{ $row->stand_lalu }}</td>
                             <td class="align-middle">{{ $row->stand_ini }}</td>

@@ -18,8 +18,8 @@ class Jalan extends Model
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }
 
-    public function jalanLingkungan()
+    public function jalanKelurahan()
     {
-        return $this->hasMany(JalanLingkungan::class, 'jalan_id');
+        return $this->hasMany(JalanKelurahan::class);
     }
 }

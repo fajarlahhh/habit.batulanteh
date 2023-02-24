@@ -70,7 +70,7 @@
                             <td class="align-middle">{{ $row->no_langganan }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->alamat }}</td>
-                            <td class="align-middle">{{ $row->jalan ? $row->jalan->nama : null }}</td>
+                            <td class="align-middle">{{ $row->jalan->nama }}</td>
                             <td class="align-middle">{{ $row->golongan->nama }}</td>
                             <td class="align-middle">{{ $row->diameter->ukuran }}</td>
                             <td class="align-middle">{{ $row->merkWaterMeter ? $row->merkWaterMeter->merk : null }}</td>

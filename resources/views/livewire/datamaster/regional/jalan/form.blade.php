@@ -44,18 +44,18 @@
                 <div class="col-md-8">
                     <div class="note note-secondary">
                         <div class="note-content">
-                            <h4>Lingkungan Yang Dilewati</h4>
+                            <h4>Kelurahan Yang Dilewati</h4>
                             <table class="table">
                                 @foreach ($detail as $key => $row)
                                     <tr>
                                         <td class="with-form-control">
                                             <select class="form-control selectpicker" data-live-search="true"
                                                 data-width="100%" data-size="10"
-                                                wire:model.defer="detail.{{ $key }}.lingkungan_id">
-                                                <option selected hidden>-- Pilih Lingkungan --</option>
-                                                @foreach ($dataLingkungan as $row)
+                                                wire:model.defer="detail.{{ $key }}.kelurahan_id">
+                                                <option selected hidden>-- Pilih Kelurahan --</option>
+                                                @foreach ($dataKelurahan as $row)
                                                     <option value="{{ $row->getKey() }}">
-                                                        {{ $row->nama . ', ' . $row->kelurahan->nama . ', ' . $row->kelurahan->kecamatan->nama }}
+                                                        {{ $row->nama . ', ' . $row->nama . ', ' . $row->kecamatan->nama }}
                                                     </option>
                                                 @endforeach
                                             </select>

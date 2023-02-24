@@ -22,4 +22,9 @@ class Kelurahan extends Model
     {
         return $this->belongsTo(Kecamatan::class)->withTrashed();
     }
+
+    public function jalanKelurahan()
+    {
+        return $this->hasMany(JalanKelurahan::class);
+    }
 }

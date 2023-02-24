@@ -41,7 +41,7 @@ class Pelanggan extends Model
         return $this->hasMany(AngsuranRekeningAir::class);
     }
 
-    public function jalanLingkungan()
+    public function jalanKelurahan()
     {
         return $this->belongsTo(Jalan::class);
     }

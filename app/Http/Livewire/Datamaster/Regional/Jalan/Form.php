@@ -3,20 +3,20 @@
 namespace App\Http\Livewire\Datamaster\Regional\Jalan;
 
 use App\Models\Jalan;
-use App\Models\JalanLingkungan;
+use App\Models\JalanKelurahan;
 use Livewire\Component;
-use App\Models\Lingkungan;
+use App\Models\Kelurahan;
 use Illuminate\Support\Facades\DB;
 
 class Form extends Component
 {
-    public $key, $nama, $jenis, $data, $dataLingkungan, $detail = [];
+    public $key, $nama, $jenis, $data, $dataKelurahan, $detail = [];
 
     protected $rules = [
         'nama' => 'required',
         'jenis' => 'required',
         'detail' => 'required',
-        'detail.*.lingkungan_id' => 'required|numeric|distinct',
+        'detail.*.kelurahan_id' => 'required|numeric|distinct',
     ];
 
     public function submit()
@@ -28,10 +28,10 @@ class Form extends Component
             $this->data->jenis = $this->jenis;
             $this->data->save();
 
-            JalanLingkungan::where('jalan_id', $this->data->id)->delete();
-            JalanLingkungan::insert(collect($this->detail)->map(fn ($q) => [
+            JalanKelurahan::where('jalan_id', $this->data->id)->delete();
+            JalanKelurahan::insert(collect($this->detail)->map(fn ($q) => [
                 'jalan_id' => $this->data->id,
-                'lingkungan_id' => $q['lingkungan_id'],
+                'kelurahan_id' => $q['kelurahan_id'],
                 'pengguna_id' => auth()->id(),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -44,14 +44,14 @@ class Form extends Component
 
     public function mount()
     {
-        $this->dataLingkungan = Lingkungan::with('kelurahan.kecamatan')->get();
+        $this->dataKelurahan = Kelurahan::with('kecamatan')->get();
         if ($this->key) {
             $this->data = Jalan::findOrFail($this->key);
             $this->nama = $this->data->nama;
             $this->jenis = $this->data->jenis;
-            $this->detail =  $this->data->jalanLingkungan->map(fn ($q) => [
-                'lingkungan_id' => $q->lingkungan_id
-            ]);
+            $this->detail =  $this->data->jalanKelurahan->map(fn ($q) => [
+                'kelurahan_id' => $q->kelurahan_id
+            ])->toArray();
         } else {
             $this->data = new Jalan();
         }
@@ -60,7 +60,7 @@ class Form extends Component
     public function tambahDetail()
     {
         $this->detail[] = [
-            'lingkungan_id' => null,
+            'kelurahan_id' => null,
         ];
     }
 

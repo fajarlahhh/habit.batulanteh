@@ -68,7 +68,7 @@
                             <td class="align-middle">
                                 <ul>
                                     @foreach ($row->rayonDetail as $subRow)
-                                        <li>{{ $subRow->jalanLingkungan->jalan->nama.', '.$subRow->jalanLingkungan->lingkungan->nama.', '.$subRow->jalanLingkungan->lingkungan->kelurahan->nama.', '.$subRow->jalanLingkungan->lingkungan->kelurahan->kecamatan->nama }}</li>
+                                        <li>{{ $subRow->jalanKelurahan->jalan->nama.', '.$subRow->jalanKelurahan->kelurahan->nama.', '.$subRow->jalanKelurahan->kelurahan->kecamatan->nama }}</li>
                                     @endforeach
                                 </ul>
                             </td>

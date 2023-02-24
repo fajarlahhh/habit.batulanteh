@@ -22,4 +22,9 @@ class Kecamatan extends Model
     {
         return $this->belongsTo(UnitPelayanan::class)->withTrashed();
     }
+
+    public function kelurahan()
+    {
+        return $this->hasMany(Kelurahan::class);
+    }
 }

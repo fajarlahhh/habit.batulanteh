@@ -73,7 +73,7 @@
                             <select wire:model.defer="jalan" class="form-control selectpicker" data-width="100%"
                                 data-live-search="true">
                                 <option selected hidden>-- Pilih Jalan --</option>
-                                @foreach (\App\Models\Jalan::orderBy('nama')->whereHas('rayon')->get() as $row)
+                                @foreach (\App\Models\Regional::orderBy('nama')->whereHas('rayon')->get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->nama }},
                                         {{ $row->kelurahan->nama }}, {{ $row->kelurahan->kecamatan->nama }}
                                     </option>

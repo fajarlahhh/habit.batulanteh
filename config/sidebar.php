@@ -132,10 +132,6 @@ return [
                 'id' => 'datamasterregionalkelurahan',
                 'title' => 'Kelurahan/Desa',
             ], [
-                'url' => '/datamaster/regional/lingkungan',
-                'id' => 'datamasterregionallingkungan',
-                'title' => 'Lingkungan/Dusun',
-            ], [
                 'url' => '/datamaster/regional/rayon',
                 'id' => 'datamasterregionalrayon',
                 'title' => 'Rayon',

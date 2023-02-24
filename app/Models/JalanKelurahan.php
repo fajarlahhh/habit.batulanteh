@@ -6,11 +6,11 @@ use App\Traits\PenggunaTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class JalanLingkungan extends Model
+class JalanKelurahan extends Model
 {
     use HasFactory, PenggunaTrait;
 
-    protected $table = 'jalan_lingkungan';
+    protected $table = 'jalan_kelurahan';
 
     public function pengguna()
     {
@@ -22,8 +22,8 @@ class JalanLingkungan extends Model
         return $this->belongsTo(Jalan::class)->withTrashed();
     }
 
-    public function lingkungan()
+    public function kelurahan()
     {
-        return $this->belongsTo(Lingkungan::class)->withTrashed();
+        return $this->belongsTo(Kelurahan::class)->withTrashed();
     }
 }

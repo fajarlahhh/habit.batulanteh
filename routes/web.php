@@ -119,11 +119,6 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('/kelurahan/tambah', \App\Http\Livewire\Datamaster\Regional\Kelurahan\Form::class)->name('datamaster.regional.kelurahan.tambah');
                 Route::get('/kelurahan/edit/{key}', \App\Http\Livewire\Datamaster\Regional\Kelurahan\Form::class)->name('datamaster.regional.kelurahan.edit');
             });
-            Route::group(['middleware' => ['role_or_permission:administrator|datamasterregionallingkungan']], function () {
-                Route::get('/lingkungan', \App\Http\Livewire\Datamaster\Regional\Lingkungan\Index::class)->name('datamaster.regional.lingkungan');
-                Route::get('/lingkungan/tambah', \App\Http\Livewire\Datamaster\Regional\Lingkungan\Form::class)->name('datamaster.regional.lingkungan.tambah');
-                Route::get('/lingkungan/edit/{key}', \App\Http\Livewire\Datamaster\Regional\Lingkungan\Form::class)->name('datamaster.regional.lingkungan.edit');
-            });
             Route::group(['middleware' => ['role_or_permission:administrator|datamasterregionalrayon']], function () {
                 Route::get('/rayon', \App\Http\Livewire\Datamaster\Regional\Rayon\Index::class)->name('datamaster.regional.rayon');
                 Route::get('/rayon/tambah', \App\Http\Livewire\Datamaster\Regional\Rayon\Form::class)->name('datamaster.regional.rayon.tambah');

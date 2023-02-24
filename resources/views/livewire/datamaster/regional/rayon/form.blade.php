@@ -54,13 +54,10 @@
                                             <th>Kecamatan</th>
                                             <th></th>
                                         </thead>
-                                        @foreach (collect($dataJalanLingkungan)->sortBy('nama')->all() as $key => $row)
+                                        @foreach (collect($dataJalanKelurahan)->sortBy('nama')->all() as $key => $row)
                                             <tr>
                                                 <td class="align-middle">
                                                     {{ $row['nama'] }}
-                                                </td>
-                                                <td class="align-middle">
-                                                    {{ $row['nama_lingkungan'] }}
                                                 </td>
                                                 <td class="align-middle">
                                                     {{ $row['nama_kelurahan'] }}
@@ -69,7 +66,7 @@
                                                     {{ $row['nama_kecamatan'] }}
                                                 </td>
                                                 <td class="with-btn align-middle width-10">
-                                                    <a href="javascript:;" wire:click="tambahDetail({{ $key }},{{ $row['jalan_lingkungan_id'] }})"
+                                                    <a href="javascript:;" wire:click="tambahDetail({{ $key }},{{ $row['id'] }})"
                                                         class="btn btn-info">+</a>
                                                 </td>
                                             </tr>
@@ -90,7 +87,6 @@
                                     <table class="table">
                                         <thead>
                                             <th>Nama</th>
-                                            <th>Lingkungan</th>
                                             <th>Kelurahan</th>
                                             <th>Kecamatan</th>
                                             <th></th>
@@ -101,16 +97,13 @@
                                                     {{ $row['nama'] }}
                                                 </td>
                                                 <td class="align-middle">
-                                                    {{ $row['nama_lingkungan'] }}
-                                                </td>
-                                                <td class="align-middle">
                                                     {{ $row['nama_kelurahan'] }}
                                                 </td>
                                                 <td class="align-middle">
                                                     {{ $row['nama_kecamatan'] }}
                                                 </td>
                                                 <td class="with-btn align-middle width-10">
-                                                    <a href="javascript:;" wire:click="hapusDetail({{ $key }},{{ $row['jalan_lingkungan_id'] }})"
+                                                    <a href="javascript:;" wire:click="hapusDetail({{ $key }},{{ $row['id'] }})"
                                                         class="btn btn-danger">-</a>
                                                 </td>
                                             </tr>

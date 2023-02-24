@@ -51,6 +51,7 @@
                         <th>Kode</th>
                         <th>Nama</th>
                         <th>Kecamatan</th>
+                        <th>Jml. Jalan</th>
                         <th>Operator</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
@@ -64,6 +65,13 @@
                             <td class="align-middle">{{ $row->kode }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->kecamatan->nama }}</td>
+                            <td class="align-middle">
+                                <ol type="a">
+                                    @foreach ($row->jalanKelurahan as $subRow)
+                                        <li>{{ $subRow->jalan->nama }}</li>
+                                    @endforeach
+                                </ol>
+                            </td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
