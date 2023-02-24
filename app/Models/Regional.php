@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Regional extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'regional';
+
+    public function rayon()
+    {
+        return $this->hasOne(Rayon::class);
+    }
 }

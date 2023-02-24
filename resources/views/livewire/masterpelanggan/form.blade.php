@@ -6,7 +6,7 @@
     @endsection
 
     <h1 class="page-header">Master Pelanggan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
-    
+
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <div class="panel-heading">
             <h4 class="panel-title">Form</h4>
@@ -69,10 +69,10 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="control-label">Jalan</label>
+                            <label for="control-label">Jalan/Perumahan</label>
                             <select wire:model.defer="jalan" class="form-control selectpicker" data-width="100%"
                                 data-live-search="true">
-                                <option selected hidden>-- Pilih Jalan --</option>
+                                <option selected hidden>-- Pilih Jalan/Perumahan --</option>
                                 @foreach (\App\Models\Regional::orderBy('nama')->whereHas('rayon')->get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->nama }},
                                         {{ $row->kelurahan->nama }}, {{ $row->kelurahan->kecamatan->nama }}
@@ -166,7 +166,7 @@
     <div wire:loading>
         <x-loading />
     </div>
-    
+
     @push('scripts')
         <script>
             $('.date').datepicker({
