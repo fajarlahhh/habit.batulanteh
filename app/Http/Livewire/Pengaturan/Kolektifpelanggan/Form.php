@@ -62,7 +62,7 @@ class Form extends Component
 
     public function mount()
     {
-        $this->dataPelanggan = Pelanggan::all();
+        $this->dataPelanggan = Pelanggan::whereNotIn('pelanggan_id', KolektifDetail::when($this->key,fn($q) => $q->where('kolektif_id', $this->key))->get()->pluck('pelanggan_id'))->get();
         if ($this->key) {
             $this->data = Kolektif::findOrFail($this->key);
             $this->nama = $this->data->nama;

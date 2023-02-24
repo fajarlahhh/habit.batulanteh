@@ -25,7 +25,7 @@ class Koreksi extends Component
     public function updatedTahun()
     {
         if ($this->pelanggan) {
-            $this->setDataRekeningAir();
+            $this->setDataRekeningAir($this->dataRekeningAir);
         }
     }
 
