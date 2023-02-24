@@ -21,8 +21,8 @@ class RayonDetail extends Model
         return $this->belongsTo(Rayon::class);
     }
 
-    public function jalan()
+    public function jalanLingkungan()
     {
-        return $this->belongsTo(Jalan::class);
+        return $this->belongsTo(JalanLingkungan::class);
     }
 }

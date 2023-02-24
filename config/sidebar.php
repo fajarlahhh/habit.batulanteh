@@ -43,7 +43,8 @@ return [
                     'url' => '/administrator/datapembayaran/rekeningnonair',
                     'id' => 'administratordatapembayaranrekeningnonair',
                     'title' => 'Rekening Non Air',
-                ]],
+                ]
+            ],
         ], [
             'url' => '/administrator/statuspelanggan',
             'id' => 'administratorstatuspelanggan',
@@ -121,7 +122,7 @@ return [
             'sub_menu' => [[
                 'url' => '/datamaster/regional/jalan',
                 'id' => 'datamasterregionaljalan',
-                'title' => 'Jalan',
+                'title' => 'Jalan/Perumahan',
             ], [
                 'url' => '/datamaster/regional/kecamatan',
                 'id' => 'datamasterregionalkecamatan',
@@ -129,7 +130,11 @@ return [
             ], [
                 'url' => '/datamaster/regional/kelurahan',
                 'id' => 'datamasterregionalkelurahan',
-                'title' => 'Kelurahan',
+                'title' => 'Kelurahan/Desa',
+            ], [
+                'url' => '/datamaster/regional/lingkungan',
+                'id' => 'datamasterregionallingkungan',
+                'title' => 'Lingkungan/Dusun',
             ], [
                 'url' => '/datamaster/regional/rayon',
                 'id' => 'datamasterregionalrayon',
@@ -248,6 +253,7 @@ return [
                 'url' => '/tagihanrekeningair/penerbitan',
                 'id' => 'tagihanrekeningairpenerbitan',
                 'title' => 'Penerbitan',
-            ]],
+            ]
+        ],
     ]],
 ];

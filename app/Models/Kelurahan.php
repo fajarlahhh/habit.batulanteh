@@ -20,6 +20,6 @@ class Kelurahan extends Model
 
     public function kecamatan()
     {
-        return $this->belongsTo(Kecamatan::class);
+        return $this->belongsTo(Kecamatan::class)->withTrashed();
     }
 }

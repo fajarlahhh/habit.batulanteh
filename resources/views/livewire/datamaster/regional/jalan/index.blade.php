@@ -1,13 +1,13 @@
 <div>
-    @section('title', 'Jalan')
+    @section('title', 'Jalan/Perumahan')
 
     @section('page')
         <li class="breadcrumb-item">Data Master</li>
         <li class="breadcrumb-item">Regional</li>
-        <li class="breadcrumb-item active">Jalan</li>
+        <li class="breadcrumb-item active">Jalan/Perumahan</li>
     @endsection
 
-    <h1 class="page-header">Jalan</h1>
+    <h1 class="page-header">Jalan/Perumahan</h1>
 
     <x-alert />
 
@@ -49,8 +49,8 @@
                     <tr>
                         <th class="width-60">No.</th>
                         <th>Nama</th>
-                        <th>Kelurahan</th>
                         <th>Jenis</th>
+                        <th>Lingkungan</th>
                         <th>Operator</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
@@ -62,8 +62,14 @@
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
-                            <td class="align-middle">{{ $row->kelurahan->nama }}</td>
                             <td class="align-middle">{{ $row->jenis }}</td>
+                            <td class="align-middle">
+                                <ul>
+                                    @foreach ($row->jalanLingkungan as $subRow)
+                                        <li>{{ $subRow->lingkungan->nama }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>

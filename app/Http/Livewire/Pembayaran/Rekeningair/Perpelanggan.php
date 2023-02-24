@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class Perpelanggan extends Component
 {
-    public $pelanggan, $pelangganId, $dataRekeningAir = [], $keterangan, $dataAngsuranRekeningAir = [], $bayar = 0, $awalRekeningAir = null, $awalAngsuranRekeningAir = null;
+    public $pelanggan, $pelangganId, $dataRekeningAir = [], $keterangan, $dataAngsuranRekeningAir = [], $bayar = 0, $awalRekeningAir = null, $awalAngsuranRekeningAir = null, $tanggal;
 
     public function updatedPelangganId()
     {
@@ -70,6 +70,11 @@ class Perpelanggan extends Component
         }
     }
 
+    public function mount()
+    {
+        $this->tanggal = date('Y-m-d H:i');
+    }
+
     public function submit()
     {
         $this->validate([
@@ -80,7 +85,7 @@ class Perpelanggan extends Component
             foreach (collect($this->dataRekeningAir)->where('angsur', 0)->all() as $key => $row) {
                 RekeningAir::where('id', $row['id'])->whereNull('waktu_bayar')->update([
                     'kasir' => auth()->user()->uid,
-                    'waktu_bayar' => now(),
+                    'waktu_bayar' => $this->tanggal,
                     'biaya_denda' => $row['denda'],
                 ]);
             }

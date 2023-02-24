@@ -1,13 +1,13 @@
 <div>
-    @section('title', 'Kelurahan/Desa')
+    @section('title', 'Lingkungan/Dusun')
 
     @section('page')
         <li class="breadcrumb-item">Data Master</li>
         <li class="breadcrumb-item">Regional</li>
-        <li class="breadcrumb-item active">Kelurahan/Desa</li>
+        <li class="breadcrumb-item active">Lingkungan/Dusun</li>
     @endsection
 
-    <h1 class="page-header">Kelurahan/Desa</h1>
+    <h1 class="page-header">Lingkungan/Dusun</h1>
 
     <x-alert />
 
@@ -18,7 +18,7 @@
                 <div class="col-xl-1 col-sm-1">
                     @role('administrator|super-admin')
                         <div class="form-inline">
-                            <a class="btn btn-primary" href="{{ route('datamaster.regional.kelurahan.tambah') }}">Tambah</a>
+                            <a class="btn btn-primary" href="{{ route('datamaster.regional.lingkungan.tambah') }}">Tambah</a>
                         </div>
                     @endrole
                 </div>
@@ -48,8 +48,8 @@
                 <thead>
                     <tr>
                         <th class="width-60">No.</th>
-                        <th>Kode</th>
                         <th>Nama</th>
+                        <th>Kelurahan</th>
                         <th>Kecamatan</th>
                         <th>Operator</th>
                         @role('administrator|super-admin')
@@ -61,9 +61,9 @@
                     @foreach ($data as $i => $row)
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
-                            <td class="align-middle">{{ $row->kode }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
-                            <td class="align-middle">{{ $row->kecamatan->nama }}</td>
+                            <td class="align-middle">{{ $row->kelurahan->nama }}</td>
+                            <td class="align-middle">{{ $row->kelurahan->kecamatan->nama }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
@@ -83,7 +83,7 @@
                                                     Permanen</button>
                                                 <button wire:click="setKey" class="btn btn-success">Batal</button>
                                             @else
-                                                <a href="{{ route('datamaster.regional.kelurahan.edit', ['key' => $row->getKey()]) }}"
+                                                <a href="{{ route('datamaster.regional.lingkungan.edit', ['key' => $row->getKey()]) }}"
                                                     class="btn btn-info"><i class="fas fa-sm fa-pencil-alt"></i></a>
                                                 <button wire:click="setKey({{ $row->getKey() }})" class="btn btn-danger"><i
                                                         class="fas fa-sm fa-trash-alt"></i></button>

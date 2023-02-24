@@ -3,23 +3,28 @@
 namespace App\Models;
 
 use App\Traits\PenggunaTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Jalan extends Model
+class Lingkungan extends Model
 {
     use HasFactory, SoftDeletes, PenggunaTrait;
 
-    protected $table = 'jalan';
+    protected $table = 'lingkungan';
 
     public function pengguna()
     {
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }
 
+    public function kelurahan()
+    {
+        return $this->belongsTo(Kelurahan::class)->withTrashed();
+    }
+
     public function jalanLingkungan()
     {
-        return $this->hasMany(JalanLingkungan::class, 'jalan_id');
+        return $this->hasMany(JalanLingkungan::class);
     }
 }
