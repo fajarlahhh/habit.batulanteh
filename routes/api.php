@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['cors'])->get('/', function () {
     return response()->json([
         'status' => 'sukses',
-        'data' => '',
+        'data' => 'API PERUMDAM BATU LANTEH',
     ]);
 });
 
