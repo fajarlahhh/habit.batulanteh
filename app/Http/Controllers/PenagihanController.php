@@ -30,7 +30,7 @@ class PenagihanController extends Controller
         try {
             return response()->json([
                 'status' => 'sukses',
-                'data' => Pelanggan::where('nama', 'like', '%' . $req->cari . '%')->orWhere('no_langganan', 'like', '%' . $req->cari . '%')->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
+                'data' => Pelanggan::whereHas('tagihan')->where('nama', 'like', '%' . $req->cari . '%')->orWhere('no_langganan', 'like', '%' . $req->cari . '%')->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
                     'no_langganan' => $q->no_langganan,
                     'nama' => $q->nama,
                     'alamat' => $q->alamat,
