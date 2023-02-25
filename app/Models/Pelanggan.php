@@ -43,7 +43,7 @@ class Pelanggan extends Model
 
     public function jalanKelurahan()
     {
-        return $this->belongsTo(Jalan::class);
+        return $this->belongsTo(JalanKelurahan::class);
     }
 
     public function merkWaterMeter()
@@ -68,7 +68,7 @@ class Pelanggan extends Model
 
     public function tagihan()
     {
-        return $this->hasMany(BacaMeter::class)->whereHas('rekeningAir')->orderBy('periode', 'desc');
+        return $this->hasMany(RekeningAir::class)->belumBayar()->orderBy('periode', 'desc');
     }
 
     public function bacaMeterTerakhir()

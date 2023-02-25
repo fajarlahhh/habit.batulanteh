@@ -19,7 +19,7 @@ class Kolektif extends Component
     {
         $this->dataRekeningAir = [];
         $this->dataAngsuranRekeningAir = [];
-        $this->dataPelanggan = Pelanggan::whereHas('kolektifDetail', fn($q) => $q->where('kolektif_id', $this->kolektifId))->with('rekeningAir', fn($q) => $q->belumBayar()->with('golongan'))->get();
+        $this->dataPelanggan = Pelanggan::whereHas('kolektifDetail', fn ($q) => $q->where('kolektif_id', $this->kolektifId))->with('rekeningAir', fn ($q) => $q->belumBayar()->with('golongan'))->get();
         $this->setDataRekeningAir();
         $this->setDataAngsuranRekeningAir();
     }
@@ -27,9 +27,9 @@ class Kolektif extends Component
     public function setDataRekeningAir()
     {
         foreach ($this->dataPelanggan as $key => $row) {
-            foreach ($row->bacaMeter->whereNotIn('id', collect($this->dataRekeningAir)->pluck('id'))->all() as $key => $subRow) {
+            foreach ($row->rekeningAir->whereNotIn('id', collect($this->dataRekeningAir)->pluck('id'))->all() as $key => $subRow) {
                 $periode = new Carbon($subRow->periode);
-                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $subRow->rekeningAir->tarifDenda->nilai : 0;
+                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $subRow->tarifDenda->nilai : 0;
                 $this->dataRekeningAir[] = [
                     'id' => $subRow->id,
                     'pelanggan_id' => $subRow->pelanggan_id,
@@ -37,10 +37,10 @@ class Kolektif extends Component
                     'nama' => $subRow->pelanggan->nama,
                     'alamat' => $subRow->pelanggan->alamat,
                     'periode' => $subRow->periode,
-                    'golongan' => $subRow->rekeningAir->golongan->nama,
-                    'angsur' => $subRow->rekeningAir->angsuranRekeningAirPeriode ? 1 : 0,
-                    'pakai' => $subRow->stand_ini - $subRow->stand_lalu,
-                    'tagihan' => $subRow->rekeningAir->harga_air + $subRow->rekeningAir->biaya_denda + $subRow->rekeningAir->biaya_lainnya + $subRow->rekeningAir->biaya_meter_air + $subRow->rekeningAir->biaya_materai,
+                    'golongan' => $subRow->golongan->nama,
+                    'angsur' => $subRow->angsuranRekeningAirPeriode ? 1 : 0,
+                    'pakai' => $subRow->stand_ini || $subRow->stand_lalu ? $subRow->stand_ini - $subRow->stand_pasang + $subRow->stand_angkat - $subRow->stand_lalu : $subRow->stand_ini - $subRow->stand_lalu,
+                    'tagihan' => $subRow->harga_air + $subRow->biaya_lainnya + $subRow->biaya_meter_air + $subRow->biaya_materai,
                     'denda' => $denda,
                 ];
             }
@@ -70,7 +70,7 @@ class Kolektif extends Component
     public function submit()
     {
         $this->validate([
-            'bayar' => 'required|numeric|min:' . collect($this->dataRekeningAir)->where('angsur', 0)->sum(fn($q) => $q['tagihan'] + $q['denda']) + collect($this->dataAngsuranRekeningAir)->sum('nilai'),
+            'bayar' => 'required|numeric|min:' . collect($this->dataRekeningAir)->where('angsur', 0)->sum(fn ($q) => $q['tagihan'] + $q['denda']) + collect($this->dataAngsuranRekeningAir)->sum('nilai'),
             'dataRekeningAir' => 'required',
         ]);
         DB::transaction(function () {

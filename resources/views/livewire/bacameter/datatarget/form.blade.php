@@ -34,18 +34,28 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Alamat</label>
-                                    <input class="form-control" type="text" disabled
-                                        value="{{ $data->pelanggan->alamat }}" />
+                                    <textarea class="form-control" type="text" disabled rows="3">{{ $data->pelanggan->alamat }}</textarea>
                                 </div>
+                                <hr>
                                 <div class="form-group">
                                     <label class="control-label">Jalan</label>
                                     <input class="form-control" type="text" disabled
-                                        value="{{ $data->pelanggan->jalan ? $data->pelanggan->jalan->nama : '' }}" />
+                                        value="{{ $data->pelanggan->jalanKelurahan->jalan->nama }}" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Kelurahan, Kecamatan</label>
+                                    <input class="form-control" type="text" disabled
+                                        value="{{ $data->pelanggan->jalanKelurahan->kelurahan->nama }}, {{ $data->pelanggan->jalanKelurahan->kelurahan->kecamatan->nama }}" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Rayon</label>
+                                    <input class="form-control" type="text" disabled
+                                        value="{{ $data->pelanggan->jalanKelurahan->rayonDetail->rayon->nama }}" />
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Pembaca</label>
                                     <input class="form-control" type="text" disabled
-                                        value="{{ $data->pelanggan->pembaca ? $data->pelanggan->pembaca->nama : '' }}" />
+                                        value="{{ $data->pelanggan->jalanKelurahan->rayonDetail->rayon->ruteBaca->pembaca->nama }} ({{ $data->pelanggan->jalanKelurahan->rayonDetail->rayon->ruteBaca->pembaca->deskripsi }})" />
                                 </div>
                             </div>
                         </div>
@@ -56,7 +66,7 @@
                             <input class="form-control" type="file" accept="image/*" autocomplete="off"
                                 wire:model="fotoUpload" />
                             @if ($data->foto)
-                            <br>
+                                <br>
                                 <img src="{{ Storage::url($data->foto) }}" alt="" class="width-full">
                             @endif
                             @error('fotoUpload')
@@ -80,8 +90,8 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Tanggal Baca</label>
-                            <input class="form-control" type="date" min="{{ date('Y-m-d') }}" max="{{ date('Y-m-t') }}" autocomplete="off" 
-                                wire:model.defer="tanggalBaca" />
+                            <input class="form-control" type="date" min="{{ date('Y-m-d') }}"
+                                max="{{ date('Y-m-t') }}" autocomplete="off" wire:model.defer="tanggalBaca" />
                             @error('tanggalBaca')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -99,17 +109,19 @@
                             @enderror
                         </div>
                         <div class="alert alert-warning">
-                            <h4>Diinputkan ketika ada pergantian water meter di bulan ini</h4>
+                            <h5>Diinputkan ketika ada pergantian water meter di bulan ini</h5>
                             <div class="form-group">
                                 <label class="control-label">Stand Angkat</label>
-                                <input class="form-control" type="number" autocomplete="off" wire:model.defer="standAngkat" />
+                                <input class="form-control" type="number" autocomplete="off"
+                                    wire:model.defer="standAngkat" />
                                 @error('standAngkat')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Stand Pasang</label>
-                                <input class="form-control" type="number" autocomplete="off" wire:model.defer="standPasang" />
+                                <input class="form-control" type="number" autocomplete="off"
+                                    wire:model.defer="standPasang" />
                                 @error('standPasang')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -132,7 +144,7 @@
     <div wire:loading>
         <x-loading />
     </div>
-    
+
     @push('scripts')
         <script>
             $('.date').datepicker({

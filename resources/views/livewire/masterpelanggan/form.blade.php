@@ -63,23 +63,23 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Alamat</label>
-                            <textarea wire:model.defer="alamat" class="form-control"rows="3"></textarea>
+                            <textarea wire:model.defer="alamat" class="form-control" rows="3"></textarea>
                             @error('alamat')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="control-label">Jalan/Perumahan</label>
-                            <select wire:model.defer="jalan" class="form-control selectpicker" data-width="100%"
-                                data-live-search="true">
+                            <select wire:model.defer="jalanKelurahan" class="form-control selectpicker"
+                                data-width="100%" data-live-search="true" data-size="10">
                                 <option selected hidden>-- Pilih Jalan/Perumahan --</option>
-                                @foreach (\App\Models\Regional::orderBy('nama')->whereHas('rayon')->get() as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->nama }},
-                                        {{ $row->kelurahan->nama }}, {{ $row->kelurahan->kecamatan->nama }}
+                                @foreach (\App\Models\Regional::orderBy('nama_jalan')->whereHas('rayonDetail.rayon.ruteBaca')->get() as $row)
+                                    <option value="{{ $row->getKey() }}">{{ $row->nama_jalan }},
+                                        {{ $row->nama_kelurahan }}, {{ $row->nama_kecamatan }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('jalan')
+                            @error('jalanKelurahan')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -89,9 +89,8 @@
                             <div class="note-content">
                                 <div class="form-group">
                                     <label class="control-label">Tanggal Pasang</label>
-                                    <input class="form-control date" type="text" autocomplete="off" readonly
-                                        onchange="@this.set('tanggalPasang', this.value);"
-                                        wire:model.defer="tanggalPasang" />
+                                    <input class="form-control" type="date" autocomplete="off"
+                                        wire:model.defer="tanggalPasang" max="{{ date('Y-m-d') }}" />
                                     @error('tanggalPasang')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

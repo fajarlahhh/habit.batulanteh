@@ -26,4 +26,9 @@ class JalanKelurahan extends Model
     {
         return $this->belongsTo(Kelurahan::class)->withTrashed();
     }
+
+    public function rayonDetail()
+    {
+        return $this->hasOne(RayonDetail::class, 'jalan_kelurahan_id');
+    }
 }

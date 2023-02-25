@@ -66,11 +66,11 @@
                         <div class="note note-primary">
                             <div class="note-content width-10">
                                 <h5>Rekening Air</h5>
-                                <div class="height-300 overflow-auto table-responsive">
+                                <div class="height-400 overflow-auto table-responsive">
                                     <table class="table width-full">
                                         <thead>
                                             <tr>
-                                                <th></th>
+                                                <th class="width-10"></th>
                                                 <th class="width-100">Periode</th>
                                                 <th class="width-100 text-nowrap">No. Langganan</th>
                                                 <th class="width-150">Nama</th>
@@ -95,7 +95,7 @@
                                                         @if (
                                                             $row['angsur'] == 0 &&
                                                                 collect($dataRekeningAir)->where('no_langganan', $row['no_langganan'])->count() -
-                                                                    $index ==
+                                                                    $no ==
                                                                     1)
                                                             <a href="javascript:;"
                                                                 wire:click="hapusDataRekeningAir({{ $index }})"

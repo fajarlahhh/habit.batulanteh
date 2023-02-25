@@ -119,7 +119,7 @@ class Postingrekeningair extends Component
                     'diskon' => $diskon,
                     'golongan_id' => $row->pelanggan->golongan_id,
                     'baca_meter_id' => $row->id,
-                    'jalan_id' => $row->pelanggan->jalan_id,
+                    'jalan_kelurahan_id' => $row->jalan_kelurahan_id,
                     'pelanggan_id' => $row->pelanggan_id,
                     'rayon_id' => $row->rayon_id,
                     'tarif_denda_id' => $this->tarifDenda ? $this->tarifDenda->id : null,
@@ -152,7 +152,7 @@ class Postingrekeningair extends Component
                 'biaya_ppn' => $q['biaya_ppn'],
                 'diskon' => $q['diskon'],
                 'golongan_id' => $q['golongan_id'],
-                'jalan_id' => $q['jalan_id'],
+                'jalan_kelurahan_id' => $q['jalan_kelurahan_id'],
                 'rayon_id' => $q['rayon_id'],
                 'pelanggan_id' => $q['pelanggan_id'],
                 'created_at' => now(),
@@ -165,7 +165,6 @@ class Postingrekeningair extends Component
 
             session()->flash('success', 'Data rekening air dan IRA periode ' . $this->tahun . '-' . $this->bulan . ' berhasil diposting');
         });
-        $this->reset('proses');
     }
 
     public function booted()

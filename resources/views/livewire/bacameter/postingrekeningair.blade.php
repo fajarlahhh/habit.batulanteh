@@ -25,16 +25,12 @@
         </div>
         <form wire:submit.prevent="submit">
             <div class="panel-body ">
-                @if ($proses)
-                    <div class="alert alert-warning">
-                        Proses ini akan menghapus seluruh data tagihan rekening air periode
-                        {{ $tahun }}-{{ $bulan }} yang belum terbayar
-                    </div>
-                @endif
+                <div class="alert alert-warning">
+                    Proses ini akan menghapus seluruh data tagihan rekening air periode terpilih yang belum terbayar
+                </div>
                 <div class="form-group">
                     <label class="control-label">Bulan</label>
-                    <select class="form-control selectpicker" wire:model.defer="bulan" data-width="100%"
-                        @if ($proses) disabled @endif>
+                    <select class="form-control selectpicker" wire:model.defer="bulan" data-width="100%">
                         @for ($i = 1; $i < 13; $i++)
                             <option value="{{ date('m', strtotime('2021-' . $i . '-01')) }}">
                                 {{ date('F', strtotime('2021-' . $i . '-01')) }}</option>
@@ -46,8 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Tahun</label>
-                    <select class="form-control selectpicker" wire:model.defer="tahun" data-width="100%"
-                        @if ($proses) disabled @endif>
+                    <select class="form-control selectpicker" wire:model.defer="tahun" data-width="100%">
                         @for ($i = 2023; $i < date('Y') + 1; $i++)
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endfor
@@ -59,7 +54,7 @@
             </div>
             <div class="panel-footer" wire:loading.remove>
                 @role('user|administrator|super-admin')
-                <input type="submit" value="Submit" class="btn btn-success" />
+                    <input type="submit" value="Submit" class="btn btn-success" />
                 @endrole
             </div>
         </form>

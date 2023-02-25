@@ -25,11 +25,11 @@ class ApiToken
         return response()->json([
             'status' => 'error',
             'data' => 'Api token invalid',
-          ],403);
+        ], 403);
     }
 
     public function verify($request): bool //optional return types
     {
-        return Pengguna::select('id')->where('api_token',$request->header('token'))->exists();
+        return Pengguna::select('id')->where('api_token', $request->header('Token'))->exists();
     }
 }

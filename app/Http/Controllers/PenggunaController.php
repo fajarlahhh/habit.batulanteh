@@ -22,33 +22,39 @@ class PenggunaController extends Controller
             return response()->json([
                 'status' => 'gagal',
                 'data' => $validator->messages(),
-            ],400);
+            ], 400);
         }
 
-        $pengguna = Pengguna::where('uid', $req->uid)->withoutGlobalScopes()->get();
-        if ($pengguna->count() > 0) {
-            $pengguna=$pengguna->first();
-            if (Hash::check($req->kata_sandi, $pengguna->kata_sandi)) {
-                return response()->json([
-                    'status' => 'sukses',
-                    'data' => [
-                        'nama' => $pengguna->nama,
-                        'uid' => $pengguna->uid,
-                        'deskripsi' => $pengguna->deskripsi,
-                        'api_token' => $pengguna->api_token,
-                    ],
-                ],200);
-            } else {
-                return response()->json([
-                    'status' => 'gagal',
-                    'data' => 'Kata sandi salah',
-                ],401);
+        try {
+            $pengguna = Pengguna::where('uid', $req->uid)->withoutGlobalScopes()->get();
+            if ($pengguna->count() > 0) {
+                $pengguna = $pengguna->first();
+                if (Hash::check($req->kata_sandi, $pengguna->kata_sandi)) {
+                    return response()->json([
+                        'status' => 'sukses',
+                        'data' => [
+                            'nama' => $pengguna->nama,
+                            'uid' => $pengguna->uid,
+                            'deskripsi' => $pengguna->deskripsi,
+                            'api_token' => $pengguna->api_token,
+                        ],
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'status' => 'gagal',
+                        'data' => 'Kata sandi salah',
+                    ], 401);
+                }
             }
-            
+            return response()->json([
+                'status' => 'gagal',
+                'data' => 'UID salah',
+            ], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e->getMessage(),
+            ], 500);
         }
-        return response()->json([
-            'status' => 'gagal',
-            'data' => 'UID salah',
-        ],401);
     }
 }

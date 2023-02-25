@@ -35,7 +35,7 @@ class Buattarget extends Component
 
         DB::transaction(function ($q) {
             BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
-            $dataPelanggan = Pelanggan::with('bacaMeterTerakhir')->with('jalan.rayonDetail.rayon.ruteBaca')->whereNotIn('id', BacaMeter::where('periode', $this->tahun . '-' . $this->bulan . '-01')->get()->pluck('pelanggan_id')->all())->whereIn('status', [1, 3])->get();
+            $dataPelanggan = Pelanggan::with('bacaMeterTerakhir')->with('jalanKelurahan.rayonDetail.rayon.ruteBaca')->whereNotIn('id', BacaMeter::where('periode', $this->tahun . '-' . $this->bulan . '-01')->get()->pluck('pelanggan_id')->all())->whereIn('status', [1, 3])->get();
             $data = [];
             foreach ($dataPelanggan as $key => $row) {
                 array_push($data, [
@@ -44,9 +44,9 @@ class Buattarget extends Component
                     'latitude' => $row->latitude,
                     'longitude' => $row->longitude,
                     'pelanggan_id' => $row->id,
-                    'pembaca_id' => $row->jalan->rayonDetail->rayon->ruteBaca->pembaca_id,
+                    'pembaca_id' => $row->jalanKelurahan->rayonDetail->rayon->ruteBaca->pembaca_id,
                     'jalan_kelurahan_id' => $row->jalan_kelurahan_id,
-                    'rayon_id' => $row->jalan->rayonDetail->rayon_id,
+                    'rayon_id' => $row->jalanKelurahan->rayonDetail->rayon_id,
                     'pengguna_id' => auth()->id(),
                     'created_at' => now(),
                     'updated_at' => now(),

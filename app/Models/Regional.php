@@ -11,8 +11,8 @@ class Regional extends Model
 
     protected $table = 'regional';
 
-    public function rayon()
+    public function rayonDetail()
     {
-        return $this->hasOne(Rayon::class);
+        return $this->hasOne(RayonDetail::class, 'jalan_kelurahan_id');
     }
 }

@@ -90,7 +90,9 @@
                             <td class="align-middle">{{ $row->tanggal_baca }}</td>
                             <td class="align-middle">{{ $row->stand_lalu }}</td>
                             <td class="align-middle">{{ $row->stand_ini }}</td>
-                            <td class="align-middle">{{ $row->stand_ini || $row->stand_lalu ? $row->stand_ini - $row->stand_pasang + $row->stand_angkat - $row->stand_lalu : $row->stand_ini - $row->stand_lalu }}</td>
+                            <td class="align-middle">
+                                {{ $row->stand_ini || $row->stand_lalu ? $row->stand_ini - $row->stand_pasang + $row->stand_angkat - $row->stand_lalu : $row->stand_ini - $row->stand_lalu }}
+                            </td>
                             <td class="align-middle">{{ $row->status_baca }}</td>
                             <td class="align-middle">
                                 @if ($row->foto)
@@ -170,9 +172,11 @@
                     <div class="form-group">
                         <label class="control-label">Pemakaian</label>
                         <select class="form-control selectpicker" wire:model="pemakaian"
-                            data-container="#sidebar-right" data-live-search="true" data-size="10" data-width="100%">
+                            data-container="#sidebar-right" data-live-search="true" data-size="10"
+                            data-width="100%">
                             <option value="">SEMUA PEMAKAIAN</option>
-                            <option value="1">< 0</option>
+                            <option value="1">
+                                < 0</option>
                             <option value="2">>= 0</option>
                         </select>
                     </div>

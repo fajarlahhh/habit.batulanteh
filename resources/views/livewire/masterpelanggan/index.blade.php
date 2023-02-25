@@ -51,7 +51,7 @@
                         <th>No. Langganan</th>
                         <th>Nama</th>
                         <th>Alamat</th>
-                        <th>Jalan</th>
+                        <th>Regional</th>
                         <th>Golongan</th>
                         <th>Diameter</th>
                         <th>Merk WM</th>
@@ -70,10 +70,18 @@
                             <td class="align-middle">{{ $row->no_langganan }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->alamat }}</td>
-                            <td class="align-middle">{{ $row->jalan->nama }}</td>
+                            <td class="align-middle">
+                                <ul>
+                                    <li>Rayon : {{ $row->jalanKelurahan->rayonDetail->rayon->nama }}</li>
+                                    <li>Jalan : {{ $row->jalanKelurahan->jalan->nama }}</li>
+                                    <li>Kelurahan, Kecamatan : {{ $row->jalanKelurahan->kelurahan->nama }},
+                                        {{ $row->jalanKelurahan->kelurahan->kecamatan->nama }}</li>
+                                </ul>
+                            </td>
                             <td class="align-middle">{{ $row->golongan->nama }}</td>
                             <td class="align-middle">{{ $row->diameter->ukuran }}</td>
-                            <td class="align-middle">{{ $row->merkWaterMeter ? $row->merkWaterMeter->merk : null }}</td>
+                            <td class="align-middle">{{ $row->merkWaterMeter ? $row->merkWaterMeter->merk : null }}
+                            </td>
                             <td class="align-middle">{{ $row->tanggal_pasang }}</td>
                             <td class="align-middle">{{ $row->no_body_water_meter }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna ? $row->pengguna->nama : null !!}</small></td>

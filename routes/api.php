@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+
 Route::middleware(['cors'])->get('/', function () {
     return response()->json([
         'status' => 'sukses',
@@ -22,14 +23,18 @@ Route::middleware(['cors'])->get('/', function () {
     ]);
 });
 
+Route::middleware(['cors'])->post('/login', [\App\Http\Controllers\PenggunaController::class, 'login']);
+
 Route::prefix('master')->group(function () {
     Route::middleware(['cors', 'apitoken'])->get('/statusbaca', [StatusbacaController::class, 'index']);
 });
-Route::middleware(['cors'])->post('/login', [\App\Http\Controllers\PenggunaController::class, 'login']);
 
+Route::prefix('bacameter')->group(function () {
+    Route::middleware(['cors', 'apitoken'])->get('/target', [BacameterController::class, 'index']);
+    Route::middleware(['cors', 'apitoken'])->post('/upload', [BacameterController::class, 'upload']);
+});
 
-Route::middleware(['cors'])->post('/bacameter/upload', [BacameterController::class, 'upload']);
-Route::middleware(['cors'])->post('/bacameter/target', [BacameterController::class, 'index']);
-
-Route::middleware(['cors'])->post('/penagihan/target', [PenagihanController::class, 'index']);
-Route::middleware(['cors'])->post('/penagihan/lunasi', [PenagihanController::class, 'lunasi']);
+Route::prefix('penagihan')->group(function () {
+    Route::middleware(['cors', 'apitoken'])->get('/target', [PenagihanController::class, 'index']);
+    Route::middleware(['cors', 'apitoken'])->post('/lunasi', [PenagihanController::class, 'lunasi']);
+});

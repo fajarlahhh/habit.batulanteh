@@ -22,7 +22,7 @@ class Perpelanggan extends Component
 
     public function setPelanggan()
     {
-        $this->pelanggan = Pelanggan::with(['rekeningAir' => fn($r) => $r->belumBayar()->with('golongan')])->findOrFail($this->pelangganId);
+        $this->pelanggan = Pelanggan::with(['rekeningAir' => fn ($r) => $r->belumBayar()->with('golongan')])->findOrFail($this->pelangganId);
         $this->setDataRekeningAir();
         $this->setDataAngsuranRekeningAir();
         $this->reset(['pelangganId']);
@@ -33,7 +33,7 @@ class Perpelanggan extends Component
         if ($this->pelanggan->rekeningAir->count() > 0) {
             foreach ($this->pelanggan->rekeningAir->whereNotIn('id', collect($this->dataRekeningAir)->pluck('id'))->all() as $key => $row) {
                 $periode = new Carbon($row->periode);
-                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->rekeningAir->tarifDenda->nilai : 0;
+                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->tarifDenda->nilai : 0;
                 $this->dataRekeningAir[] = [
                     'id' => $row->id,
                     'pelanggan_id' => $row->pelanggan_id,
@@ -43,8 +43,8 @@ class Perpelanggan extends Component
                     'periode' => $row->periode,
                     'golongan' => $row->golongan->nama,
                     'angsur' => $row->angsuranRekeningAirPeriode ? 1 : 0,
-                    'pakai' => $row->stand_ini - $row->stand_lalu,
-                    'tagihan' => $row->harga_air + $row->biaya_denda + $row->biaya_lainnya + $row->biaya_meter_air + $row->biaya_materai,
+                    'pakai' => $row->stand_ini || $row->stand_lalu ? $row->stand_ini - $row->stand_pasang + $row->stand_angkat - $row->stand_lalu : $row->stand_ini - $row->stand_lalu,
+                    'tagihan' => $row->harga_air + $row->biaya_lainnya + $row->biaya_meter_air + $row->biaya_materai,
                     'denda' => $denda,
                 ];
             }
@@ -78,7 +78,7 @@ class Perpelanggan extends Component
     public function submit()
     {
         $this->validate([
-            'bayar' => 'required|numeric|min:' . collect($this->dataRekeningAir)->where('angsur', 0)->sum(fn($q) => $q['tagihan'] + $q['denda']) + collect($this->dataAngsuranRekeningAir)->sum('nilai'),
+            'bayar' => 'required|numeric|min:' . collect($this->dataRekeningAir)->where('angsur', 0)->sum(fn ($q) => $q['tagihan'] + $q['denda']) + collect($this->dataAngsuranRekeningAir)->sum('nilai'),
             'dataRekeningAir' => 'required',
         ]);
         DB::transaction(function () {

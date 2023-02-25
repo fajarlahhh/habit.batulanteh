@@ -26,8 +26,7 @@
         <form wire:submit.prevent="submit">
             <div class="panel-body ">
                 <div class="alert alert-warning">
-                    Proses ini akan menghapus seluruh data baca meter periode
-                    {{ $tahun }}-{{ $bulan }} yang belum terbaca
+                    Proses ini akan menghapus seluruh data baca meter periode terpilih yang belum terbaca
                 </div>
                 <div class="form-group">
                     <label class="control-label">Bulan</label>

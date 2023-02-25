@@ -34,7 +34,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.masterpelanggan.index', [
-            'data' => Pelanggan::with('pengguna')->where(fn($q) => $q->where('nama', 'like', '%' . $this->cari . '%')->orWhere('no_langganan', 'like', '%' . $this->cari . '%'))->when($this->status != '0', fn($q) => $q->where('status', $this->status))->paginate(10),
+            'data' => Pelanggan::with('pengguna')->with('jalanKelurahan.rayonDetail.rayon')->with('jalanKelurahan.jalan')->with('jalanKelurahan.kelurahan.kecamatan')->where(fn ($q) => $q->where('nama', 'like', '%' . $this->cari . '%')->orWhere('no_langganan', 'like', '%' . $this->cari . '%'))->when($this->status != '0', fn ($q) => $q->where('status', $this->status))->paginate(10),
         ]);
     }
 }
