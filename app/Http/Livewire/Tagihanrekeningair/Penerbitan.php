@@ -15,7 +15,7 @@ use Livewire\Component;
 
 class Penerbitan extends Component
 {
-    public $pelanggan, $golongan, $standLalu, $standIni, $statusBaca, $catatan, $pelangganId, $tahun, $bulan, $dataTarifProgresif, $dataTarifMaterai, $dataTarifDenda, $dataTarifLainnya, $dataTarifMeterAir;
+    public $pelanggan, $golongan, $standLalu, $standIni, $standAngkat, $standPasang, $statusBaca, $catatan, $pelangganId, $tahun, $bulan, $dataTarifProgresif, $dataTarifMaterai, $dataTarifDenda, $dataTarifLainnya, $dataTarifMeterAir;
 
     public function mount()
     {
@@ -117,18 +117,27 @@ class Penerbitan extends Component
                     $bacaMeter->periode = $this->tahun . '-' . $this->bulan . '-01';
                     $bacaMeter->stand_lalu = $this->standLalu;
                     $bacaMeter->stand_ini = $this->standIni;
+                    $bacaMeter->stand_angkat = $this->standAngkat;
+                    $bacaMeter->stand_pasang = $this->standPasang;
                     $bacaMeter->status_baca = $this->statusBaca;
                     $bacaMeter->tanggal_baca = now();
                     $bacaMeter->latitude = $this->pelanggan->latitude;
                     $bacaMeter->longitude = $this->pelanggan->longitude;
                     $bacaMeter->pelanggan_id = $this->pelangganId;
-                    $bacaMeter->pembaca_id = $this->pelanggan->pembaca_id;
+                    $bacaMeter->jalan_kelurahan_id = $this->pelanggan->jalan_kelurahan_id;
+                    $bacaMeter->rayon_id = $this->pelanggan->jalanKelurahan->rayonDetail->rayon_id;
+                    $bacaMeter->pembaca_id = $this->pelanggan->jalanKelurahan->rayonDetail->rayon->ruteBaca->pembaca_id;
                     $bacaMeter->pengguna_id = auth()->id();
                     $bacaMeter->created_at = now();
                     $bacaMeter->updated_at = now();
                     $bacaMeter->save();
 
                     $rekeningAir = new RekeningAir();
+                    $rekeningAir->periode = $this->tahun . '-' . $this->bulan . '-01';
+                    $rekeningAir->stand_lalu = $this->standLalu;
+                    $rekeningAir->stand_ini = $this->standIni;
+                    $rekeningAir->stand_angkat = $this->standAngkat;
+                    $rekeningAir->stand_pasang = $this->standPasang;
                     $rekeningAir->harga_air = $hargaAir;
                     $rekeningAir->biaya_denda = 0;
                     $rekeningAir->biaya_lainnya = $biayaLainnya;
@@ -136,14 +145,17 @@ class Penerbitan extends Component
                     $rekeningAir->biaya_materai = $biayaMaterai;
                     $rekeningAir->biaya_ppn = 0;
                     $rekeningAir->diskon = 0;
+                    $rekeningAir->keterangan = $this->catatan;
+                    $rekeningAir->pelanggan_id = $this->pelangganId;
+                    $rekeningAir->jalan_kelurahan_id = $this->pelanggan->jalan_kelurahan_id;
+                    $rekeningAir->rayon_id = $this->pelanggan->jalanKelurahan->rayonDetail->rayon_id;
                     $rekeningAir->golongan_id = $this->golongan;
-                    $rekeningAir->baca_meter_id = $bacaMeter->id;
-                    $rekeningAir->jalan_id = $this->pelanggan->jalan_id;
                     $rekeningAir->tarif_denda_id = $tarifDenda;
                     $rekeningAir->tarif_lainnya_id = $tarifLainnya ? $tarifLainnya->id : null;
                     $rekeningAir->tarif_materai_id = $tarifMaterai ? $tarifMaterai->id : null;
                     $rekeningAir->tarif_meter_air_id = $tarifMeterAir ? $tarifMeterAir->id : null;
                     $rekeningAir->tarif_progresif_id = $tarifProgresif->id;
+                    $rekeningAir->baca_meter_id = $bacaMeter->id;
                     $rekeningAir->pengguna_id = auth()->id();
                     $rekeningAir->created_at = now();
                     $rekeningAir->updated_at = now();

@@ -183,7 +183,7 @@
                                     <td class="with-btn">
                                         <div class="form-group m-0">
                                             <input class="form-control" type="text"
-                                                value="{{ $row['stand_angkat_baru'] || $row['stand_pasang_baru'] ? $row['stand_ini'] - $row['stand_pasang'] + $row['stand_angkat'] - $row['stand_lalu'] : $row['stand_ini_baru'] - $row['stand_lalu_baru'] }}"
+                                                value="{{ $row['stand_angkat_baru'] || $row['stand_pasang_baru'] ? $row['stand_ini_baru'] - $row['stand_pasang_baru'] + $row['stand_angkat_baru'] - $row['stand_lalu_baru'] : $row['stand_ini_baru'] - $row['stand_lalu_baru'] }}"
                                                 autocomplete="off" readonly />
                                         </div>
                                     </td>

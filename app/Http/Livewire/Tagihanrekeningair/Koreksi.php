@@ -25,7 +25,7 @@ class Koreksi extends Component
     public function updatedTahun()
     {
         if ($this->pelanggan) {
-            $this->setDataRekeningAir($this->dataRekeningAir);
+            $this->setDataRekeningAir($this->pelanggan->rekeningAir);
         }
     }
 
@@ -43,7 +43,7 @@ class Koreksi extends Component
     public function setDataRekeningAir($data)
     {
         $this->dataRekeningAir = [];
-        $this->dataRekeningAir = collect($data)->filter(fn($q) => false !== stristr($q->periode, $this->tahun))->map(fn($q) => [
+        $this->dataRekeningAir = collect($data)->filter(fn ($q) => false !== stristr($q['periode'], $this->tahun))->map(fn ($q) => [
             'periode' => $q->periode,
             'stand_lalu_lama' => $q->stand_lalu,
             'stand_ini_lama' => $q->stand_ini,
@@ -55,17 +55,17 @@ class Koreksi extends Component
             'stand_ini_baru' => $q->stand_ini,
             'stand_angkat_baru' => $q->stand_angkat,
             'stand_pasang_baru' => $q->stand_pasang,
-            'harga_air_baru' => $q->rekeningAir->harga_air,
-            'biaya_materai_baru' => $q->rekeningAir->biaya_materai,
-            'biaya_lainnya' => $q->rekeningAir->biaya_lainnya,
-            'biaya_meter_air' => $q->rekeningAir->biaya_meter_air,
-            'kasir' => $q->rekeningAir->kasir,
-            'waktu_bayar' => $q->rekeningAir->waktu_bayar,
-            'angsur' => $q->rekeningAir->angsuranRekeningAirPeriode ? 1 : 0,
-            'rekening_air_id' => $q->rekeningAir->id,
+            'harga_air_baru' => $q->harga_air,
+            'biaya_materai_baru' => $q->biaya_materai,
+            'biaya_lainnya' => $q->biaya_lainnya,
+            'biaya_meter_air' => $q->biaya_meter_air,
+            'kasir' => $q->kasir,
+            'waktu_bayar' => $q->waktu_bayar,
+            'angsur' => $q->angsuranRekeningAirPeriode ? 1 : 0,
+            'rekening_air_id' => $q->id,
             'baca_meter_id' => $q->id,
-            'golongan_id_lama' => $q->rekeningAir->golongan_id,
-            'golongan_id_baru' => $q->rekeningAir->golongan_id,
+            'golongan_id_lama' => $q->golongan_id,
+            'golongan_id_baru' => $q->golongan_id,
             'update' => 0,
             'data_tarif' => $this->dataTarifProgresif->where('tanggal_berlaku', '<=', $q->periode)->count() == 0 ? 0 : 1,
         ])->toArray();
@@ -136,7 +136,7 @@ class Koreksi extends Component
         ]);
 
         DB::transaction(function () {
-            KoreksiRekeningAir::insert(collect($this->dataRekeningAir)->where('update', 1)->map(fn($q) => [
+            KoreksiRekeningAir::insert(collect($this->dataRekeningAir)->where('update', 1)->map(fn ($q) => [
                 'stand_lalu_lama' => $q['stand_lalu_lama'],
                 'stand_ini_lama' => $q['stand_ini_lama'],
                 'harga_air_lama' => $q['harga_air_lama'],
