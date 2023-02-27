@@ -11,20 +11,22 @@
             </div>
         </div>
     </div>
-    <script>
-        function cetak(timeout = null) {
-            var divToPrint = document.getElementById('modal-body-cetak');
-            var newWin = window.open('', 'Print-Window');
-            newWin.document.open();
-            newWin.document.write(
-                '<head><link href="/assets/css/app.css" rel="stylesheet" /><link href="/assets/css/default/app.min.css" rel="stylesheet" /></head><body class="bg-white" style="font-family: Tahoma, Geneva, sans-serif; color: #000; margin-bottom: 0px; font-size: 12px" onload="window.print()"><div><div class="m-l-40 m-r-40">' +
-                divToPrint.innerHTML +
-                '</div></div></body>'
-            );
-            newWin.document.close();
-            setTimeout(function() {
-                newWin.close();
-            }, 300);
-        }
-    </script>
+    @push('scripts')
+        <script>
+            function cetak(timeout = null) {
+                var divToPrint = document.getElementById('modal-body-cetak');
+                var newWin = window.open('', 'Print-Window');
+                newWin.document.open();
+                newWin.document.write(
+                    '<head><link href="/assets/css/app.css" rel="stylesheet" /><link href="/assets/css/default/app.min.css" rel="stylesheet" /></head><body class="bg-white" style="font-family: Tahoma, Geneva, sans-serif; color: #000; margin-bottom: 0px; font-size: 12px" onload="window.print()"><div><div class="m-l-40 m-r-40">' +
+                    divToPrint.innerHTML +
+                    '</div></div></body>'
+                );
+                newWin.document.close();
+                setTimeout(function() {
+                    newWin.close();
+                }, 300);
+            }
+        </script>
+    @endpush
 </div>

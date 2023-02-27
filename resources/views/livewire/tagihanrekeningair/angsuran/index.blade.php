@@ -1,12 +1,12 @@
 <div>
-    @section('title', 'Angsuran Rekening Air')
+    @section('title', 'Angsuran')
 
     @section('page')
         <li class="breadcrumb-item">Tagihan Rekening Air</li>
         <li class="breadcrumb-item active">Angsuran</li>
     @endsection
 
-    <h1 class="page-header">Angsuran Rekening Air</h1>
+    <h1 class="page-header">Angsuran</h1>
 
     <x-alert />
 
@@ -25,7 +25,7 @@
                 <div class="col-xl-9 col-sm-9">
                     <div class="form-inline pull-right">
                         <div class="form-group">
-                            <select class="form-control selectpicker" data-live-search="true" data-style="btn-success"
+                            <select class="form-control selectpicker" data-live-search="true"
                                 data-width="100%" wire:model="lunas">
                                 <option value="0">Belum Lunas</option>
                                 <option value="1">Sudah Lunas</option>

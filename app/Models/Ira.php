@@ -9,4 +9,10 @@ class Ira extends Model
 {
     use HasFactory;
     protected $table = 'ira';
+
+    public function golongan()
+    {
+        return $this->belongsTo(Golongan::class);
+    }
+
 }

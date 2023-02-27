@@ -92,9 +92,6 @@ class Postingrekeningair extends Component
                     }
                 }
 
-                if (!$row->pelanggan->diameter) {
-                    dd($row->pelanggan);
-                }
                 $biayaLainnya = $row->pelanggan->tarifLainnya ? $row->pelanggan->tarifLainnya->tarifLainnyaDetail->sum('nilai') : 0;
                 $biayaMeterAir = $row->pelanggan->diameter->tarifMeterAir ? $row->pelanggan->diameter->tarifMeterAir->tarifMeterAirDetail->sum('nilai') : 0;
 
@@ -110,7 +107,7 @@ class Postingrekeningair extends Component
                     'stand_ini' => $row->stand_ini,
                     'stand_angkat' => $row->stand_angkat,
                     'stand_pasang' => $row->stand_pasang,
-                    'harga_air' => $hargaAir,
+                    'harga_air' => $row->status_baca == 'PUTUS SEMENTAR PERMINTAAN SENDIRI' ? 0 : $hargaAir, // Untuk pelanggan putus sementara APS tidak dikenakan harga air
                     'biaya_denda' => 0,
                     'biaya_lainnya' => $biayaLainnya,
                     'biaya_meter_air' => $biayaMeterAir,
@@ -158,6 +155,27 @@ class Postingrekeningair extends Component
                 'created_at' => now(),
                 'updated_at' => now(),
             ])->chunk(1000);
+
+            $ira[] = Pelanggan::with('rayonDetail', 'rayonDetail')->whereIn('status', [2, 4])->get()->map(fn ($q) => [
+                'periode' => $this->tahun . '-' . $this->bulan . '-01',
+                'stand_lalu' => null,
+                'stand_ini' => null,
+                'stand_angkat' => null,
+                'stand_pasang' => null,
+                'harga_air' => null,
+                'biaya_denda' => null,
+                'biaya_lainnya' => null,
+                'biaya_meter_air' => null,
+                'biaya_materai' => null,
+                'biaya_ppn' => null,
+                'diskon' => null,
+                'golongan_id' => $q->golongan_id,
+                'jalan_kelurahan_id' => $q->jalan_kelurahan_id,
+                'rayon_id' => $q->rayonDetail->rayonDetail->rayon_id,
+                'pelanggan_id' => $q->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
             foreach ($ira as $row) {
                 Ira::insert($row->toArray());

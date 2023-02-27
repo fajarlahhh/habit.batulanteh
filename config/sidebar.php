@@ -80,6 +80,10 @@ return [
             'id' => 'cetakdspl',
             'title' => 'DSPL',
         ], [
+            'url' => '/cetak/drd',
+            'id' => 'cetakira',
+            'title' => 'DRD',
+        ],[
             'url' => '/cetak/ira',
             'id' => 'cetakira',
             'title' => 'IRA',
@@ -88,9 +92,26 @@ return [
             'id' => 'cetakkoreksirekeningair',
             'title' => 'Koreksi Rekening Air',
         ], [
-            'url' => '/cetak/lpprekair',
-            'id' => 'cetaklpprekair',
-            'title' => 'LPP Rek. Air',
+            'url' => 'javascript:;',
+            'caret' => true,
+            'title' => 'LPP',
+            'id' => 'cetaklpp',
+            'sub_menu' => [
+                //     [
+                //     'url' => '/administrator/datapembayaran/angsuranrekeningair',
+                //     'id' => 'administratordatapembayaranangsuranrekeningair',
+                //     'title' => 'Angsuran Rekening Air',
+                // ],
+                [
+                    'url' => '/cetak/lpp/air',
+                    'id' => 'cetaklppair',
+                    'title' => 'LPP Air',
+                ], [
+                    'url' => '/cetak/lpp/nonair',
+                    'id' => 'cetaklppnonair',
+                    'title' => 'LPP Non Air',
+                ]
+            ],
         ], [
             'url' => '/cetak/progresbacameter',
             'id' => 'cetakprogresbacameter',

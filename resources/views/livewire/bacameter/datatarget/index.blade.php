@@ -157,13 +157,7 @@
                             data-live-search="true" data-size="10" data-width="100%">
                             <option value="">SEMUA RAYON</option>
                             @if ($unitPelayanan)
-                                @foreach (\App\Models\Rayon::whereHas(
-        'rayonDetail',
-        fn($q) => $q->whereIn(
-            'jalan_id',
-            \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'),
-        ),
-    )->get() as $row)
+                                @foreach (\App\Models\Rayon::whereHas('rayonDetail', fn($q) => $q->whereIn('jalan_kelurahan_id',\App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id')))->get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
                                 @endforeach
                             @endif

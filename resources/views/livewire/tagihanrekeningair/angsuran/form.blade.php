@@ -1,5 +1,5 @@
 <div>
-    @section('title', 'Angsuran Rekening Air')
+    @section('title', 'Angsuran')
 
     @section('page')
         <li class="breadcrumb-item">Tagihan Rekening Air</li>

@@ -20,7 +20,7 @@
                     <div class="form-inline pull-right">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" readonly class="form-control date" wire:model.defer="tanggal" />
+                                <input type="date" class="form-control" wire:model="tanggal" />
                                 @error('tanggal')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -81,7 +81,7 @@
                                             <a wire:click="setKey" href="javascript:;" class="btn btn-success">Batal</a>
                                         @else
                                             <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})"
-                                                class="btn btn-danger">Pembatalan</a>
+                                                class="btn btn-danger">Batal</a>
                                             <a href="javascript:;" wire:click="cetak({{ $row->getKey() }})"
                                                 class="btn btn-primary">Kwitansi</a>
                                         @endif
@@ -113,25 +113,6 @@
         <script>
             Livewire.on('cetak', id => {
                 $('#modal-cetak').modal('show');
-            });
-            document.addEventListener('DOMContentLoaded', function() {
-                $('.date').datepicker({
-                    todayHighlight: true,
-                    format: 'yyyy-mm-dd',
-                    autoclose: true
-                }).on("change", function(e) {
-                    window.livewire.emit('set:settanggal', this.value);
-                });
-            });
-
-            Livewire.on('reinitialize', id => {
-                $('.date').datepicker({
-                    todayHighlight: true,
-                    format: 'yyyy-mm-dd',
-                    autoclose: true
-                }).on("change", function(e) {
-                    window.livewire.emit('set:settanggal', this.value);
-                });
             });
         </script>
     @endpush
