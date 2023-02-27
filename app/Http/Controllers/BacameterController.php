@@ -27,6 +27,10 @@ class BacameterController extends Controller
                         'nama' => $q->pelanggan->nama,
                         'alamat' => $q->pelanggan->alamat,
                         'periode' => $q->periode,
+                        'stand_lalu' => $q->stand_lalu,
+                        'stand_ini' => $q->stand_ini,
+                        'latitude' => $q->latitude,
+                        'longitude' => $q->longitude,
                     ]),
                 ], 200);
             } else {
