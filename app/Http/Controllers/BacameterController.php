@@ -21,7 +21,9 @@ class BacameterController extends Controller
                 $pengguna  = $pengguna->first();
                 return response()->json([
                     'status' => 'sukses',
-                    'data' => BacaMeter::withoutGlobalScopes()->with('pelanggan')->where('periode', $periode)->whereNull('tanggal_baca')->where('pembaca_id', $pengguna->id)->get()->map(fn ($q) => [
+                    'data' => BacaMeter::withoutGlobalScopes()->with(['pelanggan.rekeningAirTigaTerakhir' => function ($q) {
+                        return  $q->take(3);
+                    }])->where('periode', $periode)->whereNull('tanggal_baca')->where('pembaca_id', $pengguna->id)->get()->map(fn ($q) => [
                         'id' => $q->id,
                         'no_langganan' => $q->pelanggan->no_langganan,
                         'nama' => $q->pelanggan->nama,
@@ -31,6 +33,10 @@ class BacameterController extends Controller
                         'stand_ini' => $q->stand_ini,
                         'latitude' => $q->latitude,
                         'longitude' => $q->longitude,
+                        'rekeningAirTigaTerakhir' => $q->pelanggan->rekeningAirTigaTerakhir->map(fn ($r) => [
+                            'periode' => $r->periode,
+                            'pakai' => $r->stand_pasang || $r->stand_angkat ? ($r->stand_ini - $r->stand_pasang) + ($r->stand_angkat - $r->stand_lalu) : $r->stand_ini - $r->stand_lalu,
+                        ])
                     ]),
                 ], 200);
             } else {
