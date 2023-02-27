@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RekeningAir extends Model
 {
-    use HasFactory;
+    use HasFactory,HasEagerLimit;
 
     protected $table = 'rekening_air';
 

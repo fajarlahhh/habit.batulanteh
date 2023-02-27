@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\PenggunaTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pelanggan extends Model
 {
-    use HasFactory, PenggunaTrait;
+    use HasFactory, PenggunaTrait,HasEagerLimit;
 
     protected $table = 'pelanggan';
 
@@ -64,6 +65,11 @@ class Pelanggan extends Model
     public function rekeningAir()
     {
         return $this->hasMany(RekeningAir::class)->orderBy('periode', 'asc');
+    }
+
+    public function rekeningAirTigaTerakhir()
+    {
+        return $this->hasMany(RekeningAir::class)->orderBy('periode', 'desc');
     }
 
     public function tagihan()
