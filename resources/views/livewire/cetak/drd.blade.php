@@ -100,8 +100,6 @@
             </table>
         </div>
 
-        <x-modal />
-
         @push('scripts')
             <script>
                 Livewire.on('reinitialize', id => {

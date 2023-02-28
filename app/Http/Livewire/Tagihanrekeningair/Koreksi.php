@@ -79,7 +79,7 @@ class Koreksi extends Component
             $this->setHargaAir($id + 1);
         }
 
-        $pakai = $this->dataRekeningAir[$id]['stand_ini_baru'] - $this->dataRekeningAir[$id]['stand_lalu_baru'];
+        $pakai = $this->dataRekeningAir[$id]['stand_pasang_baru'] || $this->dataRekeningAir[$id]['stand_angkat_baru'] ? ($this->dataRekeningAir[$id]['stand_ini_baru'] - $this->dataRekeningAir[$id]['stand_pasang_baru']) + ($this->dataRekeningAir[$id]['stand_angkat_baru'] - $this->dataRekeningAir[$id]['stand_lalu_baru']) : $this->dataRekeningAir[$id]['stand_ini_baru'] - $this->dataRekeningAir[$id]['stand_lalu_baru'];
         if ($pakai >= 0) {
             $tarifProgresif = $this->dataTarifProgresif->where('tanggal_berlaku', '<=', $this->dataRekeningAir[$id]['periode'])->where('golongan_id', $this->dataRekeningAir[$id]['golongan_id_baru'])->sortByDesc('tanggal_berlaku')->first()->tarifProgresifDetail;
 
@@ -139,10 +139,14 @@ class Koreksi extends Component
             KoreksiRekeningAir::insert(collect($this->dataRekeningAir)->where('update', 1)->map(fn ($q) => [
                 'stand_lalu_lama' => $q['stand_lalu_lama'],
                 'stand_ini_lama' => $q['stand_ini_lama'],
+                'stand_angkat_lama' => $q['stand_angkat_lama'],
+                'stand_angkat_lama' => $q['stand_angkat_lama'],
                 'harga_air_lama' => $q['harga_air_lama'],
                 'biaya_materai_lama' => $q['biaya_materai_lama'],
                 'stand_lalu_baru' => $q['stand_lalu_baru'],
                 'stand_ini_baru' => $q['stand_ini_baru'],
+                'stand_angkat_baru' => $q['stand_angkat_baru'],
+                'stand_pasang_baru' => $q['stand_pasang_baru'],
                 'harga_air_baru' => $q['harga_air_baru'],
                 'biaya_materai_baru' => $q['biaya_materai_baru'],
                 'catatan' => $this->catatan,

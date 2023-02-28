@@ -143,7 +143,7 @@
                                     <td class="with-btn">
                                         <div class="form-group m-0">
                                             <input class="form-control" type="number"
-                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_lalu_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_lalu_baru" wire:change="setHargaAir({{ $index }})" @endif
+                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_lalu_baru'] }}" @else wire:model.lazy="dataRekeningAir.{{ $index }}.stand_lalu_baru" wire:change="setHargaAir({{ $index }})" @endif
                                                 autocomplete="off" />
                                             @error('dataRekeningAir.' . $index . '.stand_lalu_baru')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -153,7 +153,7 @@
                                     <td class="with-btn">
                                         <div class="form-group m-0">
                                             <input class="form-control" type="number"
-                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_ini_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_ini_baru" wire:change="setHargaAir({{ $index }})" @endif
+                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_ini_baru'] }}" @else wire:model.lazy="dataRekeningAir.{{ $index }}.stand_ini_baru" wire:change="setHargaAir({{ $index }})" @endif
                                                 autocomplete="off" />
                                             @error('dataRekeningAir.' . $index . '.stand_ini_baru')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -163,7 +163,7 @@
                                     <td class="with-btn">
                                         <div class="form-group m-0">
                                             <input class="form-control" type="number"
-                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_angkat_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_angkat_baru" wire:change="setHargaAir({{ $index }})" @endif
+                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_angkat_baru'] }}" @else wire:model.lazy="dataRekeningAir.{{ $index }}.stand_angkat_baru" wire:change="setHargaAir({{ $index }})" @endif
                                                 autocomplete="off" />
                                             @error('dataRekeningAir.' . $index . '.stand_angkat_baru')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -173,7 +173,7 @@
                                     <td class="with-btn">
                                         <div class="form-group m-0">
                                             <input class="form-control" type="number"
-                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_pasang_baru'] }}" @else wire:model="dataRekeningAir.{{ $index }}.stand_pasang_baru" wire:change="setHargaAir({{ $index }})" @endif
+                                                @if ($row['angsur'] == 1 || $row['data_tarif'] == 0 || ($row['kasir'] || $row['waktu_bayar'])) disabled value="{{ $row['stand_pasang_baru'] }}" @else wire:model.lazy="dataRekeningAir.{{ $index }}.stand_pasang_baru" wire:change="setHargaAir({{ $index }})" @endif
                                                 autocomplete="off" />
                                             @error('dataRekeningAir.' . $index . '.stand_pasang_baru')
                                                 <span class="text-danger">{{ $message }}</span>

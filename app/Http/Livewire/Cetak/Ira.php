@@ -30,7 +30,7 @@ class Ira extends Component
             ifnull(sum(if(stand_angkat > 0, stand_ini - stand_pasang + stand_angkat- stand_lalu, stand_ini-stand_lalu)),0) pakai,
             ifnull(sum(harga_air),0) harga_air,
             ifnull(sum(biaya_meter_air),0) administrasi,
-            ifnull(sum(biaya_materai),0) materai')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->when($this->unitPelayanan, fn ($q) => $q->whereIn('jalan_kelurahan_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->unitPelayanan, fn ($q) => $q->where('rayon_id', $this->rayon))->leftJoin('ira', 'golongan.id', '=', 'ira.golongan_id')->groupBy('golongan.id')->get(),
+            ifnull(sum(biaya_materai),0) materai')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->when($this->unitPelayanan, fn ($q) => $q->whereIn('jalan_kelurahan_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->leftJoin('ira', 'golongan.id', '=', 'ira.golongan_id')->groupBy('golongan.id')->get(),
         ])->render();
         session()->flash('cetak', $cetak);
         $this->emit('cetak');
@@ -52,7 +52,7 @@ class Ira extends Component
             ifnull(sum(if(stand_angkat > 0, stand_ini - stand_pasang + stand_angkat- stand_lalu, stand_ini-stand_lalu)),0) pakai,
             ifnull(sum(harga_air),0) harga_air,
             ifnull(sum(biaya_meter_air),0) administrasi,
-            ifnull(sum(biaya_materai),0) materai')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->when($this->unitPelayanan, fn ($q) => $q->whereIn('jalan_kelurahan_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->unitPelayanan, fn ($q) => $q->where('rayon_id', $this->rayon))->leftJoin('ira', 'golongan.id', '=', 'ira.golongan_id')->groupBy('golongan.id')->get()
+            ifnull(sum(biaya_materai),0) materai')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->when($this->unitPelayanan, fn ($q) => $q->whereIn('jalan_kelurahan_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->leftJoin('ira', 'golongan.id', '=', 'ira.golongan_id')->groupBy('golongan.id')->get()
         ]);
     }
 }

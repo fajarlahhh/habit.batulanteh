@@ -63,6 +63,11 @@ class RekeningAir extends Model
         return $this->hasOne(AngsuranRekeningAirPeriode::class);
     }
 
+    public function jalanKelurahan()
+    {
+        return $this->belongsTo(JalanKelurahan::class);
+    }
+
     public function scopeSudahBayar($query)
     {
         return $query->whereNotNull('kasir')->whereNotNull('waktu_bayar');
