@@ -19,4 +19,9 @@ class KolektifDetail extends Model
     {
         return $this->belongsTo(Pelanggan::class);
     }
+
+    public function kolektif()
+    {
+        return $this->belongsTo(Kolektif::class);
+    }
 }

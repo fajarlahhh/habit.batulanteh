@@ -54,7 +54,7 @@ class Rekeningair extends Component
     {
         return view('livewire.administrator.datapembayaran.rekeningair', [
             'i' => ($this->page - 1) * 10,
-            'data' => ModelsRekeningAir::whereBetween('waktu_bayar', [$this->tanggal.' 00:00:00', $this->tanggal.' 23:59:59'])->sudahBayar()->whereHas('bacaMeter', fn($q) => $q->whereHas('pelanggan', fn($r) => $r->where('nama', 'like', '%' . $this->cari . '%')->orWhere('no_langganan', 'like', '%' . $this->cari . '%')))->paginate(10),
+            'data' => ModelsRekeningAir::withoutGlobalScopes()->whereBetween('waktu_bayar', [$this->tanggal.' 00:00:00', $this->tanggal.' 23:59:59'])->sudahBayar()->whereHas('pelanggan', fn($r) => $r->where('nama', 'like', '%' . $this->cari . '%')->orWhere('no_langganan', 'like', '%' . $this->cari . '%'))->paginate(10),
         ]);
     }
 }

@@ -22,7 +22,7 @@ class Informasipelanggan extends Component
 
     public function updatedPelangganId()
     {
-        $this->pelanggan = Pelanggan::with('golongan')->with('tagihan.rekeningAir')->findOrFail($this->pelangganId);
+        $this->pelanggan = Pelanggan::with('golongan')->with('tagihan')->with('kolektifDetail.kolektif')->findOrFail($this->pelangganId);
         $this->status = $this->pelanggan->status;
     }
 

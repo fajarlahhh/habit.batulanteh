@@ -62,12 +62,12 @@
                         @endphp
                         <tr>
                             <td class="align-middle">{{ ++$i }}</td>
-                            <td class="align-middle text-nowrap">{{ $row->bacaMeter->periode }}</td>
-                            <td class="align-middle">{{ $row->bacaMeter->pelanggan->no_langganan }}</td>
-                            <td class="align-middle">{{ $row->bacaMeter->pelanggan->nama }}</td>
-                            <td class="align-middle">{{ $row->bacaMeter->pelanggan->alamat }}</td>
+                            <td class="align-middle text-nowrap">{{ $row->periode }}</td>
+                            <td class="align-middle">{{ $row->pelanggan->no_langganan }}</td>
+                            <td class="align-middle">{{ $row->pelanggan->nama }}</td>
+                            <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
                             <td class="align-middle">
-                                {{ $row->bacaMeter->pelanggan->golongan->nama . ' - ' . $row->bacaMeter->pelanggan->golongan->deskripsi }}
+                                {{ $row->golongan->nama . ' - ' . $row->golongan->deskripsi }}
                             </td>
                             <td class="align-middle">
                                 {{ number_format($row->harga_air + $row->biaya_retribusi + $row->biaya_jasa_lingkungan + $row->biaya_pemeliharaan + $row->biaya_administrasi + $row->biaya_materai + $row->biaya_ppn - $row->diskon + $row->biaya_denda) }}
