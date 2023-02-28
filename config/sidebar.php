@@ -76,14 +76,14 @@ return [
         'caret' => true,
         'id' => 'cetak',
         'sub_menu' => [[
-            'url' => '/cetak/dspl',
-            'id' => 'cetakdspl',
-            'title' => 'DSPL',
-        ], [
             'url' => '/cetak/drd',
             'id' => 'cetakira',
             'title' => 'DRD',
         ],[
+            'url' => '/cetak/dspl',
+            'id' => 'cetakdspl',
+            'title' => 'DSPL',
+        ], [
             'url' => '/cetak/ira',
             'id' => 'cetakira',
             'title' => 'IRA',

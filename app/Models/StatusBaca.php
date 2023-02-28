@@ -12,4 +12,9 @@ class StatusBaca extends Model
     use HasFactory, SoftDeletes, PenggunaTrait;
 
     protected $table = 'status_baca';
+
+    public function pengguna()
+    {
+        return $this->belongsTo(Pengguna::class)->withTrashed();
+    }
 }

@@ -65,6 +65,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('cetak')->group(function () {
+        Route::group(['middleware' => ['role_or_permission:administrator|cetakdrd']], function () {
+            Route::get('/drd', \App\Http\Livewire\Cetak\Drd::class)->name('cetak.drd');
+        });
         Route::group(['middleware' => ['role_or_permission:administrator|cetakdspl']], function () {
             Route::get('/dspl', \App\Http\Livewire\Cetak\Dspl::class)->name('cetak.dspl');
         });

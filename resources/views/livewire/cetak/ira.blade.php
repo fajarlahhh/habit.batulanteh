@@ -58,13 +58,11 @@
                             @endfor
                         </select>
                     </div>&nbsp;
+                    <button class="btn" wire:click="cetak">Cetak</button>
                 </div>
             </div>
             <div class="panel-body table-responsive">
                 @include('cetak.ira')
-            </div>
-            <div class="panel-footer form-inline">
-                <button class="btn" wire:click="cetak">Cetak</button>
             </div>
         </div>
 

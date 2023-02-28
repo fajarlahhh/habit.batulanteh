@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Datamaster\Statusbaca;
 
-use App\Models\Statusbaca;
+use App\Models\StatusBaca;
 use Livewire\Component;
 
 class Index extends Component
@@ -23,20 +23,20 @@ class Index extends Component
 
     public function hapus()
     {
-        Statusbaca::findOrFail($this->key)->delete();
+        StatusBaca::findOrFail($this->key)->delete();
         $this->key = null;
     }
 
     public function restore()
     {
-        Statusbaca::withTrashed()->findOrFail($this->key)->restore();
+        StatusBaca::withTrashed()->findOrFail($this->key)->restore();
         $this->key = null;
     }
 
     public function render()
     {
         return view('livewire.datamaster.statusbaca.index', [
-            'data' => Statusbaca::where(fn($q) => $q->where('keterangan', 'like', '%' . $this->cari . '%'))->when($this->exist == '2', fn($q) => $q->onlyTrashed())->get(),
+            'data' => StatusBaca::where(fn($q) => $q->where('keterangan', 'like', '%' . $this->cari . '%'))->when($this->exist == '2', fn($q) => $q->onlyTrashed())->get(),
         ]);
     }
 }

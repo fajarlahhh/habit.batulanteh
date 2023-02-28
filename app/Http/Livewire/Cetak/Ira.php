@@ -6,12 +6,12 @@ use App\Models\Golongan;
 use Livewire\Component;
 use App\Models\Regional;
 use App\Models\UnitPelayanan;
-use App\Models\Ira as ModelsIra;
 
 class Ira extends Component
 {
     public $dataUnitPelayanan, $unitPelayanan, $rayon, $bulan, $tahun;
 
+    public $queryString = ['bulan', 'tahun', 'unitPelayanan'];
     public function mount()
     {
         $this->dataUnitPelayanan = UnitPelayanan::all();

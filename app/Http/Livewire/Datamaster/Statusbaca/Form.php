@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Datamaster\Statusbaca;
 
-use App\Models\Statusbaca;
+use App\Models\StatusBaca;
 use Livewire\Component;
 
 class Form extends Component
@@ -29,11 +29,11 @@ class Form extends Component
     public function mount()
     {
         if ($this->key) {
-            $this->data = Statusbaca::findOrFail($this->key);
+            $this->data = StatusBaca::findOrFail($this->key);
             $this->keterangan = $this->data->keterangan;
             $this->inputAngka = $this->data->input_angka;
         } else {
-            $this->data = new Statusbaca();
+            $this->data = new StatusBaca();
         }
     }
 
