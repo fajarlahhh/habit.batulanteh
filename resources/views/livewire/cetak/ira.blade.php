@@ -58,7 +58,7 @@
                             @endfor
                         </select>
                     </div>&nbsp;
-                    <button class="btn" wire:click="cetak">Cetak</button>
+                    <button class="btn btn-info" wire:click="cetak">Cetak</button>
                 </div>
             </div>
             <div class="panel-body table-responsive">
