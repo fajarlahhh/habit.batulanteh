@@ -20,21 +20,21 @@
                     <td class="width-100">No. Langganan</td>
                     <td class="width-10">:</td>
                     <td colspan="2">
-                        {{ $row->bacaMeter->pelanggan->no_langganan }}
+                        {{ $row->pelanggan->no_langganan }}
                     </td>
                 </tr>
                 <tr>
                     <td>Nama</td>
                     <td>:</td>
                     <td colspan="2">
-                        {{ $row->bacaMeter->pelanggan->nama }}
+                        {{ $row->pelanggan->nama }}
                     </td>
                 </tr>
                 <tr>
                     <td>Alamat</td>
                     <td>:</td>
                     <td colspan="2">
-                        {{ $row->bacaMeter->pelanggan->alamat }}
+                        {{ $row->pelanggan->alamat }}
                     </td>
                 </tr>
                 <tr>
@@ -48,14 +48,14 @@
                     <td>Periode</td>
                     <td>:</td>
                     <td colspan="2">
-                        {{ date('Y-m', strtotime($row->bacaMeter->periode)) }}
+                        {{ date('Y-m', strtotime($row->periode)) }}
                     </td>
                 </tr>
                 <tr>
                     <td>Stand Meter</td>
                     <td>:</td>
                     <td colspan="2">
-                        {{ $row->bacaMeter->stand_ini . ' - ' . $row->bacaMeter->stand_lalu . ' = ' . ($row->bacaMeter->stand_ini - $row->bacaMeter->stand_lalu) }}
+                        {{ $row->stand_ini . ' - ' . $row->stand_lalu . ' = ' . ($row->stand_ini - $row->stand_lalu) }}
                     </td>
                 </tr>
                 <tr>
@@ -131,7 +131,7 @@
                             <td class="width-100">No. Langganan</td>
                             <td class="width-10">:</td>
                             <td colspan="2" class="p-r-5 width-200">
-                                {{ $row->bacaMeter->pelanggan->no_langganan }}
+                                {{ $row->pelanggan->no_langganan }}
                             </td>
                             <td class="width-100">Tanggal Lunas</td>
                             <td class="width-10">:</td>
@@ -143,24 +143,24 @@
                             <td>Nama</td>
                             <td>:</td>
                             <td colspan="2" class="p-r-5">
-                                {{ $row->bacaMeter->pelanggan->nama }}
+                                {{ $row->pelanggan->nama }}
                             </td>
                             <td>Periode</td>
                             <td>:</td>
                             <td colspan="2">
-                                {{ date('Y-m', strtotime($row->bacaMeter->periode)) }}
+                                {{ date('Y-m', strtotime($row->periode)) }}
                             </td>
                         </tr>
                         <tr>
                             <td>Alamat</td>
                             <td>:</td>
                             <td colspan="2" class="p-r-5">
-                                {{ $row->bacaMeter->pelanggan->alamat }}
+                                {{ $row->pelanggan->alamat }}
                             </td>
-                            <td>Stand Meter</td>
+                            <td>Pakai</td>
                             <td>:</td>
                             <td colspan="2">
-                                {{ $row->bacaMeter->stand_ini . ' - ' . $row->bacaMeter->stand_lalu . ' = ' . ($row->bacaMeter->stand_ini - $row->bacaMeter->stand_lalu) }}
+                                {{ ($row->stand_pasang || $row->stand_angkat ? ($row->stand_ini - $row->stand_pasang) + ($row->stand_angkat - $row->stand_lalu) : $row->stand_ini - $row->stand_lalu) }}
                             </td>
                         </tr>
                         <tr>

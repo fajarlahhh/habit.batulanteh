@@ -112,7 +112,7 @@ class Kolektif extends Component
         });
 
         session()->flash('success', 'Berhasil menyimpan data');
-        return redirect(route('pembayaran.rekeningair.perpelanggan'));
+        return redirect(route('pembayaran.rekeningair.kolektif'));
     }
 
     public function hapusDataRekeningAir($id)
