@@ -4,12 +4,14 @@ namespace App\Http\Livewire\Cetak;
 
 use Livewire\Component;
 use App\Models\Regional;
+use App\Exports\DrdExport;
 use App\Models\RekeningAir;
 use Livewire\WithPagination;
 use App\Models\UnitPelayanan;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Drd extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $dataUnitPelayanan, $unitPelayanan, $rayon, $bulan, $tahun;
@@ -30,11 +32,7 @@ class Drd extends Component
 
     public function cetak()
     {
-        $cetak = view('cetak.ira', [
-            'data' => RekeningAir::with('golongan')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->when($this->unitPelayanan, fn ($q) => $q->whereIn('jalan_kelurahan_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->unitPelayanan, fn ($q) => $q->where('rayon_id', $this->rayon))->get()
-        ])->render();
-        session()->flash('cetak', $cetak);
-        $this->emit('cetak');
+        return Excel::download(new DrdExport($this->unitPelayanan, $this->rayon, $this->tahun, $this->bulan), 'drd' . $this->unitPelayanan . $this->rayon . $this->tahun . $this->bulan . '.xlsx');
     }
 
     public function render()
