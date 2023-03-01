@@ -13,7 +13,7 @@
 
         <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
             <!-- begin panel-heading -->
-            <div class="panel-heading ">
+            <div class="panel-heading" wire:loading.remove>
                 <div class="form-inline width-full">
                     <div class="form-group">
                         <select class="form-control selectpicker" data-live-search="true" data-width="100%"
@@ -67,6 +67,10 @@
         </div>
 
         <x-modal />
+
+        <div wire:loading>
+            <x-loading />
+        </div>
 
         @push('scripts')
             @if (Session::has('cetak'))

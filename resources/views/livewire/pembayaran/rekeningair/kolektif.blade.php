@@ -39,6 +39,13 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        @role('administrator|super-admin')
+                            <div class="form-group">
+                                <label class="control-label">Tanggal</label>
+                                <input class="form-control" type="datetime-local" autocomplete="off"
+                                    wire:model.defer="tanggal" />
+                            </div>
+                        @endrole
                         <div class="form-group">
                             <label class="control-label">Tagihan</label>
                             <input class="form-control f-w-700 f-s-20 hitung" type="text" id="tagihan"

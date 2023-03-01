@@ -105,11 +105,11 @@ return [
                 [
                     'url' => '/cetak/lpp/air',
                     'id' => 'cetaklppair',
-                    'title' => 'LPP Air',
+                    'title' => 'Air',
                 ], [
                     'url' => '/cetak/lpp/nonair',
                     'id' => 'cetaklppnonair',
-                    'title' => 'LPP Non Air',
+                    'title' => 'Non Air',
                 ]
             ],
         ], [

@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>NO</th>
@@ -9,6 +9,7 @@
             <th>PEMAKAIAN</th>
             <th>HARGA AIR</th>
             <th>BIAYA METER AIR</th>
+            <th>MATERAI</th>
             <th>TOTAL</th>
         </tr>
     </thead>

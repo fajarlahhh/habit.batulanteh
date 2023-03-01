@@ -37,7 +37,7 @@ class Rekeningnonair extends Component
 
     public function mount()
     {
-        $this->tanggal = date('Y-m-d');
+        $this->tanggal = $this->tanggal?:date('Y-m-d');
     }
 
     public function setKey($key = null)
