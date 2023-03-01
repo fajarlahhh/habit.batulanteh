@@ -77,8 +77,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['role_or_permission:administrator|cetakkoreksirekeningair']], function () {
             Route::get('/koreksirekeningair', \App\Http\Livewire\Cetak\Koreksirekeningair::class)->name('cetak.koreksirekeningair');
         });
-        Route::group(['middleware' => ['role_or_permission:administrator|cetaklpprekair']], function () {
-            Route::get('/lpprekair', \App\Http\Livewire\Cetak\Lpprekair::class)->name('cetak.lpprekair');
+        Route::prefix('lpp')->group(function () {
+            Route::group(['middleware' => ['role_or_permission:administrator|cetaklppair']], function () {
+                Route::get('/air', \App\Http\Livewire\Cetak\Lpp\Air::class)->name('cetak.lpp.air');
+            });
+            Route::group(['middleware' => ['role_or_permission:administrator|cetaklppnonair']], function () {
+                Route::get('/nonair', \App\Http\Livewire\Cetak\Lpp\Nonair::class)->name('cetak.lpp.nonair');
+            });
         });
         Route::group(['middleware' => ['role_or_permission:administrator|cetakprogresbacameter']], function () {
             Route::get('/progresbacameter', \App\Http\Livewire\Cetak\Progresbacameter::class)->name('cetak.progresbacameter');

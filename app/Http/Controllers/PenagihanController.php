@@ -91,6 +91,45 @@ class PenagihanController extends Controller
                     'data' => 'Data tidak ditemukan',
                 ], 404);
             }
+            return response()->json([
+                'status' => 'gagal',
+                'data' => 'Pengguna tidak ditemukan',
+            ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function terbayar(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'tanggal' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $validator->messages(),
+            ], 400);
+        }
+
+        try {
+            $pengguna = Pengguna::where('api_token', $req->header('Token'))->get();
+            $tanggal = explode(' - ', $req->tanggal);
+
+            if ($pengguna->count() > 0) {
+                $pengguna  = $pengguna->first();
+                return response()->json([
+                    'status' => 'sukses',
+                    'data' => RekeningAir::where('kasir', $pengguna->nama)->whereBetween('waktu_bayar', [$tanggal[0] . ' 00:00:00', $tanggal[1] . ' 23:59:59'])->get(),
+                ]);
+            } 
+            return response()->json([
+                'status' => 'gagal',
+                'data' => 'Pengguna tidak ditemukan',
+            ], 400);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'gagal',
