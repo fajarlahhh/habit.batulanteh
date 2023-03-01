@@ -37,4 +37,5 @@ Route::prefix('bacameter')->group(function () {
 Route::prefix('penagihan')->group(function () {
     Route::middleware(['cors', 'apitoken'])->get('/target', [PenagihanController::class, 'index']);
     Route::middleware(['cors', 'apitoken'])->post('/lunasi', [PenagihanController::class, 'lunasi']);
+    Route::middleware(['cors', 'apitoken'])->post('/terbayar', [PenagihanController::class, 'terbayar']);
 });

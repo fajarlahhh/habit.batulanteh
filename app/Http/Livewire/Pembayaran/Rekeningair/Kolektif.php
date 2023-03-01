@@ -76,7 +76,7 @@ class Kolektif extends Component
         DB::transaction(function () {
             foreach (collect($this->dataRekeningAir)->where('angsur', 0)->all() as $key => $row) {
                 RekeningAir::where('id', $row['id'])->whereNull('waktu_bayar')->update([
-                    'kasir' => auth()->user()->uid,
+                    'kasir' => auth()->user()->nama,
                     'waktu_bayar' => now(),
                     'biaya_denda' => $row['denda'],
                 ]);
@@ -84,7 +84,7 @@ class Kolektif extends Component
 
             foreach (collect($this->dataAngsuranRekeningAir)->all() as $key => $row) {
                 AngsuranRekeningAirDetail::where('urutan', $row['urutan'])->where('angsuran_rekening_air_id', $row['angsuran_rekening_air_id'])->where('id', $row['angsuran_rekening_air_detail_id'])->update([
-                    'kasir' => auth()->user()->uid,
+                    'kasir' => auth()->user()->nama,
                     'waktu_bayar' => now(),
                 ]);
             }
@@ -93,7 +93,7 @@ class Kolektif extends Component
                 if (AngsuranRekeningAir::where('id', $row)->lunas()->count() > 0) {
                     $dataAngsuranRekeningAirPeriode = AngsuranRekeningAirPeriode::where('angsuran_rekening_air_id', $row)->get()->pluck('rekening_air_id')->all();
                     RekeningAir::whereIn('id', $dataAngsuranRekeningAirPeriode)->belumBayar()->update([
-                        'kasir' => auth()->user()->uid,
+                        'kasir' => auth()->user()->nama,
                         'waktu_bayar' => now(),
                         'biaya_denda' => DB::raw('(select nilai from tarif_denda where id=tarif_denda_id)'),
                     ]);
