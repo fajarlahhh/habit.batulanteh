@@ -32,6 +32,11 @@ class Air extends Component
     public function cetak()
     {
         $cetak = view('cetak.lppair', [
+            'tanggal1' => $this->tanggal1,
+            'tanggal2' => $this->tanggal2,
+            'rayon' => $this->rayon,
+            'kasir' => $this->kasir,
+            'unitPelayanan' => $this->unitPelayanan,
             'data' => RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1. ' 00:00:00', $this->tanggal2. ' 23:59:59'])->when($this->kasir, fn($q) => $q->where('kasir', $this->kasir))->whereNotNull('kasir')->orderBy('waktu_bayar')->get()
         ])->render();
         session()->flash('cetak', $cetak);

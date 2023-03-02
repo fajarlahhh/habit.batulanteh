@@ -70,7 +70,7 @@ class Rekeningnonair extends Component
             $data->no_hp = $this->noHp;
             $data->nilai = $this->tagihan;
             $data->pelanggan_id = $this->pelangganId;
-            $data->kasir = auth()->user()->uid;
+            $data->kasir = auth()->user()->nama;
             $data->save();
 
             $cetak = view('cetak.nota-rekeningnonair', [

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 
 class Pengguna extends Authenticatable
@@ -41,5 +42,10 @@ class Pengguna extends Authenticatable
     public function jalanKelurahan()
     {
         return $this->belongsTo(JalanKelurahan::class);
+    }
+
+    public function bacaMeter()
+    {
+        return $this->hasMany(BacaMeter::class, 'pembaca_id')->select('id', 'pembaca_id', DB::raw('date(tanggal_baca) tanggal_baca'));
     }
 }

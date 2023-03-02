@@ -15,13 +15,17 @@ class Ira extends Component
     public function mount()
     {
         $this->dataUnitPelayanan = UnitPelayanan::all();
-        $this->bulan = date('m');
-        $this->tahun = date('Y');
+        $this->bulan = $this->bulan?:date('m');
+        $this->tahun = $this->tahun?:date('Y');
     }
 
     public function cetak()
     {
         $cetak = view('cetak.ira', [
+            'bulan' => $this->bulan,
+            'tahun' => $this->tahun,
+            'rayon' => $this->rayon,
+            'unitPelayanan' => $this->unitPelayanan,
             'data' => Golongan::selectRaw('golongan.nama nama_golongan,
             golongan.deskripsi deskripsi_golongan,
             count(harga_air) jumlah_pelanggan,

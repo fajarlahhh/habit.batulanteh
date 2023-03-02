@@ -1,3 +1,23 @@
+<div class="text-center">
+    <h5>Ikthisar Rekening Air (IRA)</h5>
+</div>
+<table class="table table-borderless">
+    <tr>
+        <th class="width-150">Unit Pelayanan</th> 
+        <th class="width-10">:</th> 
+        <td>{{ $unitPelayanan ? \App\Models\UnitPelayanan::findOrFail($unitPelayanan)->nama : 'Semua Unit Pelayanan' }}</td>
+    </tr>
+    <tr>
+        <th class="width-150">Rayon</th> 
+        <th class="width-10">:</th> 
+        <td>{{ $rayon ? \App\Models\Rayon::findOrFail($rayon)->nama : 'Semua Rayon' }}</td>
+    </tr>
+    <tr>
+        <th class="width-150">Periode</th> 
+        <th class="width-10">:</th> 
+        <td>{{ date('F Y', strtotime($tahun . '-' . $bulan . '-01')) }}</td>
+    </tr>
+</table>
 <table class="table table-bordered">
     <thead>
         <tr>

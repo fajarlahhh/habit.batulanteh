@@ -57,6 +57,11 @@ class Pelanggan extends Model
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }
 
+    public function dspl()
+    {
+        return $this->hasMany(Dspl::class)->orderBy('periode_rekening', 'asc');
+    }
+
     public function bacaMeter()
     {
         return $this->hasMany(BacaMeter::class)->orderBy('periode', 'asc');

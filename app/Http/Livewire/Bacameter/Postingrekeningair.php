@@ -2,15 +2,16 @@
 
 namespace App\Http\Livewire\Bacameter;
 
-use App\Models\BacaMeter;
 use App\Models\Ira;
+use App\Models\Dspl;
+use Livewire\Component;
+use App\Models\BacaMeter;
 use App\Models\Pelanggan;
-use App\Models\RekeningAir;
 use App\Models\TarifDenda;
+use App\Models\RekeningAir;
 use App\Models\TarifMaterai;
 use App\Models\TarifProgresif;
 use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 
 class Postingrekeningair extends Component
 {
@@ -47,7 +48,7 @@ class Postingrekeningair extends Component
             return $this->render();
         }
 
-        if (BacaMeter::whereNull('stand_ini')->get()->count() > 0) {
+        if (BacaMeter::whereNull('stand_ini')->where('periode', $this->tahun . "-" . $this->bulan . "-01")->get()->count() > 0) {
             session()->flash('danger', 'Terdapat target baca yang belum memiliki stand ini');
             return $this->render();
         }
@@ -181,6 +182,28 @@ class Postingrekeningair extends Component
                 Ira::insert($row->toArray());
             }
 
+
+            $dspl = RekeningAir::belumBayar()->with('pelanggan')->get()->map(fn($q) => [
+                'periode' => date('Y-m-1'),
+                'status_pelanggan' => $q->pelanggan->status,
+                'periode_rekening' => $q->periode,
+                'harga_air' => $q->harga_air,
+                'biaya_denda' => $q->biaya_denda,
+                'biaya_lainnya' => $q->biaya_lainnya,
+                'biaya_meter_air' => $q->biaya_meter_air,
+                'biaya_materai' => $q->biaya_materai,
+                'biaya_ppn' => $q->biaya_ppn,
+                'golongan_id' => $q->golongan_id,
+                'pelanggan_id' => $q->pelanggan_id,
+                'jalan_kelurahan_id' => $q->jalan_kelurahan_id,
+                'rayon_id' => $q->rayon_id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ])->chunk(1000);
+            
+            foreach ($dspl as $row) {
+                Dspl::insert($row->toArray());
+            }
             session()->flash('success', 'Data rekening air dan IRA periode ' . $this->tahun . '-' . $this->bulan . ' berhasil diposting');
         });
     }

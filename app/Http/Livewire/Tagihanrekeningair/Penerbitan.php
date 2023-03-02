@@ -19,8 +19,8 @@ class Penerbitan extends Component
 
     public function mount()
     {
-        $this->bulan = date('m');
-        $this->tahun = date('Y');
+        $this->bulan = $this->bulan?:date('m');
+        $this->tahun = $this->tahun?:date('Y');
         $this->dataTarifProgresif = TarifProgresif::with('tarifProgresifDetail')->withTrashed()->get();
         $this->dataTarifMaterai = TarifMaterai::withTrashed()->get();
         $this->dataTarifDenda = TarifDenda::withTrashed()->get();

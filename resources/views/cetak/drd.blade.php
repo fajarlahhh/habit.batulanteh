@@ -8,6 +8,11 @@
         <td>{{ $unitPelayanan ? \App\Models\UnitPelayanan::findOrFail($unitPelayanan)->nama : 'Semua Unit Pelayanan' }}</td>
     </tr>
     <tr>
+        <th class="width-150">Rayon</th> 
+        <th class="width-10">:</th> 
+        <td>{{ $rayon ? \App\Models\Rayon::findOrFail($rayon)->nama : 'Semua Rayon' }}</td>
+    </tr>
+    <tr>
         <th class="width-150">Periode</th> 
         <th class="width-10">:</th> 
         <td>{{ date('F Y', strtotime($tahun . '-' . $bulan . '-01')) }}</td>

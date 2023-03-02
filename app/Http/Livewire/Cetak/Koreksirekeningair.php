@@ -21,8 +21,8 @@ class Koreksirekeningair extends Component
     public function mount()
     {
         $this->dataUnitPelayanan = UnitPelayanan::all();
-        $this->bulan = date('m');
-        $this->tahun = date('Y');
+        $this->bulan = $this->bulan?:date('m');
+        $this->tahun = $this->tahun?:date('Y');
     }
 
     public function booted()

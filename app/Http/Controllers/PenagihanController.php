@@ -123,7 +123,19 @@ class PenagihanController extends Controller
                 $pengguna  = $pengguna->first();
                 return response()->json([
                     'status' => 'sukses',
-                    'data' => RekeningAir::where('kasir', $pengguna->nama)->whereBetween('waktu_bayar', [$tanggal[0] . ' 00:00:00', $tanggal[1] . ' 23:59:59'])->get(),
+                    'data' => RekeningAir::where('kasir', $pengguna->nama)->whereBetween('waktu_bayar', [$tanggal[0] . ' 00:00:00', $tanggal[1] . ' 23:59:59'])->get()->map(fn($q)=> [
+                        "id"=> 12958,
+                        "no_langganan" => "010500005",
+                        "periode"=> $q->periode,
+                        "stand_lalu"=> 8944,
+                        "stand_ini"=> 8956,
+                        "stand_angkat"=> 8944,
+                        "stand_pasang"=> 8956,
+                        'pakai' => $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu,
+                        "waktu_bayar"=> $q->waktu_bayar,
+                        "kasir"=> $q->kasir,
+                        "jumlah"=> $q->harga_air + $q->biaya_lainnya + $q->biaya_meter_air + $q->biaya_materai+ $q->biaya_denda,
+                    ]),
                 ]);
             } 
             return response()->json([

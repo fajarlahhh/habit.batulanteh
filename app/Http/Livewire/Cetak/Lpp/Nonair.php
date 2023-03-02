@@ -32,6 +32,11 @@ class Nonair extends Component
     public function cetak()
     {
         $cetak = view('cetak.lppnonair', [
+            'tanggal1' => $this->tanggal1,
+            'tanggal2' => $this->tanggal2,
+            'rayon' => $this->rayon,
+            'kasir' => $this->kasir,
+            'unitPelayanan' => $this->unitPelayanan,
             'data' => RekeningNonAir::whereBetween('created_at', [$this->tanggal1. ' 00:00:00', $this->tanggal2. ' 23:59:59'])->when($this->kasir, fn($q) => $q->where('kasir', $this->kasir))->whereNotNull('kasir')->orderBy('created_at')->get()
         ])->render();
         session()->flash('cetak', $cetak);
