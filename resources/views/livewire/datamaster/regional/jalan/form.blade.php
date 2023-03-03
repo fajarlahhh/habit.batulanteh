@@ -55,7 +55,7 @@
                                                 <option selected hidden>-- Pilih Kelurahan --</option>
                                                 @foreach ($dataKelurahan as $row)
                                                     <option value="{{ $row->getKey() }}">
-                                                        {{ $row->nama . ', ' . $row->nama . ', ' . $row->kecamatan->nama }}
+                                                        {{ $row->nama . ', '  . $row->kecamatan->nama }}
                                                     </option>
                                                 @endforeach
                                             </select>
