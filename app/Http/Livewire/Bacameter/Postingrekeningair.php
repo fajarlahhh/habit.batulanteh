@@ -117,7 +117,6 @@ class Postingrekeningair extends Component
                     'diskon' => $diskon,
                     'golongan_id' => $row->pelanggan->golongan_id,
                     'baca_meter_id' => $row->id,
-                    'jalan_kelurahan_id' => $row->jalan_kelurahan_id,
                     'pelanggan_id' => $row->pelanggan_id,
                     'rayon_id' => $row->rayon_id,
                     'tarif_denda_id' => $this->tarifDenda ? $this->tarifDenda->id : null,
@@ -150,14 +149,13 @@ class Postingrekeningair extends Component
                 'biaya_ppn' => $q['biaya_ppn'],
                 'diskon' => $q['diskon'],
                 'golongan_id' => $q['golongan_id'],
-                'jalan_kelurahan_id' => $q['jalan_kelurahan_id'],
                 'rayon_id' => $q['rayon_id'],
                 'pelanggan_id' => $q['pelanggan_id'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ])->chunk(1000);
 
-            $ira[] = Pelanggan::with('rayonDetail', 'rayonDetail')->whereIn('status', [2, 4])->get()->map(fn ($q) => [
+            $ira[] = Pelanggan::with('rayon')->whereIn('status', [2, 4])->get()->map(fn ($q) => [
                 'periode' => $this->tahun . '-' . $this->bulan . '-01',
                 'stand_lalu' => null,
                 'stand_ini' => null,
@@ -171,8 +169,7 @@ class Postingrekeningair extends Component
                 'biaya_ppn' => null,
                 'diskon' => null,
                 'golongan_id' => $q->golongan_id,
-                'jalan_kelurahan_id' => $q->jalan_kelurahan_id,
-                'rayon_id' => $q->rayonDetail->rayonDetail->rayon_id,
+                'rayon_id' => $q->rayon_id,
                 'pelanggan_id' => $q->id,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -181,7 +178,6 @@ class Postingrekeningair extends Component
             foreach ($ira as $row) {
                 Ira::insert($row->toArray());
             }
-
 
             $dspl = RekeningAir::belumBayar()->with('pelanggan')->get()->map(fn($q) => [
                 'periode' => date('Y-m-1'),
@@ -195,7 +191,6 @@ class Postingrekeningair extends Component
                 'biaya_ppn' => $q->biaya_ppn,
                 'golongan_id' => $q->golongan_id,
                 'pelanggan_id' => $q->pelanggan_id,
-                'jalan_kelurahan_id' => $q->jalan_kelurahan_id,
                 'rayon_id' => $q->rayon_id,
                 'created_at' => now(),
                 'updated_at' => now(),

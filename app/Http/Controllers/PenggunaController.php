@@ -26,7 +26,7 @@ class PenggunaController extends Controller
         }
 
         try {
-            $pengguna = Pengguna::where('uid', $req->uid)->withoutGlobalScopes()->get();
+            $pengguna = Pengguna::where('uid', $req->uid)->where('bacameter', 1)->where('penagih', '>', 0)->withoutGlobalScopes()->get();
             if ($pengguna->count() > 0) {
                 $pengguna = $pengguna->first();
                 if (Hash::check($req->kata_sandi, $pengguna->kata_sandi)) {
@@ -48,7 +48,7 @@ class PenggunaController extends Controller
             }
             return response()->json([
                 'status' => 'gagal',
-                'data' => 'UID salah',
+                'data' => 'Kredensial tidak valid',
             ], 401);
         } catch (\Exception $e) {
             return response()->json([

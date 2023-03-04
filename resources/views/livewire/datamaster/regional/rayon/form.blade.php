@@ -35,84 +35,17 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Keterangan</label>
-                    <textarea class="form-control" type="text" autocomplete="off" wire:model.defer="keterangan" rows="3"></textarea>
-                    @error('keterangan')
+                    <label for="control-label">Kelurahan</label>
+                    <select wire:model.defer="kelurahan" class="form-control selectpicker" data-live-search="true"
+                        data-width="100%">
+                        <option selected hidden>-- Pilih Kelurahan --</option>
+                        @foreach (\App\Models\Kelurahan::orderBy('nama')->get() as $row)
+                            <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
+                        @endforeach
+                    </select>
+                    @error('kelurahan')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="note note-secondary">
-                            <div class="note-content">
-                                <h4>Data Jalan</h4>
-                                <div class="table-responsive height-400">
-                                    <table class="table">
-                                        <thead>
-                                            <th>Nama</th>
-                                            <th>Kelurahan</th>
-                                            <th>Kecamatan</th>
-                                            <th></th>
-                                        </thead>
-                                        @foreach (collect($dataJalanKelurahan)->sortBy('nama')->all() as $key => $row)
-                                            <tr>
-                                                <td class="align-middle">
-                                                    {{ $row['nama'] }}
-                                                </td>
-                                                <td class="align-middle">
-                                                    {{ $row['nama_kelurahan'] }}
-                                                </td>
-                                                <td class="align-middle">
-                                                    {{ $row['nama_kecamatan'] }}
-                                                </td>
-                                                <td class="with-btn align-middle width-10">
-                                                    <a href="javascript:;" wire:click="tambahDetail({{ $key }},{{ $row['id'] }})"
-                                                        class="btn btn-info">+</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <h1 style="font-size: 100px; margin-top: 160px"><i class="fas fa-forward"></i></h1>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="note note-secondary">
-                            <div class="note-content">
-                                <h4>Data Jalan di Rayon Ini</h4>
-                                <div class="table-responsive height-400">
-                                    <table class="table">
-                                        <thead>
-                                            <th>Nama</th>
-                                            <th>Kelurahan</th>
-                                            <th>Kecamatan</th>
-                                            <th></th>
-                                        </thead>
-                                        @foreach (collect($detail)->sortBy('nama')->all() as $key => $row)
-                                            <tr>
-                                                <td class="align-middle">
-                                                    {{ $row['nama'] }}
-                                                </td>
-                                                <td class="align-middle">
-                                                    {{ $row['nama_kelurahan'] }}
-                                                </td>
-                                                <td class="align-middle">
-                                                    {{ $row['nama_kecamatan'] }}
-                                                </td>
-                                                <td class="with-btn align-middle width-10">
-                                                    <a href="javascript:;" wire:click="hapusDetail({{ $key }},{{ $row['id'] }})"
-                                                        class="btn btn-danger">-</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="panel-footer">

@@ -36,7 +36,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.datamaster.regional.kelurahan.index', [
-            'data' => Kelurahan::with('pengguna')->with('jalanKelurahan.jalan')->with('kecamatan')->where(fn($q) => $q->where('nama', 'like', '%' . $this->cari . '%'))->when($this->exist == '2', fn($q) => $q->onlyTrashed())->get(),
+            'data' => Kelurahan::with('pengguna')->with('kecamatan')->where(fn($q) => $q->where('nama', 'like', '%' . $this->cari . '%'))->when($this->exist == '2', fn($q) => $q->onlyTrashed())->get(),
         ]);
     }
 }

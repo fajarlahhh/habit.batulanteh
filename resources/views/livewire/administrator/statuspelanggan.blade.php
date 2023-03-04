@@ -75,8 +75,8 @@
                                         value=" @if ($pelanggan) @switch($pelanggan->status) 
                                         @case(1) Aktif @break
                                         @case(2) Putus Sementara @break
-                                        @case(3) Putus Sementara Permintaan Pelanggan @break
-                                        @case(4) Putus Rampung @break
+                                        @case(3) Segel @break
+                                        @case(4) Bongkar @break
                                     @default
                                 @endswitch @endif
                                 "

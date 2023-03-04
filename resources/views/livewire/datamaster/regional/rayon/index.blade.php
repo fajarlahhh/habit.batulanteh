@@ -50,8 +50,7 @@
                         <th class="width-60">No.</th>
                         <th>Kode</th>
                         <th>Nama</th>
-                        <th>Keterangan</th>
-                        <th>Jalan</th>
+                        <th>Kelurahan</th>
                         <th>Operator</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
@@ -64,14 +63,7 @@
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle">{{ $row->kode }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
-                            <td class="align-middle">{{ $row->keterangan }}</td>
-                            <td class="align-middle">
-                                <ul>
-                                    @foreach ($row->rayonDetail as $subRow)
-                                        <li>{{ $subRow->jalanKelurahan->jalan->nama.', '.$subRow->jalanKelurahan->kelurahan->nama.', '.$subRow->jalanKelurahan->kelurahan->kecamatan->nama }}</li>
-                                    @endforeach
-                                </ul>
-                            </td>
+                            <td class="align-middle">{{ $row->kelurahan->nama }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>

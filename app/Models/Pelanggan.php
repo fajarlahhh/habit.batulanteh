@@ -27,6 +27,11 @@ class Pelanggan extends Model
         return $this->belongsTo(TarifLainnya::class);
     }
 
+    public function rayon()
+    {
+        return $this->belongsTo(Rayon::class);
+    }
+
     public function diameter()
     {
         return $this->belongsTo(Diameter::class);
@@ -42,10 +47,6 @@ class Pelanggan extends Model
         return $this->hasMany(AngsuranRekeningAir::class);
     }
 
-    public function jalanKelurahan()
-    {
-        return $this->belongsTo(JalanKelurahan::class);
-    }
 
     public function merkWaterMeter()
     {

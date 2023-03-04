@@ -112,11 +112,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/statusbaca/edit/{key}', \App\Http\Livewire\Datamaster\Statusbaca\Form::class)->name('datamaster.statusbaca.edit');
         });
         Route::prefix('regional')->group(function () {
-            Route::group(['middleware' => ['role_or_permission:administrator|datamasterregionaljalan']], function () {
-                Route::get('/jalan', \App\Http\Livewire\Datamaster\Regional\Jalan\Index::class)->name('datamaster.regional.jalan');
-                Route::get('/jalan/tambah', \App\Http\Livewire\Datamaster\Regional\Jalan\Form::class)->name('datamaster.regional.jalan.tambah');
-                Route::get('/jalan/edit/{key}', \App\Http\Livewire\Datamaster\Regional\Jalan\Form::class)->name('datamaster.regional.jalan.edit');
-            });
             Route::group(['middleware' => ['role_or_permission:administrator|datamasterregionalkecamatan']], function () {
                 Route::get('/kecamatan', \App\Http\Livewire\Datamaster\Regional\Kecamatan\Index::class)->name('datamaster.regional.kecamatan');
                 Route::get('/kecamatan/tambah', \App\Http\Livewire\Datamaster\Regional\Kecamatan\Form::class)->name('datamaster.regional.kecamatan.tambah');

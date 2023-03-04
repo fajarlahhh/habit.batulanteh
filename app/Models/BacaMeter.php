@@ -19,9 +19,9 @@ class BacaMeter extends Model
         return $this->belongsTo(Pelanggan::class);
     }
 
-    public function jalanKelurahan()
+    public function rayon()
     {
-        return $this->belongsTo(JalanKelurahan::class);
+        return $this->belongsTo(Rayon::class);
     }
 
     public function pengguna()

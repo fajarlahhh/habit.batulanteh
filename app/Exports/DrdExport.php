@@ -26,7 +26,7 @@ class DrdExport implements FromView
             'tahun' => $this->tahun,
             'rayon' => $this->rayon,
             'unitPelayanan' => $this->unitPelayanan,
-            'data' =>  RekeningAir::with('golongan')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->when($this->unitPelayanan, fn ($q) => $q->whereIn('jalan_kelurahan_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->unitPelayanan, fn ($q) => $q->where('rayon_id', $this->rayon))->get()
+            'data' =>  RekeningAir::with('golongan')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->unitPelayanan, fn ($q) => $q->where('rayon_id', $this->rayon))->get()
         ]);
     }
 

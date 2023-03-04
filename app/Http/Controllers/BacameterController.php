@@ -16,7 +16,7 @@ class BacameterController extends Controller
     {
         $periode = date('Y-m-01');
         try {
-            $pengguna = Pengguna::select('id')->where('api_token', $req->header('Token'))->get();
+            $pengguna = Pengguna::select('id')->where('api_token', $req->header('Token'))->where('bacameter', 1)->get();
             if ($pengguna->count() > 0) {
                 $pengguna  = $pengguna->first();
                 return response()->json([
@@ -42,7 +42,7 @@ class BacameterController extends Controller
             } else {
                 return response()->json([
                     'status' => 'gagal',
-                    'data' => 'Pengguna not found',
+                    'data' => 'Kredensial tidak valid',
                 ], 400);
             }
         } catch (\Exception $e) {
@@ -73,21 +73,29 @@ class BacameterController extends Controller
         }
 
         try {
-            $gambar = $req->file('file');
-            $namaFile = date('YmdHims') . time() . uniqid() . '.' . $gambar->getClientOriginalExtension();
-            Storage::putFileAs('public/bacameter/', $gambar, $namaFile);
-            BacaMeter::where('id', $req->id)->withoutGlobalScopes()->update([
-                'stand_ini' => $req->stand,
-                'status_baca' => $req->status_baca,
-                'tanggal_baca' => $req->tanggal_baca,
-                'latitude' => $req->latitude,
-                'longitude' => $req->longitude,
-                'foto' => 'public/bacameter/' . $namaFile
-            ]);
-            return response()->json([
-                'status' => 'sukses',
-                'data' => null,
-            ], 200);
+            $pengguna = Pengguna::select('id')->where('api_token', $req->header('Token'))->where('bacameter', 1)->get();
+            if ($pengguna->count() > 0) {
+                $gambar = $req->file('file');
+                $namaFile = date('YmdHims') . time() . uniqid() . '.' . $gambar->getClientOriginalExtension();
+                Storage::putFileAs('public/bacameter/', $gambar, $namaFile);
+                BacaMeter::where('id', $req->id)->withoutGlobalScopes()->update([
+                    'stand_ini' => $req->stand,
+                    'status_baca' => $req->status_baca,
+                    'tanggal_baca' => $req->tanggal_baca,
+                    'latitude' => $req->latitude,
+                    'longitude' => $req->longitude,
+                    'foto' => 'public/bacameter/' . $namaFile
+                ]);
+                return response()->json([
+                    'status' => 'sukses',
+                    'data' => null,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 'gagal',
+                    'data' => 'Kredensial tidak valid',
+                ], 400);
+            }
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'gagal',

@@ -26,7 +26,7 @@ class KoreksirekeningairExport implements FromView
             'tahun' => $this->tahun,
             'rayon' => $this->rayon,
             'unitPelayanan' => $this->unitPelayanan,
-            'data' =>  KoreksiRekeningAir::with('rekeningAir.pelanggan')->with('golonganLama')->with('golonganBaru')->with('rekeningAir.jalanKelurahan.kelurahan.kecamatan.unitPelayanan')->whereBetween('created_at',  [$this->tahun . '-' . $this->bulan . '-01 00:00:00', $this->tahun . '-' . $this->bulan . '-31 23:59:59'])->when($this->unitPelayanan, fn ($q) => $q->whereIn('jalan_kelurahan_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->get()
+            'data' =>  KoreksiRekeningAir::with('rekeningAir.pelanggan')->with('golonganLama')->with('golonganBaru')->with('rekeningAir.rayon.kelurahan.kecamatan.unitPelayanan')->whereBetween('created_at',  [$this->tahun . '-' . $this->bulan . '-01 00:00:00', $this->tahun . '-' . $this->bulan . '-31 23:59:59'])->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->get()
         ]);
     }
     public function collection()

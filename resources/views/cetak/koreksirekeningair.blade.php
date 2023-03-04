@@ -60,7 +60,7 @@
                 <td class="text-nowrap">{{ $row->rekeningAir->pelanggan->nama }}</td>
                 <td class="text-nowrap">{{ $row->rekeningAir->pelanggan->alamat }}</td>
                 <td class="text-nowrap">
-                    {{ $row->rekeningAir->jalanKelurahan->kelurahan->kecamatan->unitPelayanan->nama }}</td>
+                    {{ $row->rayon->kelurahan->kecamatan->unitPelayanan->nama }}</td>
                 <td class="text-nowrap">{{ $row->rekeningAir->periode }}</td>
                 <td class="text-nowrap">{{ $row->golonganLama->nama }}</td>
                 <td class="text-right">{{ $row->harga_air_lama }}</td>

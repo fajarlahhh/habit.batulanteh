@@ -38,24 +38,14 @@
                                 </div>
                                 <hr>
                                 <div class="form-group">
-                                    <label class="control-label">Jalan</label>
-                                    <input class="form-control" type="text" disabled
-                                        value="{{ $data->pelanggan->jalanKelurahan->jalan->nama }}" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Kelurahan, Kecamatan</label>
-                                    <input class="form-control" type="text" disabled
-                                        value="{{ $data->pelanggan->jalanKelurahan->kelurahan->nama }}, {{ $data->pelanggan->jalanKelurahan->kelurahan->kecamatan->nama }}" />
-                                </div>
-                                <div class="form-group">
                                     <label class="control-label">Rayon</label>
                                     <input class="form-control" type="text" disabled
-                                        value="{{ $data->pelanggan->jalanKelurahan->rayonDetail->rayon->nama }}" />
+                                        value="{{ $data->rayon->nama . ', ' . $data->rayon->kelurahan->nama . ', ' . $data->rayon->kelurahan->kecamatan->nama }}" />
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Pembaca</label>
                                     <input class="form-control" type="text" disabled
-                                        value="{{ $data->pelanggan->jalanKelurahan->rayonDetail->rayon->ruteBaca->pembaca->nama }} ({{ $data->pelanggan->jalanKelurahan->rayonDetail->rayon->ruteBaca->pembaca->deskripsi }})" />
+                                        value="{{ $data->rayon->ruteBaca->pembaca->nama }} ({{ $data->rayon->ruteBaca->pembaca->deskripsi }})" />
                                 </div>
                             </div>
                         </div>

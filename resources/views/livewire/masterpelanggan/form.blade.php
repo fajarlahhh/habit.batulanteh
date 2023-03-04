@@ -33,8 +33,8 @@
                                 <option selected hidden>-- Pilih Status --</option>
                                 <option value="1">Aktif</option>
                                 <option value="2">Putus Sementara</option>
-                                <option value="3">Putus Sementara Permintaan Pelanggan</option>
-                                <option value="4">Putus Rampung</option>
+                                <option value="3">Segel</option>
+                                <option value="4">Bongkar</option>
                             </select>
                             @error('status')
                                 <span class="text-danger">{{ $message }}</span>
@@ -69,17 +69,17 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="control-label">Jalan/Perumahan</label>
-                            <select wire:model.defer="jalanKelurahan" class="form-control selectpicker"
+                            <label for="control-label">Rayon</label>
+                            <select wire:model.defer="rayon" class="form-control selectpicker"
                                 data-width="100%" data-live-search="true" data-size="10">
-                                <option selected hidden>-- Pilih Jalan/Perumahan --</option>
-                                @foreach (\App\Models\Regional::orderBy('nama_jalan')->whereHas('rayonDetail.rayon.ruteBaca')->get() as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->nama_jalan }},
+                                <option selected hidden>-- Pilih Rayon --</option>
+                                @foreach (\App\Models\Regional::orderBy('nama_rayon')->whereHas('ruteBaca')->get() as $row)
+                                    <option value="{{ $row->getKey() }}">{{ $row->nama_rayon }},
                                         {{ $row->nama_kelurahan }}, {{ $row->nama_kecamatan }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('jalanKelurahan')
+                            @error('rayon')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

@@ -27,8 +27,8 @@
                                 <option value="0">Semua</option>
                                 <option value="1">Aktif</option>
                                 <option value="2">Putus Sementara</option>
-                                <option value="3">Putus Sementara Permintaan Pelanggan</option>
-                                <option value="4">Putus Rampung</option>
+                                <option value="3">Segel</option>
+                                <option value="4">Bongkar</option>
                             </select>
                         </div>&nbsp;
                         <div class="input-group">
@@ -71,12 +71,13 @@
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->alamat }}</td>
                             <td class="align-middle">
-                                <ul>
-                                    <li>Rayon : {{ $row->jalanKelurahan->rayonDetail->rayon->nama }}</li>
-                                    <li>Jalan : {{ $row->jalanKelurahan->jalan->nama }}</li>
-                                    <li>Kelurahan, Kecamatan : {{ $row->jalanKelurahan->kelurahan->nama }},
-                                        {{ $row->jalanKelurahan->kelurahan->kecamatan->nama }}</li>
-                                </ul>
+                                @if ($row->rayon_id)
+                                    <ul>
+                                        <li>Rayon : {{ $row->rayon->nama }}</li>
+                                        <li>Kelurahan, Kecamatan : {{ $row->rayon->kelurahan->nama }},
+                                            {{ $row->rayon->kelurahan->kecamatan->nama }}</li>
+                                    </ul>
+                                @endif
                             </td>
                             <td class="align-middle">{{ $row->golongan->nama }}</td>
                             <td class="align-middle">{{ $row->diameter->ukuran }}</td>

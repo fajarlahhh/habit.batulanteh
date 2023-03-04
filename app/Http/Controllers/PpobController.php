@@ -9,10 +9,9 @@ use App\Models\RekeningAir;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PenagihanController extends Controller
+class PpobController extends Controller
 {
-    //
-    public function index(Request $req)
+    public function cari(Request $req)
     {
         $validator = Validator::make($req->all(), [
             'cari' => 'required',
@@ -26,30 +25,27 @@ class PenagihanController extends Controller
         }
 
         try {
-            $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 1)->get();
+            $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 2)->get();
             if ($pengguna->count() > 0) {
                 return response()->json([
                     'status' => 'sukses',
-                    'data' => Pelanggan::whereHas('tagihan')->where('nama', 'like', '%' . $req->cari . '%')->orWhere('no_langganan', 'like', '%' . $req->cari . '%')->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
-                        'no_langganan' => $q->no_langganan,
-                        'nama' => $q->nama,
-                        'alamat' => $q->alamat,
-                        'tagihan' => $q->tagihan->map(function ($r) {
-                            $periode = new Carbon($r->periode);
-                            $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $r->tarifDenda->nilai : 0;
-                            return [
-                                'id' => $r->id,
-                                'stand_lalu' => $r->stand_lalu,
-                                'stand_ini' => $r->stand_ini,
-                                'stand_angkat' => $r->stand_angkat,
-                                'stand_pasang' => $r->stand_pasang,
-                                'pakai' => $r->stand_ini || $r->stand_lalu ? $r->stand_ini - $r->stand_pasang + $r->stand_angkat - $r->stand_lalu : $r->stand_ini - $r->stand_lalu,
-                                'periode' => $r->periode,
-                                'tagihan' => $r->harga_air + $r->biaya_lainnya + $r->biaya_meter_air + $r->biaya_materai,
-                                'denda' => $denda,
-                            ];
-                        })
-                    ]),
+                    'data' => Pelanggan::whereHas('tagihan')->withCount('tagihan')
+                        ->having('tagihan_count',  3)->where('no_langganan', $req->cari)->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
+                            'no_langganan' => $q->no_langganan,
+                            'nama' => $q->nama,
+                            'alamat' => $q->alamat,
+                            'tagihan' => $q->tagihan->map(function ($r) {
+                                $periode = new Carbon($r->periode);
+                                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $r->tarifDenda->nilai : 0;
+                                return [
+                                    'id' => $r->id,
+                                    'pakai' => $r->stand_ini || $r->stand_lalu ? $r->stand_ini - $r->stand_pasang + $r->stand_angkat - $r->stand_lalu : $r->stand_ini - $r->stand_lalu,
+                                    'periode' => $r->periode,
+                                    'tagihan' => $r->harga_air + $r->biaya_lainnya + $r->biaya_meter_air + $r->biaya_materai,
+                                    'denda' => $denda,
+                                ];
+                            })
+                        ]),
                 ]);
             }
             return response()->json([
@@ -59,12 +55,12 @@ class PenagihanController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'gagal',
-                'data' => $e->getMessage(),
+                'data' => $e->getMessage()
             ], 500);
         }
     }
 
-    public function lunasi(Request $req)
+    public function bayar(Request $req)
     {
         $validator = Validator::make($req->all(), [
             'id' => 'required',
@@ -78,7 +74,7 @@ class PenagihanController extends Controller
         }
 
         try {
-            $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 1)->get();
+            $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 2)->get();
             if ($pengguna->count() > 0) {
                 $pengguna  = $pengguna->first();
                 if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() > 0) {
@@ -103,12 +99,12 @@ class PenagihanController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'gagal',
-                'data' => $e->getMessage(),
+                'data' => $e->getMessage()
             ], 500);
         }
     }
 
-    public function terbayar(Request $req)
+    public function data(Request $req)
     {
         $validator = Validator::make($req->all(), [
             'tanggal' => 'required',
@@ -121,7 +117,8 @@ class PenagihanController extends Controller
         }
 
         try {
-            $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 1)->get();
+            $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 2)->get();
+
             if ($pengguna->count() > 0) {
                 $tanggal = explode(' - ', $req->tanggal);
                 $pengguna  = $pengguna->first();
@@ -131,10 +128,6 @@ class PenagihanController extends Controller
                         "id" => $q->id,
                         "no_langganan" => "010500005",
                         "periode" => $q->periode,
-                        "stand_lalu" => $q->stand_lalu,
-                        "stand_ini" => $q->stand_ini,
-                        "stand_angkat" => $q->stand_angkat,
-                        "stand_pasang" => $q->stand_pasang,
                         'pakai' => $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu,
                         "waktu_bayar" => $q->waktu_bayar,
                         "kasir" => $q->kasir,
@@ -149,7 +142,7 @@ class PenagihanController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'gagal',
-                'data' => $e->getMessage(),
+                'data' => $e->getMessage()
             ], 500);
         }
     }

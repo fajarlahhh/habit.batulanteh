@@ -16,7 +16,7 @@
     <tr>
         <th class="width-150">Status Pelanggan</th>
         <th class="width-10">:</th>
-        <td>{{ $status ? ($status == 1 ? 'Aktif' : ($status == 2 ? 'Putus Sementara' : ($status == 3 ? 'Putus Sementara Permintaan Sendiri' : 'Putus Rampung'))) : 'Semua Status Pelanggan' }}
+        <td>{{ $status ? ($status == 1 ? 'Aktif' : ($status == 2 ? 'Putus Sementara' : ($status == 3 ? 'Segel' : 'Bongkar'))) : 'Semua Status Pelanggan' }}
         </td>
     </tr>
     <tr>

@@ -29,7 +29,7 @@
                             <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
                                 data-size="10" wire:model.lazy="pelangganId">
                                 <option selected hidden>-- Pilih Pelanggan --</option>
-                                @foreach (\App\Models\Pelanggan::all() as $row)
+                                @foreach (\App\Models\Pelanggan::get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} -
                                         {{ $row->nama }}
                                     </option>
@@ -44,6 +44,20 @@
                                 <label class="control-label">Tanggal</label>
                                 <input class="form-control" type="datetime-local" autocomplete="off"
                                     wire:model.defer="tanggal" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">-- Pilih Kasir</label>
+                                <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
+                                    data-size="10" wire:model.lazy="kasir">
+                                    @foreach ($dataKasir as $row)
+                                        <option value="{{ $row->nama }}">
+                                            {{ $row->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('kasir')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         @endrole
                         <div class="form-group">

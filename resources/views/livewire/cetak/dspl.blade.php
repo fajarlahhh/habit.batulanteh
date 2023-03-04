@@ -29,13 +29,7 @@
                             wire:model="rayon">
                             <option value="">SEMUA RAYON</option>
                             @if ($unitPelayanan)
-                                @foreach (\App\Models\Rayon::whereHas(
-        'rayonDetail',
-        fn($q) => $q->whereIn(
-            'jalan_kelurahan_id',
-            \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'),
-        ),
-    )->get() as $row)
+                                @foreach (\App\Models\Rayon::whereIn('id', \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'))->get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
                                 @endforeach
                             @endif
@@ -47,8 +41,8 @@
                             <option value="">SEMUA STATUS PELANGGAN</option>
                             <option value="1">AKTIF</option>
                             <option value="2">PUTUS SEMENTARA</option>
-                            <option value="3">PUTUS SEMENTARA PERMINTAAN SENDIRI</option>
-                            <option value="4">PUTUS RAMPUNG</option>
+                            <option value="3">Segel</option>
+                            <option value="4">Bongkar</option>
                         </select>
                     </div>&nbsp;
                     <div class="form-group">

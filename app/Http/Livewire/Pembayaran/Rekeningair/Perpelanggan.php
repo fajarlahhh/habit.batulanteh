@@ -2,22 +2,30 @@
 
 namespace App\Http\Livewire\Pembayaran\Rekeningair;
 
+use Carbon\Carbon;
+use Livewire\Component;
+use App\Models\Pengguna;
+use App\Models\Pelanggan;
+use App\Models\RekeningAir;
+use Illuminate\Support\Facades\DB;
 use App\Models\AngsuranRekeningAir;
 use App\Models\AngsuranRekeningAirDetail;
 use App\Models\AngsuranRekeningAirPeriode;
-use App\Models\Pelanggan;
-use App\Models\RekeningAir;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 
 class Perpelanggan extends Component
 {
-    public $pelanggan, $pelangganId, $dataRekeningAir = [], $keterangan, $dataAngsuranRekeningAir = [], $bayar = 0, $awalRekeningAir = null, $awalAngsuranRekeningAir = null, $tanggal;
+    public $pelanggan, $pelangganId, $dataRekeningAir = [], $keterangan, $dataAngsuranRekeningAir = [], $bayar = 0, $awalRekeningAir = null, $awalAngsuranRekeningAir = null, $tanggal, $dataKasir, $kasir;
 
     public function updatedPelangganId()
     {
         $this->setPelanggan();
+    }
+
+    public function mount()
+    {
+        $this->tanggal = date('Y-m-d H:i');
+        $this->dataKasir = Pengguna::where('penagih', '>', 0)->get();
+        $this->kasir = $this->kasir ?: auth()->user()->nama;
     }
 
     public function setPelanggan()
@@ -70,21 +78,17 @@ class Perpelanggan extends Component
         }
     }
 
-    public function mount()
-    {
-        $this->tanggal = date('Y-m-d H:i');
-    }
-
     public function submit()
     {
         $this->validate([
             'bayar' => 'required|numeric|min:' . collect($this->dataRekeningAir)->where('angsur', 0)->sum(fn ($q) => $q['tagihan'] + $q['denda']) + collect($this->dataAngsuranRekeningAir)->sum('nilai'),
             'dataRekeningAir' => 'required',
+            'kasir' => 'required'
         ]);
         DB::transaction(function () {
             foreach (collect($this->dataRekeningAir)->where('angsur', 0)->all() as $key => $row) {
                 RekeningAir::where('id', $row['id'])->whereNull('waktu_bayar')->update([
-                    'kasir' => auth()->user()->nama,
+                    'kasir' => $this->kasir,
                     'waktu_bayar' => $this->tanggal,
                     'biaya_denda' => $row['denda'],
                 ]);
@@ -92,8 +96,8 @@ class Perpelanggan extends Component
 
             foreach (collect($this->dataAngsuranRekeningAir)->all() as $key => $row) {
                 AngsuranRekeningAirDetail::where('urutan', $row['urutan'])->where('angsuran_rekening_air_id', $row['angsuran_rekening_air_id'])->where('id', $row['angsuran_rekening_air_detail_id'])->update([
-                    'kasir' => auth()->user()->nama,
-                    'waktu_bayar' => now(),
+                    'kasir' => $this->kasir,
+                    'waktu_bayar' => $this->tanggal,
                 ]);
             }
 
@@ -101,8 +105,8 @@ class Perpelanggan extends Component
                 if (AngsuranRekeningAir::where('id', $row)->lunas()->count() > 0) {
                     $dataAngsuranRekeningAirPeriode = AngsuranRekeningAirPeriode::where('angsuran_rekening_air_id', $row)->get()->pluck('rekening_air_id')->all();
                     RekeningAir::whereIn('id', $dataAngsuranRekeningAirPeriode)->belumBayar()->update([
-                        'kasir' => auth()->user()->nama,
-                        'waktu_bayar' => now(),
+                        'kasir' => $this->kasir,
+                        'waktu_bayar' => $this->tanggal,
                         'biaya_denda' => DB::raw('(select nilai from tarif_denda where id=tarif_denda_id)'),
                     ]);
                 }

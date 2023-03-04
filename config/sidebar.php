@@ -141,10 +141,6 @@ return [
             'caret' => true,
             'id' => 'datamasterregional',
             'sub_menu' => [[
-                'url' => '/datamaster/regional/jalan',
-                'id' => 'datamasterregionaljalan',
-                'title' => 'Jalan/Perumahan',
-            ], [
                 'url' => '/datamaster/regional/kecamatan',
                 'id' => 'datamasterregionalkecamatan',
                 'title' => 'Kecamatan',

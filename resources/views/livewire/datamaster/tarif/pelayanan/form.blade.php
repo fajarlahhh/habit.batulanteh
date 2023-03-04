@@ -62,8 +62,8 @@
                         <option value="">Non Pelanggan</option>
                         <option value="1">Pelanggan Aktif</option>
                         <option value="2">Pelanggan Putus Sementara</option>
-                        <option value="3">Pelanggan Putus Sementara Permintaan Pelanggan</option>
-                        <option value="4">Pelanggan Putus Rampung</option>
+                        <option value="3">Pelanggan Segel</option>
+                        <option value="4">Pelanggan Bongkar</option>
                     </select>
                     @error('pelanggan')
                         <span class="text-danger">{{ $message }}</span>

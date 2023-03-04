@@ -38,7 +38,7 @@ class Drd extends Component
     public function render()
     {
         return view('livewire.cetak.drd', [
-            'data' => RekeningAir::with('golongan')->with('tarifMeterAir.tarifMeterAirDetail')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->when($this->unitPelayanan, fn ($q) => $q->whereIn('jalan_kelurahan_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->paginate(10)
+            'data' => RekeningAir::with('golongan')->with('tarifMeterAir.tarifMeterAirDetail')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->paginate(10)
         ]);
     }
 }

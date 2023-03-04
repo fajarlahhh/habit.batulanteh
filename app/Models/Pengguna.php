@@ -39,10 +39,6 @@ class Pengguna extends Authenticatable
         return $this->kata_sandi;
     }
 
-    public function jalanKelurahan()
-    {
-        return $this->belongsTo(JalanKelurahan::class);
-    }
 
     public function bacaMeter()
     {

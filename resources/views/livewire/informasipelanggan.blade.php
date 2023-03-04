@@ -71,11 +71,11 @@
                                         @break
 
                                         @case(3)
-                                            Putus Sementara Permintaan Sendiri
+                                            Segel
                                         @break
 
                                         @case(4)
-                                            Putus Rampung
+                                            Bongkar
                                         @break
 
                                         @default
@@ -119,7 +119,7 @@
                             <td>{{ $pelanggan ? $pelanggan->tanggal_putus_sementara : null }}</td>
                         </tr>
                         <tr>
-                            <td class="text-nowrap width-100">Tanggal Putus Rampung</td>
+                            <td class="text-nowrap width-100">Tanggal Bongkar</td>
                             <td class="width-10">:</td>
                             <td>{{ $pelanggan ? $pelanggan->tanggal_putus_rampung : null }}</td>
                         </tr>
@@ -152,37 +152,30 @@
                             <h4>Lokasi</h4>
                             <table class="table table-borderless">
                                 <tr>
-                                    <td class="text-nowrap width-100">Jalan</td>
-                                    <td class="width-10">:</td>
-                                    <td>
-                                        {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->nama : null }}
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td class="text-nowrap width-100">Kelurahan</td>
                                     <td class="width-10">:</td>
                                     <td>
-                                        {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->kelurahan->nama : null }}
+                                        {{ $pelanggan && $pelanggan->rayon_id ? $pelanggan->rayon->kelurahan->nama : null }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-nowrap width-100">Kecamatan</td>
                                     <td class="width-10">:</td>
                                     <td>
-                                        {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->kelurahan->kecamatan->nama : null }}
+                                        {{ $pelanggan && $pelanggan->rayon_id ? $pelanggan->rayon->kelurahan->kecamatan->nama : null }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-nowrap width-100">Rayon</td>
                                     <td class="width-10">:</td>
                                     <td>
-                                        {{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->rayonDetail->rayon->nama : null }}
+                                        {{ $pelanggan && $pelanggan->rayon_id ? $pelanggan->rayon->nama : null }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-nowrap width-100">Petugas Baca Meter</td>
                                     <td class="width-10">:</td>
-                                    <td>{{ $pelanggan && $pelanggan->jalan_id ? $pelanggan->jalan->rayonDetail->rayon->ruteBaca->pembaca->nama : null }}
+                                    <td>{{ $pelanggan && $pelanggan->rayon_id ? $pelanggan->rayon->ruteBaca->pembaca->nama : null }}
                                     </td>
                                 </tr>
                             </table>

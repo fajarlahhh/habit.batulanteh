@@ -21,10 +21,6 @@ class Dspl extends Model
         return $this->belongsTo(Golongan::class);
     }
 
-    public function jalanKelurahan()
-    {
-        return $this->belongsTo(JalanKelurahan::class);
-    }
 
     public function rayon()
     {

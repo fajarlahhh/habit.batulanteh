@@ -8,11 +8,11 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $data, $key, $ktp, $status = 1, $noLangganan, $nama, $alamat, $noHp, $tanggalPasang, $noBodyWaterMeter, $golongan, $jalanKelurahan, $merkWaterMeter, $diameter;
+    public $data, $key, $ktp, $status = 1, $noLangganan, $nama, $alamat, $noHp, $tanggalPasang, $noBodyWaterMeter, $golongan, $rayon, $merkWaterMeter, $diameter;
 
     public function setArea()
     {
-        $data = Rayon::whereHas('rayonDetail', fn ($q) => $q->where('jalan_kelurahan_id', $this->jalanKelurahan))->get();
+        $data = Rayon::where('id', $this->rayon)->get();
         if ($data->count() > 0) {
             return $data->first()->kode;
         }
@@ -29,7 +29,7 @@ class Form extends Component
             'noHp' => 'digits_between:9,13|numeric|regex:/(08)[0-9]{9}/',
             'tanggalPasang' => 'required|date',
             'noBodyWaterMeter' => 'required',
-            'jalanKelurahan' => 'required|numeric',
+            'rayon' => 'required|numeric',
             'golongan' => 'required|numeric',
             'merkWaterMeter' => 'required|numeric',
             'diameter' => 'required|numeric',
@@ -38,7 +38,7 @@ class Form extends Component
         $area = $this->setArea();
 
         if (!$this->key) {
-            $pelanggan = Pelanggan::where('jalan_kelurahan_id', $this->jalanKelurahan)->orderBy('id', 'desc')->first();
+            $pelanggan = Pelanggan::where('rayon_id', $this->rayon)->orderBy('id', 'desc')->first();
             $this->noLangganan = $area . '00001';
             if ($pelanggan) {
                 $this->noLangganan = $area . sprintf('%05s', (int) substr($pelanggan->no_langganan, 6, 4) + 1);
@@ -54,7 +54,7 @@ class Form extends Component
         $this->data->tanggal_pasang = $this->tanggalPasang;
         $this->data->no_body_water_meter = $this->noBodyWaterMeter;
         $this->data->golongan_id = $this->golongan;
-        $this->data->jalan_kelurahan_id = $this->jalanKelurahan;
+        $this->data->rayon_id = $this->rayon;
         $this->data->merk_water_meter_id = $this->merkWaterMeter;
         $this->data->diameter_id = $this->diameter;
         $this->data->save();
@@ -76,7 +76,7 @@ class Form extends Component
             $this->tanggalPasang = $this->data->tanggal_pasang;
             $this->noBodyWaterMeter = $this->data->no_body_water_meter;
             $this->golongan = $this->data->golongan_id;
-            $this->jalanKelurahan = $this->data->jalan_kelurahan_id;
+            $this->rayon = $this->data->rayon_id;
             $this->merkWaterMeter = $this->data->merk_water_meter_id;
             $this->diameter = $this->data->diameter_id;
         } else {

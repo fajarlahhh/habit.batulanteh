@@ -124,9 +124,8 @@ class Penerbitan extends Component
                     $bacaMeter->latitude = $this->pelanggan->latitude;
                     $bacaMeter->longitude = $this->pelanggan->longitude;
                     $bacaMeter->pelanggan_id = $this->pelangganId;
-                    $bacaMeter->jalan_kelurahan_id = $this->pelanggan->jalan_kelurahan_id;
-                    $bacaMeter->rayon_id = $this->pelanggan->jalanKelurahan->rayonDetail->rayon_id;
-                    $bacaMeter->pembaca_id = $this->pelanggan->jalanKelurahan->rayonDetail->rayon->ruteBaca->pembaca_id;
+                    $bacaMeter->rayon_id = $this->pelanggan->rayon_id;
+                    $bacaMeter->pembaca_id = $this->pelanggan->rayon->ruteBaca->pembaca_id;
                     $bacaMeter->pengguna_id = auth()->id();
                     $bacaMeter->created_at = now();
                     $bacaMeter->updated_at = now();
@@ -147,8 +146,7 @@ class Penerbitan extends Component
                     $rekeningAir->diskon = 0;
                     $rekeningAir->keterangan = $this->catatan;
                     $rekeningAir->pelanggan_id = $this->pelangganId;
-                    $rekeningAir->jalan_kelurahan_id = $this->pelanggan->jalan_kelurahan_id;
-                    $rekeningAir->rayon_id = $this->pelanggan->jalanKelurahan->rayonDetail->rayon_id;
+                    $rekeningAir->rayon_id = $this->pelanggan->rayon_id;
                     $rekeningAir->golongan_id = $this->golongan;
                     $rekeningAir->tarif_denda_id = $tarifDenda;
                     $rekeningAir->tarif_lainnya_id = $tarifLainnya ? $tarifLainnya->id : null;

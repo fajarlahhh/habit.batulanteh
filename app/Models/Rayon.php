@@ -17,9 +17,9 @@ class Rayon extends Model
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }
 
-    public function rayonDetail()
+    public function kelurahan()
     {
-        return $this->hasMany(RayonDetail::class);
+        return $this->belongsTo(Kelurahan::class);
     }
 
     public function ruteBaca()

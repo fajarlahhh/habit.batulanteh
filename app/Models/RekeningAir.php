@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RekeningAir extends Model
 {
-    use HasFactory,HasEagerLimit;
+    use HasFactory, HasEagerLimit;
 
     protected $table = 'rekening_air';
 
@@ -23,9 +23,9 @@ class RekeningAir extends Model
         return $this->belongsTo(Pelanggan::class);
     }
 
-    public function jalan()
+    public function rayon()
     {
-        return $this->belongsTo(Jalan::class)->withTrashed();
+        return $this->belongsTo(Rayon::class);
     }
 
     public function golongan()
@@ -63,10 +63,6 @@ class RekeningAir extends Model
         return $this->hasOne(AngsuranRekeningAirPeriode::class);
     }
 
-    public function jalanKelurahan()
-    {
-        return $this->belongsTo(JalanKelurahan::class);
-    }
 
     public function scopeSudahBayar($query)
     {
