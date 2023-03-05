@@ -104,14 +104,12 @@
                                                 <div class="custom-control custom-radio">
                                                     <input type="radio" id="status3" name="status" value="3"
                                                         wire:model.defer="status" class="custom-control-input">
-                                                    <label class="custom-control-label" for="status3">Putus Sementara
-                                                        Permintaan Sendiri</label>
+                                                    <label class="custom-control-label" for="status3">Segel</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
                                                     <input type="radio" id="status4" name="status" value="4"
                                                         wire:model.defer="status" class="custom-control-input">
-                                                    <label class="custom-control-label" for="status4">Putus
-                                                        Rampung</label>
+                                                    <label class="custom-control-label" for="status4">Bongkar</label>
                                                 </div>
                                             </div>
                                         </div>
