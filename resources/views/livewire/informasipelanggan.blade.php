@@ -63,7 +63,7 @@
                                 @if ($pelanggan)
                                     @switch($pelanggan->status)
                                         @case(1)
-                                            Putus Sementara
+                                            Aktif
                                         @break
 
                                         @case(2)
