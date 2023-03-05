@@ -26,19 +26,26 @@ class PenggunaController extends Controller
         }
 
         try {
-            $pengguna = Pengguna::where('uid', $req->uid)->where('bacameter', 1)->orWhere('penagih', '>', 0)->withoutGlobalScopes()->get();
+            $pengguna = Pengguna::where('uid', $req->uid)->withoutGlobalScopes()->get();
             if ($pengguna->count() > 0) {
                 $pengguna = $pengguna->first();
                 if (Hash::check($req->kata_sandi, $pengguna->kata_sandi)) {
-                    return response()->json([
-                        'status' => 'sukses',
-                        'data' => [
-                            'nama' => $pengguna->nama,
-                            'uid' => $pengguna->uid,
-                            'deskripsi' => $pengguna->deskripsi,
-                            'api_token' => $pengguna->api_token,
-                        ],
-                    ], 200);
+                    if ($pengguna->penagih > 0 || $pengguna->bacameter > 0) {
+                        return response()->json([
+                            'status' => 'sukses',
+                            'data' => [
+                                'nama' => $pengguna->nama,
+                                'uid' => $pengguna->uid,
+                                'deskripsi' => $pengguna->deskripsi,
+                                'api_token' => $pengguna->api_token,
+                            ],
+                        ], 200);
+                    }else{
+                        return response()->json([
+                            'status' => 'gagal',
+                            'data' => 'Tidak ada hak akses',
+                        ], 401);
+                    }
                 } else {
                     return response()->json([
                         'status' => 'gagal',
