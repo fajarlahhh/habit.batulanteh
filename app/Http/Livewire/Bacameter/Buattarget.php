@@ -59,7 +59,7 @@ class Buattarget extends Component
 
             BacaMeter::where('pelanggan_id', $dataPelanggan->where('status', 3)->pluck('id')->all())->where('periode', $this->tahun . '-' . $this->bulan . '-01')->update([
                 'stand_ini' => DB::raw('stand_lalu'),
-                'status_baca' => 'PUTUS SEMENTAR PERMINTAAN SENDIRI',
+                'status_baca' => 'SEGEL',
                 'tanggal_baca' => now(),
             ]);
             session()->flash('success', 'Data bacaan periode ' . $this->tahun . '-' . $this->bulan . ' berhasil dibuat');

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pelanggan extends Model
 {
-    use HasFactory, PenggunaTrait,HasEagerLimit;
+    use HasFactory, PenggunaTrait, HasEagerLimit;
 
     protected $table = 'pelanggan';
 
