@@ -187,7 +187,7 @@
                             <td>Meter Air</td>
                             <td>:</td>
                             <td>Rp.</td>
-                            <td class="text-right">{{ number_format($row->biaya_meter_air) }}</td>
+                            <td class="text-right">{{ number_format($row->biaya_meter_air + $row->biaya_admin) }}</td>
                         </tr>
                         <tr>
                             <td>Denda</td>
