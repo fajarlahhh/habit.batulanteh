@@ -23,12 +23,43 @@
                 <div class="col-xl-11 col-sm-11">
                     <div class="form-inline pull-right">
                         <div class="form-group">
+                            <select class="form-control selectpicker" data-live-search="true" data-width="100%"
+                                wire:model="unitPelayanan">
+                                <option value="">SEMUA UNIT PELAYANAN</option>
+                                @foreach ($dataUnitPelayanan as $row)
+                                    <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>&nbsp;
+                        <div class="form-group">
+                            <select class="form-control selectpicker" data-live-search="true" data-width="100%"
+                                wire:model="rayon">
+                                <option value="">SEMUA RAYON</option>
+                                @if ($unitPelayanan)
+                                    @foreach (\App\Models\Rayon::whereIn('id', \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'))->get() as $row)
+                                        <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>&nbsp;
+                        <div class="form-group">
+                            <select class="form-control selectpicker" data-live-search="true" data-width="100%"
+                                wire:model="golongan">
+                                <option value="">SEMUA GOLONGAN</option>
+                                @if ($unitPelayanan)
+                                    @foreach (\App\Models\Golongan::all() as $row)
+                                        <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>&nbsp;
+                        <div class="form-group">
                             <select class="form-control selectpicker" data-width="100%" wire:model="status">
-                                <option value="0">Semua</option>
-                                <option value="1">Aktif</option>
-                                <option value="2">Putus Sementara</option>
-                                <option value="3">Segel</option>
-                                <option value="4">Bongkar</option>
+                                <option >SEMUA STATUS</option>
+                                <option value="1">AKTIF</option>
+                                <option value="2">PUTUS SEMENTARA</option>
+                                <option value="3">SEGEL</option>
+                                <option value="4">BONGKAR</option>
                             </select>
                         </div>&nbsp;
                         <div class="input-group">
