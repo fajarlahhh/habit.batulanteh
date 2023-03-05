@@ -88,7 +88,7 @@
                             <td class="align-middle">{{ $row->pelanggan->nama }}</td>
                             <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
                             <td class="align-middle">{{ $row->rayon->nama }}</td>
-                            <td class="align-middle">{{ $row->rayon->ruteBaca->pembaca->nama }}</td>
+                            <td class="align-middle">{{ $row->pembaca->nama }}</td>
                             <td class="align-middle">{{ $row->tanggal_baca }}</td>
                             <td class="align-middle">{{ $row->stand_lalu }}</td>
                             <td class="align-middle">{{ $row->stand_ini }}</td>

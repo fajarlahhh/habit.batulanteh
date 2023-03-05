@@ -55,7 +55,7 @@
                         </div>&nbsp;
                         <div class="form-group">
                             <select class="form-control selectpicker" data-width="100%" wire:model="status">
-                                <option >SEMUA STATUS</option>
+                                <option value="">SEMUA STATUS</option>
                                 <option value="1">AKTIF</option>
                                 <option value="2">PUTUS SEMENTARA</option>
                                 <option value="3">SEGEL</option>

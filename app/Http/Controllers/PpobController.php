@@ -30,7 +30,7 @@ class PpobController extends Controller
                 return response()->json([
                     'status' => 'sukses',
                     'data' => Pelanggan::whereHas('tagihan')->withCount('tagihan')
-                        ->having('tagihan_count',  3)->where('no_langganan', $req->cari)->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
+                        ->having('tagihan_count',  3)->where('no_langganan', $req->cari)->where('status', 1)->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
                             'no_langganan' => $q->no_langganan,
                             'nama' => $q->nama,
                             'alamat' => $q->alamat,
@@ -77,7 +77,7 @@ class PpobController extends Controller
             $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 2)->get();
             if ($pengguna->count() > 0) {
                 $pengguna  = $pengguna->first();
-                if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() > 0) {
+                if (RekeningAir::whereIn('id', $req->id)->whereHas('pelanggan', fn($q) => $q->where('status', 1))->whereNull('waktu_bayar')->count() > 0) {
                     RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->update([
                         'kasir' => $pengguna->nama,
                         'waktu_bayar' => now(),

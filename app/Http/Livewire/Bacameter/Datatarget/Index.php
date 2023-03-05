@@ -15,18 +15,19 @@ class Index extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $tahun, $bulan, $statusBaca, $tanggalBaca, $unitPelayanan, $rayon, $cari, $dataUnitPelayanan;
+    public $tahun, $bulan, $statusBaca, $tanggalBaca, $unitPelayanan, $rayon, $cari, $dataUnitPelayanan, $pemakaian;
 
-    protected $queryString = ['tahun', 'bulan', 'statusBaca', 'tanggalBaca', 'unitPelayanan', 'rayon', 'cari'];
+    protected $queryString = ['tahun', 'bulan', 'statusBaca', 'tanggalBaca', 'unitPelayanan', 'rayon', 'cari', 'pemakaian'];
 
     public function mount()
     {
         $this->bulan = $this->bulan ?: date('m');
         $this->tahun = $this->tahun ?: date('Y');
-        $this->statusBaca= $this->statusBaca?:null;
-        $this->unitPelayanan= $this->unitPelayanan?:null;
-        $this->rayon= $this->rayon?:null;
-        $this->cari= $this->cari?:null;
+        $this->statusBaca = $this->statusBaca ?: null;
+        $this->unitPelayanan = $this->unitPelayanan ?: null;
+        $this->pemakaian = $this->pemakaian ?: null;
+        $this->rayon = $this->rayon ?: null;
+        $this->cari = $this->cari ?: null;
         $this->dataUnitPelayanan = UnitPelayanan::all();
     }
 
