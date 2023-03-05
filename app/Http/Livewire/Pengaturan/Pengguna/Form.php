@@ -101,7 +101,14 @@ class Form extends Component
         $this->data->save();
 
         session()->flash('success', 'Berhasil menyimpan data');
-        return redirect(route('pengaturan.pengguna'));
+    }
+
+    public function resetApiToken()
+    {
+        $this->data->api_token = Hash::make(Str::random(10));
+        $this->data->save();
+
+        session()->flash('success', 'Berhasil menyimpan data');
     }
 
     public function boot()

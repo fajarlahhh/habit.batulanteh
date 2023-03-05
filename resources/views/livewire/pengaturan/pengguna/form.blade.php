@@ -9,6 +9,8 @@
 
     <h1 class="page-header">Pengguna <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
 
+    <x-alert />
+
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
         <div class="panel-heading ui-sortable-handle">
@@ -47,6 +49,7 @@
                         <div class="form-group">
                             <label class="control-label">Level</label>
                             <select class="form-control selectpicker" wire:model.lazy="level" data-width="100%">
+                                <option selected hidden>-- Pilih Level --</option>
                                 @foreach ($dataLevel as $row)
                                     <option value="{{ $row->name }}">{{ ucfirst($row->name) }}</option>
                                 @endforeach
@@ -95,13 +98,24 @@
                 </div>
             </div>
             <div class="panel-footer">
-                @role('administrator|super-admin')
-                    <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
-                @endrole
-                <a href="{{ route('pengaturan.pengguna') }}" class="btn btn-danger m-r-3">Batal</a>
-                <a href="javascript:;" wire:click="resetKataSandi" class="btn btn-warning">Reset
-                    Kata Sandi
-                </a>
+                <div class="row">
+                    <div class="col-md-6">
+                        @role('administrator|super-admin')
+                            <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
+                        @endrole
+                        <a href="{{ route('pengaturan.pengguna') }}" class="btn btn-danger m-r-3">Batal</a>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        @if ($key)
+                        <a href="javascript:;" wire:click="resetKataSandi" class="btn btn-warning">Reset
+                            Kata Sandi
+                        </a>
+                        <a href="javascript:;" wire:click="resetApiToken" class="btn btn-warning">Reset
+                            API Token
+                        </a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </form>
     </div>
