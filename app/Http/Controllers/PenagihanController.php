@@ -7,6 +7,7 @@ use App\Models\Pengguna;
 use App\Models\Pelanggan;
 use App\Models\RekeningAir;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PenagihanController extends Controller
@@ -81,15 +82,26 @@ class PenagihanController extends Controller
             $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 1)->get();
             if ($pengguna->count() > 0) {
                 $pengguna  = $pengguna->first();
-                if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() > 0) {
-                    RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->update([
-                        'kasir' => $pengguna->nama,
-                        'waktu_bayar' => now(),
-                    ]);
+                if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() == collect($req->id)->count()) {
+                    DB::transaction(function () {
+                        foreach (RekeningAir::whereIn('id', $req->id)->get() as $key => $row) {
+                            $periode = new Carbon($row->periode);
+                            $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->tarifDenda->nilai : 0;
+                            RekeningAir::whereIn('id', $row->id)->whereNull('waktu_bayar')->update([
+                                'kasir' => $pengguna->nama,
+                                'waktu_bayar' => now(),
+                                'denda' => $denda
+                            ]);
+                        }
+                        return response()->json([
+                            'status' => 'sukses',
+                            'data' => null,
+                        ], 200);
+                    });
                     return response()->json([
-                        'status' => 'sukses',
-                        'data' => null,
-                    ], 200);
+                        'status' => 'gagal',
+                        'data' => 'Terjadi kesalahan',
+                    ], 500);
                 }
                 return response()->json([
                     'status' => 'gagal',
