@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use App\Traits\PenggunaTrait;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BacaMeter extends Model
 {
-    use HasFactory, SoftDeletes, PenggunaTrait;
+    use HasFactory, SoftDeletes, PenggunaTrait, HasEagerLimit;
 
     protected $table = 'baca_meter';
 

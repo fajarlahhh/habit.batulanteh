@@ -35,12 +35,14 @@ class Buattarget extends Component
 
         DB::transaction(function ($q) {
             BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
-            $dataPelanggan = Pelanggan::with('bacaMeterTerakhir')->with('rayon.ruteBaca')->whereNotIn('id', BacaMeter::where('periode', $this->tahun . '-' . $this->bulan . '-01')->get()->pluck('pelanggan_id')->all())->whereIn('status', [1, 3])->get();
+            $dataPelanggan = Pelanggan::with(['bacaMeter' => function ($q) {
+                return  $q->take(1);
+            }])->with('rayon.ruteBaca')->whereNotIn('id', BacaMeter::where('periode', $this->tahun . '-' . $this->bulan . '-01')->get()->pluck('pelanggan_id')->all())->whereIn('status', [1, 3])->get();
             $data = [];
             foreach ($dataPelanggan as $key => $row) {
                 array_push($data, [
                     'periode' => $this->tahun . '-' . $this->bulan . '-01',
-                    'stand_lalu' => $row->bacaMeterTerakhir ? $row->bacaMeterTerakhir->stand_ini : 0,
+                    'stand_lalu' => $row->bacaMeter->count() > 0 ? $row->bacaMeter->first()->stand_ini : 0,
                     'latitude' => $row->latitude,
                     'longitude' => $row->longitude,
                     'pelanggan_id' => $row->id,
@@ -49,6 +51,9 @@ class Buattarget extends Component
                     'pengguna_id' => auth()->id(),
                     'created_at' => now(),
                     'updated_at' => now(),
+                    'stand_ini' => $row->status == 3 ? DB::raw('stand_lalu') : 0,
+                    'status_baca' => $row->status == 3 ? 'SEGEL' : null,
+                    'tanggal_baca' => $row->status == 3 ? now() : null,
                 ]);
             }
 
@@ -57,11 +62,6 @@ class Buattarget extends Component
                 BacaMeter::insert($row->toArray());
             }
 
-            BacaMeter::where('pelanggan_id', $dataPelanggan->where('status', 3)->pluck('id')->all())->where('periode', $this->tahun . '-' . $this->bulan . '-01')->update([
-                'stand_ini' => DB::raw('stand_lalu'),
-                'status_baca' => 'SEGEL',
-                'tanggal_baca' => now(),
-            ]);
             session()->flash('success', 'Data bacaan periode ' . $this->tahun . '-' . $this->bulan . ' berhasil dibuat');
         });
     }
