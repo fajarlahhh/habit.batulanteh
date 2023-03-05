@@ -1,6 +1,6 @@
 <div>
     <div>
-        @section('title', 'LPP Air')
+        @section('title', 'Laporan Penerimaan Penagihan Air (LPP Air)')
 
         @section('page')
             <li class="breadcrumb-item">Cetak</li>
@@ -8,7 +8,7 @@
             <li class="breadcrumb-item active">Air</li>
         @endsection
 
-        <h1 class="page-header">LPP Air</h1>
+        <h1 class="page-header">Laporan Penerimaan Penagihan Air (LPP Air)</h1>
 
         <x-alert />
 

@@ -1,5 +1,5 @@
 <div class="text-center">
-    <h5>LPP Air</h5>
+    <h5>Laporan Penerimaan Penagihan Air</h5>
 </div>
 <table class="table table-borderless">
     <tr>

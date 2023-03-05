@@ -1,6 +1,6 @@
 <div>
     <div>
-        @section('title', 'LPP Non Air')
+        @section('title', 'Laporan Penerimaan Penagihan Non Air')
 
         @section('page')
             <li class="breadcrumb-item">Cetak</li>
@@ -8,7 +8,7 @@
             <li class="breadcrumb-item active">Non Air</li>
         @endsection
 
-        <h1 class="page-header">LPP Non Air</h1>
+        <h1 class="page-header">Laporan Penerimaan Penagihan Non Air</h1>
 
         <x-alert />
 
