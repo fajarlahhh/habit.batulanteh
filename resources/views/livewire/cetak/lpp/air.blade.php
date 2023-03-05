@@ -16,47 +16,55 @@
             <!-- begin panel-heading -->
             <div class="panel-heading" wire:loading.remove>
                 <div class="form-inline width-full">
-                    <div class="form-group">
-                        <input class="form-control" type="date" autocomplete="off" wire:model="tanggal1" />
-                    </div>&nbsp;
-                    <div class="form-group">
-                        <label> s/d</label>&nbsp;
-                        <input class="form-control" type="date" autocomplete="off" wire:model="tanggal2" />
-                    </div>&nbsp;
-                    <div class="form-group">
-                        <select class="form-control selectpicker" data-live-search="true" data-width="100%"
-                            wire:model="unitPelayanan">
-                            <option value="">SEMUA UNIT PELAYANAN</option>
-                            @foreach ($dataUnitPelayanan as $row)
-                                <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>&nbsp;
-                    <div class="form-group">
-                        <select class="form-control selectpicker" data-live-search="true" data-width="100%"
-                            wire:model="rayon">
-                            <option value="">SEMUA RAYON</option>
-                            @if ($unitPelayanan)
-                                @foreach (\App\Models\Rayon::whereIn('id', \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'))->get() as $row)
+                    <form wire:submit.prevent="load" class="form-inline">
+                        <div class="form-group">
+                            <input class="form-control" type="date" autocomplete="off" wire:model.defer="tanggal1" />
+                        </div>&nbsp;
+                        <div class="form-group">
+                            <label> s/d</label>&nbsp;
+                            <input class="form-control" type="date" autocomplete="off" wire:model.defer="tanggal2" />
+                        </div>&nbsp;
+                        <div class="form-group">
+                            <select class="form-control selectpicker" data-live-search="true" data-width="100%"
+                                wire:model.defer="unitPelayanan">
+                                <option value="">SEMUA UNIT PELAYANAN</option>
+                                @foreach ($dataUnitPelayanan as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
                                 @endforeach
-                            @endif
-                        </select>
-                    </div>&nbsp;
-                    <div class="form-group">
-                        <select class="form-control selectpicker" data-live-search="true" data-width="100%"
-                            wire:model="unitPelayanan">
-                            <option value="">SEMUA KASIR</option>
-                            @foreach ($dataKasir as $row)
-                                <option value="{{ $row->nama }}">{{ $row->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>&nbsp;
-                    <button class="btn btn-info" wire:click="cetak">Cetak</button>
+                            </select>
+                        </div>&nbsp;
+                        <div class="form-group">
+                            <select class="form-control selectpicker" data-live-search="true" data-width="100%"
+                                wire:model.defer="rayon">
+                                <option value="">SEMUA RAYON</option>
+                                @if ($unitPelayanan)
+                                    @foreach (\App\Models\Rayon::whereIn(
+        'id',
+        \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'),
+    )->get() as $row)
+                                        <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>&nbsp;
+                        <div class="form-group">
+                            <select class="form-control selectpicker" data-live-search="true" data-width="100%"
+                                wire:model.defer="unitPelayanan">
+                                <option value="">SEMUA KASIR</option>
+                                @foreach ($dataKasir as $row)
+                                    <option value="{{ $row->nama }}">{{ $row->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>&nbsp;
+                        <input value="Load" class="btn btn-info" type="submit">
+                    </form>
                 </div>
             </div>
             <div class="panel-body table-responsive">
                 @include('cetak.lppair')
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-info" wire:click="cetak">Cetak</button>
             </div>
         </div>
 

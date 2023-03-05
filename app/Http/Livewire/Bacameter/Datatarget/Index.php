@@ -23,6 +23,10 @@ class Index extends Component
     {
         $this->bulan = $this->bulan ?: date('m');
         $this->tahun = $this->tahun ?: date('Y');
+        $this->statusBaca= $this->statusBaca?:null;
+        $this->unitPelayanan= $this->unitPelayanan?:null;
+        $this->rayon= $this->rayon?:null;
+        $this->cari= $this->cari?:null;
         $this->dataUnitPelayanan = UnitPelayanan::all();
     }
 

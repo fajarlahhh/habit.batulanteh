@@ -67,6 +67,7 @@
                         <th>No. Langganan</th>
                         <th>Nama</th>
                         <th>Alamat</th>
+                        <th>Rayon</th>
                         <th>Pembaca</th>
                         <th>Tanggal Baca</th>
                         <th>Stand Lalu</th>
@@ -86,6 +87,7 @@
                             <td class="align-middle">{{ $row->pelanggan->no_langganan }}</td>
                             <td class="align-middle">{{ $row->pelanggan->nama }}</td>
                             <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
+                            <td class="align-middle">{{ $row->rayon->nama }}</td>
                             <td class="align-middle">{{ $row->rayon->ruteBaca->pembaca->nama }}</td>
                             <td class="align-middle">{{ $row->tanggal_baca }}</td>
                             <td class="align-middle">{{ $row->stand_lalu }}</td>
