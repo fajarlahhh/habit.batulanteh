@@ -1,5 +1,5 @@
 <div class="text-center">
-    <h5>Daftar Rekening Ditagih (DRD)</h5>
+    <h5>Daftar Saldo Piutang Langganan (DSPL)</h5>
 </div>
 <table class="table table-borderless">
     <tr>
@@ -60,7 +60,7 @@
             @php
                 if ($pelanggan != $row->pelanggan_id) {
                     $lembar += $data->where('pelanggan_id', $row->pelanggan_id)->count();
-                    $tagihan += $data->where('pelanggan_id', $row->pelanggan_id)->sum(fn($q) => $q->materai + $q->harga_air + $q->biaya_meter_air + $q->biaya_denda);
+                    $tagihan += $data->where('pelanggan_id', $row->pelanggan_id)->sum(fn($q) => $q->materai + $q->harga_air + $q->biaya_meter_air  + $q->biaya_admin+ $q->biaya_denda);
                 }
             @endphp
             <tr>
@@ -75,7 +75,7 @@
                     {{ $pelanggan != $row->pelanggan_id ? $data->where('pelanggan_id', $row->pelanggan_id)->count() : null }}
                 </td>
                 <td class="text-right" class="text-nowrap">
-                    {{ $pelanggan != $row->pelanggan_id ? $data->where('pelanggan_id', $row->pelanggan_id)->sum(fn($q) => $q->materai + $q->harga_air + $q->biaya_meter_air + $q->biaya_denda) : null }}
+                    {{ $pelanggan != $row->pelanggan_id ? $data->where('pelanggan_id', $row->pelanggan_id)->sum(fn($q) => $q->materai + $q->harga_air + $q->biaya_meter_air + $q->biaya_admin+ $q->biaya_denda) : null }}
                 </td>
                 <td class="text-nowrap">{{ $row->periode_rekening }}</td>
                 <td class="text-nowrap">{{ $row->golongan->nama }}</td>
@@ -83,7 +83,7 @@
                     {{ $row->stand_ini || $row->stand_lalu ? $row->stand_ini - $row->stand_pasang + $row->stand_angkat - $row->stand_lalu : $row->stand_ini - $row->stand_lalu }}
                 </td>
                 <td class="text-right">
-                    {{ $row->materai + $row->harga_air + $row->biaya_meter_air + $row->biaya_denda }}
+                    {{ $row->materai + $row->harga_air + $row->biaya_meter_air + $row->biaya_admin + $row->biaya_denda }}
                 </td>
             </tr>
             @php

@@ -1,13 +1,13 @@
 <div>
-    @section('title', 'Tarif Pelayanan')
+    @section('title', 'Tarif Pelayanan/Sangsi')
     @section('page')
         <li class="breadcrumb-item">Data Master</li>
         <li class="breadcrumb-item">Tarif</li>
-        <li class="breadcrumb-item">Pelayanan</li>
+        <li class="breadcrumb-item">Pelayanan/Sangsi</li>
         <li class="breadcrumb-item active">{{ $key ? 'Edit' : 'Tambah' }} Data</li>
     @endsection
 
-    <h1 class="page-header">Tarif Pelayanan <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
+    <h1 class="page-header">Tarif Pelayanan/Sangsi <small>{{ $key ? 'Edit' : 'Tambah' }} Data</small></h1>
 
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->

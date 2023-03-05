@@ -32,7 +32,7 @@ class Form extends Component
             'rekening_air_id' => $q->rekeningAir->id,
             'periode' => $q->periode,
             'denda' => $q->rekeningAir->tarifDenda->nilai,
-            'tagihan' => $q->rekeningAir->harga_air + $q->rekeningAir->biaya_denda + $q->rekeningAir->biaya_lainnya + $q->rekeningAir->biaya_meter_air + $q->rekeningAir->biaya_materai + $q->rekeningAir->biaya_ppn - $q->rekeningAir->diskon,
+            'tagihan' => $q->rekeningAir->harga_air + $q->rekeningAir->biaya_denda + $q->rekeningAir->biaya_lainnya + $q->rekeningAir->biaya_meter_air + $q->rekeningAir->biaya_admin + $q->rekeningAir->biaya_materai + $q->rekeningAir->biaya_ppn - $q->rekeningAir->diskon,
         ]);
         $this->hitungAngsuran();
     }

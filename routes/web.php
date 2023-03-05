@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', \App\Http\Livewire\Dashboard::class);
-
+    Route::get('/gantisandi', \App\Http\Livewire\Gantisandi::class);
     Route::prefix('administrator')->group(function () {
         Route::prefix('datapembayaran')->group(function () {
             Route::group(['middleware' => ['role_or_permission:administrator|administratordatapembayaranrekeningair']], function () {

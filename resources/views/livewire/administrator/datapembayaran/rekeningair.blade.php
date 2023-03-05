@@ -70,7 +70,7 @@
                                 {{ $row->golongan->nama . ' - ' . $row->golongan->deskripsi }}
                             </td>
                             <td class="align-middle">
-                                {{ number_format($row->harga_air + $row->biaya_retribusi + $row->biaya_jasa_lingkungan + $row->biaya_pemeliharaan + $row->biaya_administrasi + $row->biaya_materai + $row->biaya_ppn - $row->diskon + $row->biaya_denda) }}
+                                {{ number_format($row->harga_air + $row->biaya_meter_air + $row->biaya_lainnya + $row->biaya_admin + $row->biaya_materai + $row->biaya_ppn - $row->diskon + $row->biaya_denda) }}
                             </td>
                             <td class="align-middle"><small>{!! $row->kasir . '<br>' . $row->waktu_bayar !!}</small></td>
                             @role('super-admin|administrator')

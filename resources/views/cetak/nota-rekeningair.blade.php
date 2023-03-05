@@ -63,14 +63,14 @@
                     <td>:</td>
                     <td>Rp.</td>
                     <td class="text-right">
-                        {{ number_format($row->harga_air + $row->biaya_pemeliharaan + $row->biaya_administrasi + $row->biaya_ppn - $row->diskon) }}
+                        {{ number_format($row->harga_air + $row->biaya_ppn - $row->diskon) }}
                     </td>
                 </tr>
                 <tr>
                     <td>Meter Air</td>
                     <td>:</td>
                     <td>Rp.</td>
-                    <td class="text-right">{{ number_format($row->biaya_meter_air) }}</td>
+                    <td class="text-right">{{ number_format($row->biaya_meter_air + $row->biaya_admin) }}</td>
                 </tr>
                 <tr>
                     <td>Denda</td>
@@ -103,7 +103,7 @@
                     <th>:</th>
                     <th>Rp.</th>
                     <th class="text-right">
-                        {{ number_format($row->harga_air + $row->biaya_meter_air + $row->biaya_denda + $row->biaya_lainnya + $row->biaya_lainnya + $row->biaya_materai + $row->biaya_ppn - $row->diskon) }}
+                        {{ number_format($row->harga_air + $row->biaya_meter_air + $row->biaya_admin + $row->biaya_denda + $row->biaya_lainnya + $row->biaya_lainnya + $row->biaya_materai + $row->biaya_ppn - $row->diskon) }}
                     </th>
                 </tr>
                 <tr>
@@ -180,7 +180,7 @@
                             <td>:</td>
                             <td>Rp.</td>
                             <td class="text-right">
-                                {{ number_format($row->harga_air + $row->biaya_pemeliharaan + $row->biaya_administrasi + $row->biaya_ppn - $row->diskon) }}
+                                {{ number_format($row->harga_air + $row->biaya_ppn - $row->diskon) }}
                             </td>
                         </tr>
                         <tr>
@@ -220,7 +220,7 @@
                             <th>:</th>
                             <th>Rp.</th>
                             <th class="text-right">
-                                {{ number_format($row->harga_air + $row->biaya_meter_air + $row->biaya_denda + $row->biaya_lainnya + $row->biaya_lainnya + $row->biaya_materai + $row->biaya_ppn - $row->diskon) }}
+                                {{ number_format($row->harga_air + $row->biaya_meter_air + $row->biaya_admin + $row->biaya_denda + $row->biaya_lainnya + $row->biaya_lainnya + $row->biaya_materai + $row->biaya_ppn - $row->diskon) }}
                             </th>
                         </tr>
                     </table>

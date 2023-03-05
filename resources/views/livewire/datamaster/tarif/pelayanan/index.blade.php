@@ -1,13 +1,13 @@
 <div>
-    @section('title', 'Pelayanan')
+    @section('title', 'Pelayanan/Sangsi')
 
     @section('page')
         <li class="breadcrumb-item">Data Master</li>
         <li class="breadcrumb-item">Tarif</li>
-        <li class="breadcrumb-item active">Pelayanan</li>
+        <li class="breadcrumb-item active">Pelayanan/Sangsi</li>
     @endsection
 
-    <h1 class="page-header">Pelayanan</h1>
+    <h1 class="page-header">Pelayanan/Sangsi</h1>
 
     <x-alert />
 

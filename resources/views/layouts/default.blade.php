@@ -61,7 +61,7 @@
                         <span class="d-none d-md-inline">{{ auth()->user()->nama }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#modal-password" class="dropdown-item" data-toggle="modal">Ganti Kata Sandi</a>
+                        <a href="/gantisandi" class="dropdown-item">Ganti Kata Sandi</a>
                         <div class="dropdown-divider"></div>
                         <a href="javascript:;" class="dropdown-item btn-logout"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log

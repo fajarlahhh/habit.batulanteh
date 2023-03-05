@@ -228,7 +228,7 @@
                         @foreach ($pelanggan->tagihan as $key => $row)
                             @php
                                 $periode = new \Carbon\Carbon($row->periode);
-                                $tagihan = $row->harga_air + $row->biaya_lainnya + $row->biaya_meter_air + $row->biaya_materai + $row->biaya_ppn - $row->diskon;
+                                $tagihan = $row->harga_air + $row->biaya_lainnya + $row->biaya_meter_air + $row->biaya_admin + $row->biaya_materai + $row->biaya_ppn - $row->diskon;
                                 $denda =
                                     $periode
                                         ->addMonths(1)

@@ -48,7 +48,7 @@ class Kolektif extends Component
                     'golongan' => $subRow->golongan->nama,
                     'angsur' => $subRow->angsuranRekeningAirPeriode ? 1 : 0,
                     'pakai' => $subRow->stand_ini || $subRow->stand_lalu ? $subRow->stand_ini - $subRow->stand_pasang + $subRow->stand_angkat - $subRow->stand_lalu : $subRow->stand_ini - $subRow->stand_lalu,
-                    'tagihan' => $subRow->harga_air + $subRow->biaya_lainnya + $subRow->biaya_meter_air + $subRow->biaya_materai,
+                    'tagihan' => $subRow->harga_air + $subRow->biaya_lainnya + $subRow->biaya_meter_air + $subRow->biaya_admin + $subRow->biaya_materai,
                     'denda' => $denda,
                 ];
             }

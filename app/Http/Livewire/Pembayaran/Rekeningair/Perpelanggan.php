@@ -52,7 +52,7 @@ class Perpelanggan extends Component
                     'golongan' => $row->golongan->nama,
                     'angsur' => $row->angsuranRekeningAirPeriode ? 1 : 0,
                     'pakai' => $row->stand_ini || $row->stand_lalu ? $row->stand_ini - $row->stand_pasang + $row->stand_angkat - $row->stand_lalu : $row->stand_ini - $row->stand_lalu,
-                    'tagihan' => $row->harga_air + $row->biaya_lainnya + $row->biaya_meter_air + $row->biaya_materai,
+                    'tagihan' => $row->harga_air + $row->biaya_lainnya + $row->biaya_meter_air + $row->biaya_admin + $row->biaya_materai,
                     'denda' => $denda,
                 ];
             }

@@ -58,7 +58,7 @@
                 <td class="text-right">{{ $row->biaya_denda }}</td>
                 <td class="text-right">{{ $row->biaya_materai }}</td>
                 <td class="text-right">
-                    {{ $row->biaya_materai + $row->harga_air + $row->biaya_meter_air + $row->biaya_denda }}
+                    {{ $row->biaya_materai + $row->harga_air + $row->biaya_meter_air + $row->biaya_admin + $row->biaya_denda }}
                 </td>
                 <td class="text-right">{{ $row->kasir }}</td>
             </tr>
@@ -73,7 +73,7 @@
             <th class="text-right">{{ $data->sum('biaya_denda') }}</th>
             <th class="text-right">{{ $data->sum('biaya_materai') }}</th>
             <th class="text-right">
-                {{ $data->sum(fn($q) => $q->materai + $q->harga_air + $q->biaya_meter_air + $q->biaya_denda) }}</th>
+                {{ $data->sum(fn($q) => $q->materai + $q->harga_air + $q->biaya_meter_air + $q->biaya_admin + $q->biaya_denda) }}</th>
                 <th></th>
         </tr>
     </tbody>
