@@ -98,20 +98,20 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Periode</th>
+                                <th class="width-150">Periode</th>
                                 <th>Golongan</th>
                                 <th class="width-150">Stand Lalu</th>
                                 <th class="width-150">Stand Ini</th>
                                 <th class="width-150">Stand Angkat</th>
                                 <th class="width-150">Stand Pasang</th>
                                 <th class="width-100">Pakai</th>
-                                <th>Harga Air</th>
-                                <th>Materai</th>
-                                <th>Keterangan</th>
+                                <th class="width-150">Harga Air</th>
+                                <th class="width-150">Materai</th>
+                                <th class="width-150">Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($dataRekeningAir as $index => $row)
+                            @foreach (collect($dataRekeningAir)->sortByDesc('periode') as $index => $row)
                                 <tr>
                                     <td class="with-btn">
                                         <div class="form-group m-0">
