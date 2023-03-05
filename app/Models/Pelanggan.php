@@ -87,4 +87,9 @@ class Pelanggan extends Model
     {
         return $this->hasOne(BacaMeter::class)->orderBy('periode', 'desc');
     }
+
+    public function rekeningAirTerakhir()
+    {
+        return $this->hasOne(RekeningAir::class)->orderBy('periode', 'desc');
+    }
 }
