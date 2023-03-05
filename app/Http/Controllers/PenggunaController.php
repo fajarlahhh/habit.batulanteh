@@ -30,7 +30,12 @@ class PenggunaController extends Controller
             if ($pengguna->count() > 0) {
                 $pengguna = $pengguna->first();
                 if (Hash::check($req->kata_sandi, $pengguna->kata_sandi)) {
-                    if ($pengguna->penagih > 0 || $pengguna->bacameter > 0) {
+                    if ($pengguna->penagih == 0 && $pengguna->bacameter == 0) {
+                        return response()->json([
+                            'status' => 'gagal',
+                            'data' => 'Tidak ada hak akses',
+                        ], 401);
+                    }else{
                         return response()->json([
                             'status' => 'sukses',
                             'data' => [
@@ -40,11 +45,6 @@ class PenggunaController extends Controller
                                 'api_token' => $pengguna->api_token,
                             ],
                         ], 200);
-                    }else{
-                        return response()->json([
-                            'status' => 'gagal',
-                            'data' => 'Tidak ada hak akses',
-                        ], 401);
                     }
                 } else {
                     return response()->json([
