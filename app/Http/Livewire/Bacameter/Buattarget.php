@@ -32,30 +32,35 @@ class Buattarget extends Component
         //     session()->flash('danger', 'Data bacaan periode ' . $this->tahun . '-' . $this->bulan . ' ini sudah ada');
         //     return $this->render();
         // }
+        BacaMeter::where('status_baca', 'SEGEL')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
+        BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
 
-        DB::transaction(function ($q) {
-            BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
-            $dataPelanggan = Pelanggan::with('rekeningAirTerakhir')->with('rayon.ruteBaca')->whereIn('status', [1, 3])->get()->map(fn ($q) => [
-                [
+        DB::transaction(function () {
+            $dataPelanggan = Pelanggan::with('rayon.ruteBaca')->whereIn('status', [1, 3])->get();
+
+            $data = [];
+            foreach ($dataPelanggan as $key => $row) {
+                array_push($data, [
                     'periode' => $this->tahun . '-' . $this->bulan . '-01',
-                    'stand_lalu' => $q->rekeningAirTerakhir ? $q->rekeningAirTerakhir->stand_ini : 0,
-                    'latitude' => $q->latitude,
-                    'longitude' => $q->longitude,
-                    'pelanggan_id' => $q->id,
-                    'pembaca_id' => $q->rayon->ruteBaca->pembaca_id,
-                    'rayon_id' => $q->rayon_id,
+                    'stand_lalu' => $row->rekeningAirTerakhir ? $row->rekeningAirTerakhir->stand_ini : 0,
+                    'latitude' => $row->latitude,
+                    'longitude' => $row->longitude,
+                    'pelanggan_id' => $row->id,
+                    'pembaca_id' => $row->rayon->ruteBaca->pembaca_id,
+                    'rayon_id' => $row->rayon_id,
                     'pengguna_id' => auth()->id(),
                     'created_at' => now(),
                     'updated_at' => now(),
-                    'stand_ini' => $q->status == 3 ? DB::raw('stand_lalu') : 0,
-                    'status_baca' => $q->status == 3 ? 'SEGEL' : null,
-                    'tanggal_baca' => $q->status == 3 ? now() : null,
-                ]
-            ]);
-            
-            $insert = collect($dataPelanggan)->chunk(2000);
-            foreach ($insert as $row) {
-                BacaMeter::insert($row->toArray());
+                    'stand_ini' => $row->status == 3 ? DB::raw('stand_lalu') : 0,
+                    'status_baca' => $row->status == 3 ? 'SEGEL' : null,
+                    'tanggal_baca' => $row->status == 3 ? now() : null,
+                ]);
+            }
+
+            $insert = collect($data)->chunk(2000);
+
+            foreach ($insert as $r) {
+                BacaMeter::insert($r->toArray());
             }
 
             session()->flash('success', 'Data bacaan periode ' . $this->tahun . '-' . $this->bulan . ' berhasil dibuat');
