@@ -35,12 +35,14 @@ class Buattarget extends Component
 
         DB::transaction(function ($q) {
             BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
-            $dataPelanggan = Pelanggan::whereIn('status', [1, 3])->get();
+            $dataPelanggan = Pelanggan::with(['bacaMeter' => function ($q) {
+                return  $q->take(1);
+            }])->whereIn('status', [1, 3])->get();
             $data = [];
             foreach ($dataPelanggan as $key => $row) {
                 array_push($data, [
                     'periode' => $this->tahun . '-' . $this->bulan . '-01',
-                    'stand_lalu' => 1,
+                    'stand_lalu' => $row->bacaMeter->count() > 0 ? $row->bacaMeter->first()->stand_ini : 0,
                     'latitude' => $row->latitude,
                     'longitude' => $row->longitude,
                     'pelanggan_id' => $row->id,
