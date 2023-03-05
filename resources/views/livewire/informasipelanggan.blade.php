@@ -290,7 +290,7 @@
                             <th>Foto</th>
                         </tr>
                         @if ($pelanggan)
-                            @foreach ($pelanggan->bacaMeter as $key => $row)
+                            @foreach ($pelanggan->bacaMeter->sortByDesc('periode') as $key => $row)
                                 <tr>
                                     <td class="align-middle">{{ date('F Y', strtotime($row->periode)) }}</td>
                                     <td class="align-middle">{{ $row->pembaca->nama }}</td>
