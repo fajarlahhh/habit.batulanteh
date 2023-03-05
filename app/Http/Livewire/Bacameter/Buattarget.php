@@ -37,7 +37,7 @@ class Buattarget extends Component
             BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
             $dataPelanggan = Pelanggan::with(['bacaMeter' => function ($q) {
                 return  $q->take(1);
-            }])->with('rayon.ruteBaca')->whereNotIn('id', BacaMeter::where('periode', $this->tahun . '-' . $this->bulan . '-01')->get()->pluck('pelanggan_id')->all())->whereIn('status', [1, 3])->get();
+            }])->with('rayon.ruteBaca')->whereIn('status', [1, 3])->get();
             $data = [];
             foreach ($dataPelanggan as $key => $row) {
                 array_push($data, [
