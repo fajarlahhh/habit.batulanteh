@@ -35,9 +35,7 @@ class Buattarget extends Component
 
         DB::transaction(function ($q) {
             BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
-            $dataPelanggan = Pelanggan::with(['rekeningAir' => function ($q) {
-                return  $q->take(1);
-            }])->whereIn('status', [1, 3])->get()->map(fn ($q) => [
+            $dataPelanggan = Pelanggan::whereIn('status', [1, 3])->get()->map(fn ($q) => [
                 [
                     'periode' => $this->tahun . '-' . $this->bulan . '-01',
                     'stand_lalu' => $q->rekeningAir->count() > 0 ? $q->rekeningAir->first()->stand_ini : 0,
@@ -54,7 +52,7 @@ class Buattarget extends Component
                     'tanggal_baca' => $q->status == 3 ? now() : null,
                 ]
             ]);
-            
+
             $insert = collect($dataPelanggan)->chunk(2000);
             foreach ($insert as $row) {
                 BacaMeter::insert($row->toArray());
