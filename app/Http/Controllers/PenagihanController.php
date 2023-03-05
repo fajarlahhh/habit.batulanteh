@@ -70,7 +70,6 @@ class PenagihanController extends Controller
         $validator = Validator::make($req->all(), [
             'id' => 'required',
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'gagal',
@@ -87,21 +86,17 @@ class PenagihanController extends Controller
                         foreach (RekeningAir::whereIn('id', $req->id)->get() as $key => $row) {
                             $periode = new Carbon($row->periode);
                             $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->tarifDenda->nilai : 0;
-                            RekeningAir::whereIn('id', $row->id)->whereNull('waktu_bayar')->update([
+                            RekeningAir::where('id', $row->id)->whereNull('waktu_bayar')->update([
                                 'kasir' => $pengguna->nama,
                                 'waktu_bayar' => now(),
-                                'denda' => $denda
+                                'biaya_denda' => $denda
                             ]);
                         }
-                        return response()->json([
-                            'status' => 'sukses',
-                            'data' => null,
-                        ], 200);
                     });
                     return response()->json([
-                        'status' => 'gagal',
-                        'data' => 'Terjadi kesalahan',
-                    ], 500);
+                        'status' => 'sukses',
+                        'data' => RekeningAir::whereIn('id', $req->id)->get(),
+                    ], 200);
                 }
                 return response()->json([
                     'status' => 'gagal',
