@@ -28,7 +28,7 @@ class BacameterController extends Controller
                         'no_langganan' => $q->pelanggan->no_langganan,
                         'nama' => $q->pelanggan->nama,
                         'alamat' => $q->pelanggan->alamat,
-                        'rayon' => $q->rayon->nama,
+                        'rayon' => $q->rayon->kode.'-'.$q->rayon->nama,
                         'kelurahan' => $q->rayon->kelurahan->nama,
                         'kecamatan' => $q->rayon->kelurahan->kecamatan->nama,
                         'periode' => $q->periode,

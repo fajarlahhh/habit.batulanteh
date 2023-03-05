@@ -138,6 +138,7 @@ class PenagihanController extends Controller
                         'pakai' => $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu,
                         "waktu_bayar" => $q->waktu_bayar,
                         "kasir" => $q->kasir,
+                        "denda" => $q->biaya_denda,
                         "jumlah" => $q->harga_air + $q->biaya_lainnya + $q->biaya_meter_air +$q->biaya_admin + $q->biaya_materai + $q->biaya_denda,
                     ]),
                 ]);
