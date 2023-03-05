@@ -83,7 +83,7 @@ class PenagihanController extends Controller
             if ($pengguna->count() > 0) {
                 $pengguna  = $pengguna->first();
                 if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() == collect($req->id)->count()) {
-                    DB::transaction(function () {
+                    DB::transaction(function () use($pengguna) {
                         foreach (RekeningAir::whereIn('id', $req->id)->get() as $key => $row) {
                             $periode = new Carbon($row->periode);
                             $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->tarifDenda->nilai : 0;
