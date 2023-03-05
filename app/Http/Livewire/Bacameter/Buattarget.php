@@ -21,7 +21,7 @@ class Buattarget extends Component
     {
         ini_set('max_execution_time', 0);
         set_time_limit(0);
-        ini_set('memory_limit', '6144M');
+        ini_set('memory_limit', '512M');
 
         $this->validate([
             "bulan" => "required",
@@ -38,7 +38,7 @@ class Buattarget extends Component
             $dataPelanggan = Pelanggan::with('rekeningAirTerakhir')->with('rayon.ruteBaca')->whereIn('status', [1, 3])->get()->map(fn ($q) => [
                 [
                     'periode' => $this->tahun . '-' . $this->bulan . '-01',
-                    'stand_lalu' => $q->rekeningAir->count() > 0 ? $q->rekeningAir->first()->stand_ini : 0,
+                    'stand_lalu' => $q->rekeningAirTerakhir ? $q->rekeningAirTerakhir->stand_ini : 0,
                     'latitude' => $q->latitude,
                     'longitude' => $q->longitude,
                     'pelanggan_id' => $q->id,
