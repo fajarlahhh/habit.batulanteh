@@ -39,10 +39,6 @@ class Air extends Component
         ini_set('memory_limit', '512M');
         return Excel::download(new LPPAirExport($this->unitPelayanan, $this->rayon, $this->kasir, $this->tanggal1, $this->tanggal2), 'lppair' . $this->unitPelayanan . $this->rayon . $this->kasir . $this->tanggal1 . $this->tanggal2 . '.xlsx');
     }
-    // public function load()
-    // {
-    //     $this->data = RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->kasir, fn ($q) => $q->where('kasir', $this->kasir))->whereNotNull('kasir')->orderBy('waktu_bayar')->get();
-    // }
 
     public function render()
     {

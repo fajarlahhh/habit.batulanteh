@@ -49,7 +49,7 @@
                         </div>&nbsp;
                         <div class="form-group">
                             <select class="form-control selectpicker" data-live-search="true" data-width="100%"
-                                wire:model.defer="unitPelayanan">
+                                wire:model.defer="kasir">
                                 <option value="">SEMUA KASIR</option>
                                 @foreach ($dataKasir as $row)
                                     <option value="{{ $row->nama }}">{{ $row->nama }}</option>
