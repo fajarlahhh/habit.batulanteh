@@ -31,7 +31,7 @@ class PpobController extends Controller
                 return response()->json([
                     'status' => 'sukses',
                     'data' => Pelanggan::whereHas('tagihan')->withCount('tagihan')
-                        ->having('tagihan_count',  3)->where('no_langganan', $req->cari)->where('status', 1)->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
+                        ->having('tagihan_count', '<=', 3)->where('no_langganan', $req->cari)->where('status', 1)->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
                             'no_langganan' => $q->no_langganan,
                             'nama' => $q->nama,
                             'alamat' => $q->alamat,
