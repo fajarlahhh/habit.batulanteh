@@ -29,7 +29,7 @@ class Progresbacameter extends Component
             'rayon' => $this->rayon,
             'tanggal' => Carbon::parse($this->tahun . '-' . $this->bulan . '-01')->daysInMonth,
             'unitPelayanan' => $this->unitPelayanan,
-            'data' => Pengguna::whereIn('id', BacaMeter::where('periode', $this->tahun . '-' . $this->bulan . '-01')->get()->pluck('pembaca_id'))->when($this->unitPelayanan, fn ($q) => $q->whereHas('bacaMeter', fn ($r) => $r->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id'))))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->with(['bacaMeter' => function ($q) {
+            'data' => Pengguna::whereIn('id', BacaMeter::where('status_baca', 'SEGEL')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->get()->pluck('pembaca_id'))->when($this->unitPelayanan, fn ($q) => $q->whereHas('bacaMeter', fn ($r) => $r->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id'))))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->with(['bacaMeter' => function ($q) {
                 return $q->where('periode', $this->tahun . '-' . $this->bulan . '-01');
             }])->get(),
         ])->render();
@@ -46,7 +46,7 @@ class Progresbacameter extends Component
     {
         return view('livewire.cetak.progresbacameter', [
             'tanggal' => Carbon::parse($this->tahun . '-' . $this->bulan . '-01')->daysInMonth,
-            'data' => Pengguna::whereIn('id', BacaMeter::where('periode', $this->tahun . '-' . $this->bulan . '-01')->get()->pluck('pembaca_id'))->when($this->unitPelayanan, fn ($q) => $q->whereHas('bacaMeter', fn ($r) => $r->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id'))))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->with(['bacaMeter' => function ($q) {
+            'data' => Pengguna::whereIn('id', BacaMeter::where('status_baca', 'SEGEL')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->get()->pluck('pembaca_id'))->when($this->unitPelayanan, fn ($q) => $q->whereHas('bacaMeter', fn ($r) => $r->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id'))))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->with(['bacaMeter' => function ($q) {
                 return $q->where('periode', $this->tahun . '-' . $this->bulan . '-01');
             }])->get()
         ]);
