@@ -102,7 +102,7 @@ class PpobController extends Controller
                 } 
                 return response()->json([
                     'status' => 'gagal',
-                    'data' => 'Unauthorized',
+                    'data' => 'Transaksi tidak sah',
                 ], 401);
             }
             return response()->json([
