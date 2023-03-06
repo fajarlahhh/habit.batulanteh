@@ -95,7 +95,7 @@ class PenagihanController extends Controller
                     });
                     return response()->json([
                         'status' => 'sukses',
-                        'data' => RekeningAir::whereIn('id', $req->id)->get(),
+                        'data' => null,
                     ], 200);
                 }
                 return response()->json([
