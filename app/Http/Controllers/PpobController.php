@@ -81,9 +81,9 @@ class PpobController extends Controller
                 $pengguna  = $pengguna->first();
                 return response()->json([
                     'status' => 'sukses',
-                    'data' => RekeningAir::where('kasir', $pengguna->nama)->whereBetween('waktu_bayar', [$tanggal[0] . ' 00:00:00', $tanggal[1] . ' 23:59:59'])->get()->map(fn ($q) => [
+                    'data' => RekeningAir::with('pelanggan')->where('kasir', $pengguna->nama)->whereBetween('waktu_bayar', [$tanggal[0] . ' 00:00:00', $tanggal[1] . ' 23:59:59'])->get()->map(fn ($q) => [
                         "id" => $q->id,
-                        "no_langganan" => "010500005",
+                        "no_langganan" => $q->pelanggan->no_langganan,
                         "periode" => $q->periode,
                         'pakai' => $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu,
                         "waktu_bayar" => $q->waktu_bayar,
