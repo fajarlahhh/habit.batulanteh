@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Regional;
 use App\Models\RekeningAir;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
@@ -28,7 +29,7 @@ class LPPAirExport implements FromView
             'rayon' => $this->rayon,
             'kasir' => $this->kasir,
             'unitPelayanan' => $this->unitPelayanan,
-            'data' =>  RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->kasir, fn ($q) => $q->where('kasir', $this->kasir))->whereNotNull('kasir')->orderBy('waktu_bayar')->get()
+            'data' =>  RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->kasir, fn ($q) => $q->where('kasir', $this->kasir))->whereNotNull('kasir')->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->orderBy('waktu_bayar')->get()
         ]);
     }
 }
