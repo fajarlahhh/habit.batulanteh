@@ -228,7 +228,7 @@
                 <div class="col-sm-12">
                     <table class="width-full">
                         <tr>
-                            <td class="width-400 f-s-10">
+                            <td class="width-300 f-s-10">
                                 <ul>
                                     <li>PERUMDAM BATU LANTEH Menyatakan Struk ini Sebagai Bukti
                                         Pembayaran Yang Sah, Mohon Disimpan.</li>
@@ -240,9 +240,7 @@
                             </td>
                             <td class="text-center">
                                 Direktur Utama<br>
-                                <img src="/assets/img/ttd.png" alt="" class="height-70 position-absolute">
-                                <br>
-                                <br>
+                                <img src="/assets/img/ttd.png" alt="" class="height-70">
                                 <br>
                                 <u>H. Abdul Hakim</u>
                             </td>
@@ -394,9 +392,7 @@
                             </td>
                             <td class="text-center">
                                 Direktur Utama<br>
-                                <img src="/assets/img/ttd.png" alt="" class="height-70 position-absolute">
-                                <br>
-                                <br>
+                                <img src="/assets/img/ttd.png" alt="" class="height-70">
                                 <br>
                                 <u>H. Abdul Hakim</u>
                             </td>

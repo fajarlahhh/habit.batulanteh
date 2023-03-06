@@ -59,7 +59,7 @@ class Rekeningnonair extends Component
     {
         return view('livewire.administrator.datapembayaran.rekeningnonair', [
             'i' => ($this->page - 1) * 10,
-            'data' => ModelsRekeningNonAir::whereBetween('created_at', [$this->tanggal.' 00:00:00', $this->tanggal.' 23:59:59'])->where(fn($q) => $q->where('nama', 'like', '%' . $this->cari . '%')->where('alamat', 'like', '%' . $this->cari . '%'))->paginate(10),
+            'data' => ModelsRekeningNonAir::whereBetween('created_at', [$this->tanggal.' 00:00:00', $this->tanggal.' 23:59:59'])->where(fn($q) => $q->where('nama', 'like', '%' . $this->cari . '%')->where('alamat', 'like', '%' . $this->cari . '%'))->orderBy('created_at')->paginate(10),
         ]);
     }
 }

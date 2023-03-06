@@ -206,9 +206,7 @@
                         </td>
                         <td>
                             Direktur Utama<br>
-                            <img src="/assets/img/ttd.png" alt="" class="height-70 position-absolute">
-                            <br>
-                            <br>
+                            <img src="/assets/img/ttd.png" alt="" class="height-70">
                             <br>
                             <u>H. Abdul Hakim</u>
                         </td>
