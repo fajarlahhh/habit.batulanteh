@@ -77,9 +77,11 @@
                 @for ($j = 0; $j < $data->count(); $j++)
                     @php
                         $realisasiHarian += $realisasiKeseluruhan[$j][$i];
-                        $totalRealisasiHarian += $realisasiHarian;
                     @endphp
                 @endfor
+                @php
+                    $totalRealisasiHarian += $realisasiHarian;
+                @endphp
                 <th class="text-right">{{ $realisasiHarian }} </th>
             @endfor
             <td class="text-center text-nowrap">
