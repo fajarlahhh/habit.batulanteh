@@ -50,9 +50,13 @@
                             <label class="control-label">Level</label>
                             <select class="form-control selectpicker" wire:model.lazy="level" data-width="100%">
                                 <option selected hidden>-- Pilih Level --</option>
-                                @foreach ($dataLevel as $row)
-                                    <option value="{{ $row->name }}">{{ ucfirst($row->name) }}</option>
-                                @endforeach
+                                @if ($uid == 'admin')
+                                    <option value="administrator">Administrator</option>
+                                @else
+                                    @foreach ($dataLevel as $row)
+                                        <option value="{{ $row->name }}">{{ ucfirst($row->name) }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             @error('level')
                                 <span class="text-danger">{{ $message }}</span>
@@ -107,12 +111,12 @@
                     </div>
                     <div class="col-md-6 text-right">
                         @if ($key)
-                        <a href="javascript:;" wire:click="resetKataSandi" class="btn btn-warning">Reset
-                            Kata Sandi
-                        </a>
-                        <a href="javascript:;" wire:click="resetApiToken" class="btn btn-warning">Reset
-                            API Token
-                        </a>
+                            <a href="javascript:;" wire:click="resetKataSandi" class="btn btn-warning">Reset
+                                Kata Sandi
+                            </a>
+                            <a href="javascript:;" wire:click="resetApiToken" class="btn btn-warning">Reset
+                                API Token
+                            </a>
                         @endif
                     </div>
                 </div>
