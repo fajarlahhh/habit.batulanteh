@@ -47,12 +47,14 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th class="width-60">No.</th>
+                        <th class="width-10">No.</th>
                         <th>UID</th>
                         <th>Nama</th>
                         <th>Deskripsi</th>
                         <th>Level</th>
-                        <th>Token</th>
+                        <th>Penagih</th>
+                        <th>Baca Meter</th>
+                        <th>API Token</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
                         @endrole
@@ -67,6 +69,20 @@
                             <td class="align-middle">{{ $row->deskripsi }}</td>
                             <td class="align-middle">{{ $row->getRoleNames() ? $row->getRoleNames()->first() : null }}
                             </td>
+                            <td class="align-middle">
+                                @switch($row->penagih)
+                                    @case(1)
+                                        Penagih
+                                    @break
+
+                                    @case(2)
+                                        PPOB
+                                    @break
+
+                                    @default
+                                @endswitch
+                            </td>
+                            <td class="align-middle">{{ $row->bacameter == 1 ? 'YA' : '' }}</td>
                             <td class="align-middle">{{ $row->api_token }}</td>
                             <td class="with-btn-group align-middle text-right" nowrap>
                                 @role('administrator|super-admin')

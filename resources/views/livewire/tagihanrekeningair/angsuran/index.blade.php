@@ -15,7 +15,7 @@
         <div class="panel-heading">
             <div class="row width-full">
                 <div class="col-xl-3 col-sm-3">
-                    @role('user|administrator|super-admin')
+                    @role('operator|administrator|super-admin')
                         <div class="form-inline">
                             <a href="{{ route('tagihanrekeningair.angsuran.tambah') }}" class="btn btn-primary"><i
                                     class="fa fa-plus"></i> Tambah</a>
@@ -57,7 +57,7 @@
                         <th>Total</th>
                         <th>Terbayar</th>
                         <th>Operator</th>
-                        @role('administrator|super-admin|user')
+                        @role('administrator|super-admin|operator')
                             <th class="width-90"></th>
                         @endrole
                     </tr>
@@ -75,7 +75,7 @@
                             <td class="align-middle text-right">{{ number_format($row->total) }}</td>
                             <td class="align-middle text-right">{{ number_format($row->bayar) }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
-                            @role('administrator|super-admin|user')
+                            @role('administrator|super-admin|operator')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     <div class="btn-group btn-group-sm" role="group">
                                         @if ($key === $row->getKey())

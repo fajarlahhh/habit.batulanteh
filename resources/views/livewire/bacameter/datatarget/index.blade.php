@@ -101,7 +101,7 @@
                                     <img src="{{ Storage::url($row->foto) }}" class='height-70' />
                                 @endif
                             </td>
-                            @role('administrator|super-admin|user')
+                            @role('administrator|super-admin|operator')
                                 <td class="with-btn-group align-middle text-right" nowrap>
                                     @if (!$row->rekeningAir)
                                         <div class="btn-group btn-group-sm" role="group">

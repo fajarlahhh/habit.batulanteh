@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role;
 
 class Form extends Component
 {
-    public $data, $key, $uid, $nama, $deskripsi, $kataSandi, $level = 'operator', $akses = [], $dataLevel = [], $dataMenu;
+    public $data, $key, $uid, $nama, $deskripsi, $kataSandi, $level = 'operator', $akses = [], $dataLevel = [], $dataMenu, $penagih = 0, $bacameter = 0;
 
     public function submit()
     {
@@ -21,6 +21,7 @@ class Form extends Component
             'level' => 'required',
             'uid' => 'required',
             'nama' => 'required',
+            'penagih' => 'required',
         ]);
 
         DB::transaction(function () {
@@ -31,6 +32,8 @@ class Form extends Component
             $this->data->nama = $this->nama;
             $this->data->api_token = Str::random(60);
             $this->data->deskripsi = $this->deskripsi;
+            $this->data->penagih = $this->penagih;
+            $this->data->bacameter = $this->bacameter?1: 0;
             $this->data->save();
 
             $this->data->syncPermissions($this->akses);
@@ -61,6 +64,8 @@ class Form extends Component
             $this->uid = $this->data->uid;
             $this->nama = $this->data->nama;
             $this->deskripsi = $this->data->deskripsi;
+            $this->penagih = $this->data->penagih;
+            $this->bacameter = $this->data->bacameter;
             $this->level = $this->data->getRoleNames()->first();
             $this->akses = $this->data->getPermissionNames()->toArray();
         } else {

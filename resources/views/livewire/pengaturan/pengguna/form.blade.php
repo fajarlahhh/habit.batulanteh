@@ -62,6 +62,27 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
+                        <div class="alert alert-muted form-inline">
+                            <div class="custom-control custom-radio mr-3">
+                                <input type="radio" id="penagih0" name="penagih" class="custom-control-input" wire:model.defer="penagih" value="0">
+                                <label class="custom-control-label" for="penagih0">Bukan Penagih</label>
+                            </div>
+                            <div class="custom-control custom-radio mr-3">
+                                <input type="radio" id="penagih1" name="penagih" class="custom-control-input" wire:model.defer="penagih" value="1">
+                                <label class="custom-control-label" for="penagih1">Penagih</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="penagih2" name="penagih" class="custom-control-input" wire:model.defer="penagih" value="2">
+                                <label class="custom-control-label" for="penagih2">PPOB</label>
+                            </div>
+                        </div>
+                        <div class="checkbox checkbox-css">
+                            <input type="checkbox" id="bacameter" wire:model.defer="bacameter" />
+                            <label for="bacameter">
+                                Baca Meter
+                            </label>
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <div class="note note-secondary">

@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="panel-footer" wire:loading.remove>
-                @role('user|administrator|super-admin')
+                @role('operator|administrator|super-admin')
                     <input type="submit" value="Submit" class="btn btn-success" />
                 @endrole
             </div>

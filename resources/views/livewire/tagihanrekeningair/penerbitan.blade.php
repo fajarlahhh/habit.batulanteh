@@ -78,7 +78,7 @@
                             autocomplete="off" readonly />
                     </div>
                 </div>
-                @role('user|administrator|super-admin')
+                @role('operator|administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
             </div>
@@ -162,7 +162,7 @@
                     @enderror
                 </div>
                 <br>
-                @role('user|administrator|super-admin')
+                @role('operator|administrator|super-admin')
                     <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                 @endrole
             </div>
