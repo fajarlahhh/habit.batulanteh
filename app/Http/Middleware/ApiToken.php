@@ -24,7 +24,7 @@ class ApiToken
 
         return response()->json([
             'status' => 'error',
-            'data' => 'Api token invalid',
+            'data' => 'Api token tidak valid',
         ], 403);
     }
 
