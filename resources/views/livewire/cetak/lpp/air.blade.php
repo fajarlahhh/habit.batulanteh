@@ -16,7 +16,7 @@
             <!-- begin panel-heading -->
             <div class="panel-heading" wire:loading.remove>
                 <div class="form-inline width-full">
-                    <form wire:submit.prevent="load" class="form-inline">
+                    <form wire:submit.prevent="render" class="form-inline">
                         <div class="form-group">
                             <input class="form-control" type="date" autocomplete="off" wire:model.defer="tanggal1" />
                         </div>&nbsp;
@@ -57,14 +57,19 @@
                             </select>
                         </div>&nbsp;
                         <input value="Load" class="btn btn-info" type="submit">
-                    </form>
+                    </form>&nbsp;<button class="btn btn-info" wire:click="cetak">Export</button>
                 </div>
             </div>
             <div class="panel-body table-responsive">
                 @include('cetak.lppair')
             </div>
-            <div class="panel-footer">
-                <button class="btn btn-info" wire:click="cetak">Cetak</button>
+            <div class="panel-footer form-inline">
+                <div class="col-md-6 col-lg-10 col-xl-10 col-xs-12">
+                    {{ $data->links() }}
+                </div>
+                <div class="col-md-6 col-lg-2 col-xl-2 col-xs-12">
+                    <label class="pull-right">Jumlah Data : {{ $data->total() }}</label>
+                </div>
             </div>
         </div>
 

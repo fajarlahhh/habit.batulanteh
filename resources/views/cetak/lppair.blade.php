@@ -23,7 +23,7 @@
         <td>{{ $kasir ? : 'Semua Kasir' }}</td>
     </tr>
 </table>
-<table class="table table-bordered">
+<table class="table">
     <thead>
         <tr>
             <th>NO</th>
@@ -44,7 +44,7 @@
     <tbody>
         @foreach ($data as $key => $row)
             <tr>
-                <td>{{ ++$key }}</td>
+                <td>{{ ++$no }}</td>
                 <td class="text-nowrap">{{ $row->pelanggan->no_langganan }}</td>
                 <td class="text-nowrap">{{ $row->pelanggan->nama }}</td>
                 <td class="text-nowrap">{{ $row->pelanggan->alamat }}</td>
@@ -60,21 +60,8 @@
                 <td class="text-right">
                     {{ $row->biaya_materai + $row->harga_air + $row->biaya_meter_air + $row->biaya_admin + $row->biaya_denda }}
                 </td>
-                <td class="text-right">{{ $row->kasir }}</td>
+                <td >{{ $row->kasir }}</td>
             </tr>
         @endforeach
-        <tr>
-            <th colspan="6">TOTAL</th>
-            <th class="text-right">
-                {{ $data->sum(fn($q) => $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu) }}
-            </th>
-            <th class="text-right">{{ $data->sum('harga_air') }}</th>
-            <th class="text-right">{{ $data->sum('biaya_meter_air') }}</th>
-            <th class="text-right">{{ $data->sum('biaya_denda') }}</th>
-            <th class="text-right">{{ $data->sum('biaya_materai') }}</th>
-            <th class="text-right">
-                {{ $data->sum(fn($q) => $q->materai + $q->harga_air + $q->biaya_meter_air + $q->biaya_admin + $q->biaya_denda) }}</th>
-                <th></th>
-        </tr>
     </tbody>
 </table>

@@ -28,8 +28,8 @@ class Buattarget extends Component
             "tahun" => "required",
         ]);
 
-        if (BacaMeter::where('periode', $this->tahun . "-" . $this->bulan . "-01")->count() > 0) {
-            session()->flash('danger', 'Data bacaan periode ' . $this->tahun . '-' . $this->bulan . ' ini sudah ada');
+        if (BacaMeter::where('status_baca', '!=', 'SEGEL')->whereNull('tanggal_baca')->where('periode', $this->tahun . "-" . $this->bulan . "-01")->count() > 0) {
+            session()->flash('danger', 'Data bacaan periode ' . $this->tahun . '-' . $this->bulan . ' ini sudah terbaca ada');
             return $this->render();
         }
         BacaMeter::where('status_baca', 'SEGEL')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
@@ -57,9 +57,7 @@ class Buattarget extends Component
                 ]);
             }
 
-            $insert = collect($data)->chunk(2000);
-
-            foreach ($insert as $r) {
+            foreach (collect($data)->chunk(2000) as $r) {
                 BacaMeter::insert($r->toArray());
             }
 
