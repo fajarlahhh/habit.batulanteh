@@ -36,6 +36,7 @@
             <th>PEMAKAIAN</th>
             <th>HARGA AIR</th>
             <th>BIAYA METER AIR</th>
+            <th>BIAYA ADMIN</th>
             <th>DENDA</th>
             <th>MATERAI</th>
             <th>TOTAL</th>
@@ -57,6 +58,7 @@
                 </td>
                 <td class="text-right">{{ $row->harga_air }}</td>
                 <td class="text-right">{{ $row->biaya_meter_air }}</td>
+                <td class="text-right">{{ $row->biaya_admin }}</td>
                 <td class="text-right">{{ $row->biaya_denda }}</td>
                 <td class="text-right">{{ $row->biaya_materai }}</td>
                 <td class="text-right">

@@ -87,7 +87,7 @@ return [
             'url' => '/cetak/drd',
             'id' => 'cetakira',
             'title' => 'DRD',
-        ],[
+        ], [
             'url' => '/cetak/dspl',
             'id' => 'cetakdspl',
             'title' => 'DSPL',
@@ -99,28 +99,7 @@ return [
             'url' => '/cetak/koreksirekeningair',
             'id' => 'cetakkoreksirekeningair',
             'title' => 'Koreksi Rekening Air',
-        ], [
-            'url' => 'javascript:;',
-            'caret' => true,
-            'title' => 'Log Pembatalan',
-            'id' => 'cetaklogpembatalan',
-            'sub_menu' => [
-                //     [
-                //     'url' => '/administrator/datapembayaran/angsuranrekeningair',
-                //     'id' => 'administratordatapembayaranangsuranrekeningair',
-                //     'title' => 'Angsuran Rekening Air',
-                // ],
-                [
-                    'url' => '/cetak/logpembatalan/air',
-                    'id' => 'cetaklogpembatalanair',
-                    'title' => 'Air',
-                ], [
-                    'url' => '/cetak/logpembatalan/nonair',
-                    'id' => 'cetaklogpembatalannonair',
-                    'title' => 'Non Air',
-                ]
-            ],
-        ], [
+        ],  [
             'url' => 'javascript:;',
             'caret' => true,
             'title' => 'LPP',
@@ -138,6 +117,27 @@ return [
                 ], [
                     'url' => '/cetak/lpp/nonair',
                     'id' => 'cetaklppnonair',
+                    'title' => 'Non Air',
+                ]
+            ],
+        ], [
+            'url' => 'javascript:;',
+            'caret' => true,
+            'title' => 'Pembatalan',
+            'id' => 'cetakpembatalan',
+            'sub_menu' => [
+                //     [
+                //     'url' => '/administrator/datapembayaran/angsuranrekeningair',
+                //     'id' => 'administratordatapembayaranangsuranrekeningair',
+                //     'title' => 'Angsuran Rekening Air',
+                // ],
+                [
+                    'url' => '/cetak/pembatalan/air',
+                    'id' => 'cetakpembatalanair',
+                    'title' => 'Air',
+                ], [
+                    'url' => '/cetak/pembatalan/nonair',
+                    'id' => 'cetakpembatalannonair',
                     'title' => 'Non Air',
                 ]
             ],

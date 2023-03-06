@@ -91,6 +91,14 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('/nonair', \App\Http\Livewire\Cetak\Lpp\Nonair::class)->name('cetak.lpp.nonair');
             });
         });
+        Route::prefix('pembatalan')->group(function () {
+            Route::group(['middleware' => ['role_or_permission:administrator|cetakpembatalanair']], function () {
+                Route::get('/air', \App\Http\Livewire\Cetak\Pembatalan\Air::class)->name('cetak.pembatalan.air');
+            });
+            Route::group(['middleware' => ['role_or_permission:administrator|cetakpembatalannonair']], function () {
+                Route::get('/nonair', \App\Http\Livewire\Cetak\Pembatalan\Nonair::class)->name('cetak.pembatalan.nonair');
+            });
+        });
         Route::group(['middleware' => ['role_or_permission:administrator|cetakprogresbacameter']], function () {
             Route::get('/progresbacameter', \App\Http\Livewire\Cetak\Progresbacameter::class)->name('cetak.progresbacameter');
         });
