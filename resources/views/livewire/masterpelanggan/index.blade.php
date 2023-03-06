@@ -37,7 +37,7 @@
                                 <option value="">SEMUA RAYON</option>
                                 @if ($unitPelayanan)
                                     @foreach (\App\Models\Rayon::whereIn('id', \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'))->get() as $row)
-                                        <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                        <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -48,7 +48,7 @@
                                 <option value="">SEMUA GOLONGAN</option>
                                 @if ($unitPelayanan)
                                     @foreach (\App\Models\Golongan::all() as $row)
-                                        <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                        <option value="{{ $row->getKey() }}">{{ $row->nama }} - {{ $row->deskripsi }}</option>
                                     @endforeach
                                 @endif
                             </select>
