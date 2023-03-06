@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Tagihanrekeningair;
 
 use App\Models\BacaMeter;
 use App\Models\Pelanggan;
+use App\Models\PenerbitanRekAirManual;
 use App\Models\RekeningAir;
 use App\Models\TarifDenda;
 use App\Models\TarifLainnya;
@@ -56,9 +57,7 @@ class Penerbitan extends Component
             'standIni' => 'required|numeric',
             'statusBaca' => 'required',
         ]);
-        if (date('Ymd') < $this->tahun . substr('0' . $this->bulan, -2) . '01') {
-            session()->flash('danger', 'Periode ' . $this->tahun . '-' . $this->bulan . ' belum saatnya terbit');
-        } else if (BacaMeter::where('pelanggan_id', $this->pelanggan->id)->withoutGlobalScopes()->where('periode', $this->tahun . '-' . $this->bulan . '-01')->count() > 0) {
+        if (BacaMeter::where('pelanggan_id', $this->pelanggan->id)->withoutGlobalScopes()->where('periode', $this->tahun . '-' . $this->bulan . '-01')->count() > 0) {
             session()->flash('danger', 'Rekening air periode ' . $this->tahun . '-' . $this->bulan . ' untuk pelanggan ini sudah ada');
         } else {
             DB::transaction(function () {
@@ -158,6 +157,34 @@ class Penerbitan extends Component
                     $rekeningAir->created_at = now();
                     $rekeningAir->updated_at = now();
                     $rekeningAir->save();
+
+                    $log = new PenerbitanRekAirManual();
+                    $log->periode = $this->tahun . '-' . $this->bulan . '-01';
+                    $log->stand_lalu = $this->standLalu;
+                    $log->stand_ini = $this->standIni;
+                    $log->stand_angkat = $this->standAngkat;
+                    $log->stand_pasang = $this->standPasang;
+                    $log->harga_air = $hargaAir;
+                    $log->biaya_denda = 0;
+                    $log->biaya_lainnya = $biayaLainnya;
+                    $log->biaya_meter_air = $biayaMeterAir;
+                    $log->biaya_materai = $biayaMaterai;
+                    $log->biaya_ppn = 0;
+                    $log->diskon = 0;
+                    $log->keterangan = $this->catatan;
+                    $log->pelanggan_id = $this->pelangganId;
+                    $log->rayon_id = $this->pelanggan->rayon_id;
+                    $log->golongan_id = $this->golongan;
+                    $log->tarif_denda_id = $tarifDenda;
+                    $log->tarif_lainnya_id = $tarifLainnya ? $tarifLainnya->id : null;
+                    $log->tarif_materai_id = $tarifMaterai ? $tarifMaterai->id : null;
+                    $log->tarif_meter_air_id = $tarifMeterAir ? $tarifMeterAir->id : null;
+                    $log->tarif_progresif_id = $tarifProgresif->id;
+                    $log->baca_meter_id = $bacaMeter->id;
+                    $log->pengguna_id = auth()->id();
+                    $log->created_at = now();
+                    $log->updated_at = now();
+                    $log->save();
                 }
                 session()->flash('success', 'Berhasil menyimpan data');
             });

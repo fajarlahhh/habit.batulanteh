@@ -77,6 +77,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['role_or_permission:administrator|cetakkoreksirekeningair']], function () {
             Route::get('/koreksirekeningair', \App\Http\Livewire\Cetak\Koreksirekeningair::class)->name('cetak.koreksirekeningair');
         });
+        Route::group(['middleware' => ['role_or_permission:administrator|cetakdaftarpenerbitanmanual']], function () {
+            Route::get('/daftarpenerbitanrekairmanual', \App\Http\Livewire\Cetak\Daftarpenerbitanrekairmanual::class)->name('cetak.daftarpenerbitanrekairmanual');
+        });
+        Route::group(['middleware' => ['role_or_permission:administrator|cetakdaftarpergantianstatuspelanggan']], function () {
+            Route::get('/daftarpergantianstatuspelanggan', \App\Http\Livewire\Cetak\Daftarpergantianstatuspelanggan::class)->name('cetak.daftarpergantianstatuspelanggan');
+        });
         Route::prefix('lpp')->group(function () {
             Route::group(['middleware' => ['role_or_permission:administrator|cetaklppair']], function () {
                 Route::get('/air', \App\Http\Livewire\Cetak\Lpp\Air::class)->name('cetak.lpp.air');

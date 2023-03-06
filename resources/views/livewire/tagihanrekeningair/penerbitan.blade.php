@@ -1,5 +1,5 @@
 <div>
-    @section('title', 'Penerbitan Rekening Air')
+    @section('title', 'Penerbitan Rekening Air Manual')
 
     @push('css')
         <link href="/assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
@@ -8,10 +8,10 @@
 
     @section('page')
         <li class="breadcrumb-item">Tagihan Rekening Air</li>
-        <li class="breadcrumb-item active">Penerbitan</li>
+        <li class="breadcrumb-item active">Penerbitan Rekening Air Manual</li>
     @endsection
 
-    <h1 class="page-header">Penerbitan</h1>
+    <h1 class="page-header">Penerbitan Rekening Air Manual</h1>
 
     <x-alert />
 

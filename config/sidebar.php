@@ -76,6 +76,14 @@ return [
         'caret' => true,
         'id' => 'cetak',
         'sub_menu' => [[
+            'url' => '/cetak/daftarpenerbitanrekairmanual',
+            'id' => 'cetakdaftarpenerbitanrekairmanual',
+            'title' => 'Daftar Penerbitan Rek. Air Manual',
+        ], [
+            'url' => '/cetak/daftarpergantianstatuspelanggan',
+            'id' => 'cetakdaftarpergantianstatuspelanggan',
+            'title' => 'Daftar Pergantian Status Pelanggan',
+        ], [
             'url' => '/cetak/drd',
             'id' => 'cetakira',
             'title' => 'DRD',
@@ -91,6 +99,27 @@ return [
             'url' => '/cetak/koreksirekeningair',
             'id' => 'cetakkoreksirekeningair',
             'title' => 'Koreksi Rekening Air',
+        ], [
+            'url' => 'javascript:;',
+            'caret' => true,
+            'title' => 'Log Pembatalan',
+            'id' => 'cetaklogpembatalan',
+            'sub_menu' => [
+                //     [
+                //     'url' => '/administrator/datapembayaran/angsuranrekeningair',
+                //     'id' => 'administratordatapembayaranangsuranrekeningair',
+                //     'title' => 'Angsuran Rekening Air',
+                // ],
+                [
+                    'url' => '/cetak/logpembatalan/air',
+                    'id' => 'cetaklogpembatalanair',
+                    'title' => 'Air',
+                ], [
+                    'url' => '/cetak/logpembatalan/nonair',
+                    'id' => 'cetaklogpembatalannonair',
+                    'title' => 'Non Air',
+                ]
+            ],
         ], [
             'url' => 'javascript:;',
             'caret' => true,
@@ -265,7 +294,7 @@ return [
             ], [
                 'url' => '/tagihanrekeningair/penerbitan',
                 'id' => 'tagihanrekeningairpenerbitan',
-                'title' => 'Penerbitan',
+                'title' => 'Penerbitan Manual',
             ]
         ],
     ]],
