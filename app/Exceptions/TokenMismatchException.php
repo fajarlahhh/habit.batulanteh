@@ -25,6 +25,6 @@ class TokenMismatchException extends Exception
             return response()->json([
                 'status' => 'error',
                 'data' => 'Unauthorized',
-              ]);
+              ],401);
     }
 }

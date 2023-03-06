@@ -56,7 +56,63 @@ class PpobController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'gagal',
-                'data' => $e->getMessage()
+                'data' => 'Terjadi kesalahan di server',
+            ], 500);
+        }
+    }
+
+    public function bayar(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'gagal',
+                'data' => $validator->messages(),
+            ], 400);
+        }
+
+        try {
+            $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 2)->get();
+            if ($pengguna->count() > 0) {
+                $pengguna  = $pengguna->first();
+                if (collect($req->id)->count() == 3) {
+                    if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() == collect($req->id)->count()) {
+                        DB::transaction(function () use($pengguna, $req) {
+                            foreach (RekeningAir::whereIn('id', $req->id)->get() as $key => $row) {
+                                $periode = new Carbon($row->periode);
+                                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->tarifDenda->nilai : 0;
+                                RekeningAir::where('id', $row->id)->whereNull('waktu_bayar')->update([
+                                    'kasir' => $pengguna->nama,
+                                    'waktu_bayar' => now(),
+                                    'biaya_denda' => $denda
+                                ]);
+                            }
+                        });
+                        return response()->json([
+                            'status' => 'sukses',
+                            'data' => null,
+                        ], 200);
+                    }
+                    return response()->json([
+                        'status' => 'gagal',
+                        'data' => 'Data tidak ditemukan',
+                    ], 404);
+                } 
+                return response()->json([
+                    'status' => 'gagal',
+                    'data' => 'Unauthorized',
+                ], 401);
+            }
+            return response()->json([
+                'status' => 'gagal',
+                'data' => 'Kredensial tidak valid',
+            ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'gagal',
+                'data' => 'Terjadi kesalahan di server',
             ], 500);
         }
     }
@@ -99,7 +155,7 @@ class PpobController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'gagal',
-                'data' => $e->getMessage()
+                'data' => 'Terjadi kesalahan di server',
             ], 500);
         }
     }
