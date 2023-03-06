@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Cetak\Lpp;
 
-use App\Exports\LPPAirExport;
 use Livewire\Component;
 use App\Models\Pengguna;
+use App\Models\Regional;
 use App\Models\RekeningAir;
 use Livewire\WithPagination;
+use App\Exports\LPPAirExport;
 use App\Models\UnitPelayanan;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -44,7 +45,7 @@ class Air extends Component
     {
         return view('livewire.cetak.lpp.air', [
             'no' => ($this->page - 1) * 10,
-            'data' => RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->kasir, fn ($q) => $q->where('kasir', $this->kasir))->whereNotNull('kasir')->orderBy('waktu_bayar')->paginate(10)
+            'data' => RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->kasir, fn ($q) => $q->where('kasir', $this->kasir))->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->whereNotNull('kasir')->orderBy('waktu_bayar')->paginate(10)
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Cetak\Lpp;
 
 use Livewire\Component;
 use App\Models\Pengguna;
+use App\Models\Regional;
 use Livewire\WithPagination;
 use App\Models\UnitPelayanan;
 use App\Models\RekeningNonAir;
@@ -42,7 +43,7 @@ class Nonair extends Component
     public function render()
     {
         return view('livewire.cetak.lpp.nonair', [
-            'data' => RekeningNonAir::whereBetween('created_at', [$this->tanggal1. ' 00:00:00', $this->tanggal2. ' 23:59:59'])->when($this->kasir, fn($q) => $q->where('kasir', $this->kasir))->whereNotNull('kasir')->orderBy('created_at')->paginate(10)
+            'data' => RekeningNonAir::whereBetween('created_at', [$this->tanggal1. ' 00:00:00', $this->tanggal2. ' 23:59:59'])->when($this->kasir, fn($q) => $q->where('kasir', $this->kasir))->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->whereNotNull('kasir')->orderBy('created_at')->paginate(10)
         ]);
     }
 }
