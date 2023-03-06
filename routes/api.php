@@ -42,7 +42,7 @@ Route::prefix('penagihan')->group(function () {
 });
 
 Route::prefix('ppob')->group(function () {
-    Route::middleware(['cors', 'apitoken'])->get('/target', [PpobController::class, 'cari']);
+    Route::middleware(['cors', 'apitoken'])->get('/tunggakan', [PpobController::class, 'cari']);
     Route::middleware(['cors', 'apitoken'])->post('/bayar', [PenagihanController::class, 'lunasi']);
     Route::middleware(['cors', 'apitoken'])->post('/data', [PpobController::class, 'data']);
 });
