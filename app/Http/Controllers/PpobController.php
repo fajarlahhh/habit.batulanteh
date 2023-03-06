@@ -77,7 +77,7 @@ class PpobController extends Controller
             $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 2)->get();
             if ($pengguna->count() > 0) {
                 $pengguna  = $pengguna->first();
-                if (collect($req->id)->count() == 3) {
+                if (collect($req->id)->count() <= 3) {
                     if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() == collect($req->id)->count()) {
                         DB::transaction(function () use($pengguna, $req) {
                             foreach (RekeningAir::whereIn('id', $req->id)->get() as $key => $row) {
