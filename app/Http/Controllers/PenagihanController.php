@@ -78,7 +78,7 @@ class PenagihanController extends Controller
         }
 
         try {
-            $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 1)->get();
+            $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', '>', 1)->get();
             if ($pengguna->count() > 0) {
                 $pengguna  = $pengguna->first();
                 if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() == collect($req->id)->count()) {

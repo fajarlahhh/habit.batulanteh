@@ -73,24 +73,14 @@
             </div>
         </div>
 
-        <x-modal />
-
         <div wire:loading>
             <x-loading />
         </div>
 
         @push('scripts')
-            @if (Session::has('cetak'))
-                <script>
-                    $('#modal-cetak').modal('show');
-                </script>
-            @endif
             <script>
                 Livewire.on('reinitialize', id => {
                     $('.selectpicker').selectpicker();
-                });
-                Livewire.on('cetak', id => {
-                    $('#modal-cetak').modal('show');
                 });
             </script>
         @endpush

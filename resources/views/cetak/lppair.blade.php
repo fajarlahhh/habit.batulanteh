@@ -27,6 +27,7 @@
     <thead>
         <tr>
             <th>NO</th>
+            <th>TANGGAL BAYAR</th>
             <th>NO. LANGGANAN</th>
             <th>NAMA</th>
             <th>ALAMAT</th>
@@ -45,6 +46,7 @@
         @foreach ($data as $key => $row)
             <tr>
                 <td>{{ ++$no }}</td>
+                <td>{{ $row->waktu_bayar }}</td>
                 <td class="text-nowrap">{{ $row->pelanggan->no_langganan }}</td>
                 <td class="text-nowrap">{{ $row->pelanggan->nama }}</td>
                 <td class="text-nowrap">{{ $row->pelanggan->alamat }}</td>
