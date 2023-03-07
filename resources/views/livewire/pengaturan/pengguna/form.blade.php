@@ -137,7 +137,7 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-md-6">
-                        @role('administrator|super-admin')
+                        @role('administrator|super-admin|operator')
                             <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                         @endrole
                         <a href="{{ route('pengaturan.pengguna') }}" class="btn btn-danger m-r-3">Batal</a>

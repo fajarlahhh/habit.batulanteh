@@ -55,7 +55,7 @@
                         <th>Penagih</th>
                         <th>Baca Meter</th>
                         <th>Unit Pelayanan</th>
-                        @role('administrator|super-admin')
+                        @role('administrator|super-admin|operator')
                             <th class="width-90"></th>
                         @endrole
                     </tr>
@@ -84,7 +84,7 @@
                             </td>
                             <td class="align-middle">{{ $row->bacameter == 1 ? 'YA' : '' }}</td>
                             <td class="with-btn-group align-middle text-right" nowrap>
-                                @role('administrator|super-admin')
+                                @role('administrator|super-admin|operator')
                                     <div class="btn-group btn-group-sm" role="group">
                                         @if ($row->trashed())
                                             @if ($key == $row->getKey())
