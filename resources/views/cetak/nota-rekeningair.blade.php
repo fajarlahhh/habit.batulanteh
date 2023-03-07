@@ -63,14 +63,7 @@
                     <td>:</td>
                     <td>Rp.</td>
                     <td class="text-right">
-                        {{ number_format($row->harga_air + $row->biaya_ppn - $row->diskon) }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Meter Air</td>
-                    <td>:</td>
-                    <td>Rp.</td>
-                    <td class="text-right">{{ number_format($row->biaya_meter_air + $row->biaya_admin) }}</td>
+                        {{ number_format($row->harga_air + $row->biaya_ppn - $row->diskon + $row->biaya_meter_air + $row->biaya_admin) }}</td>
                 </tr>
                 <tr>
                     <td>Denda</td>
@@ -78,26 +71,6 @@
                     <td>Rp.</td>
                     <td class="text-right">{{ number_format($row->biaya_denda) }}</td>
                 </tr>
-                <tr>
-                    <td>Materai</td>
-                    <td>:</td>
-                    <td>Rp.</td>
-                    <td class="text-right">{{ number_format($row->biaya_materai) }}</td>
-                </tr>
-                @if ($row->tarifLainnya)
-                    <tr>
-                        <td>Biaya
-                            @foreach ($row->tarifLainnya->tarifLainnyaDetail as $subRow)
-                                {{ $row->jenis . ' ' }}
-                            @endforeach
-                        </td>
-                        <td>:</td>
-                        <td>Rp.</td>
-                        <td class="text-right">
-                            {{ number_format($row->biaya_lainnya) }}
-                        </td>
-                    </tr>
-                @endif
                 <tr>
                     <th>Total</th>
                     <th>:</th>
@@ -180,14 +153,7 @@
                             <td>:</td>
                             <td>Rp.</td>
                             <td class="text-right">
-                                {{ number_format($row->harga_air + $row->biaya_ppn - $row->diskon) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Meter Air</td>
-                            <td>:</td>
-                            <td>Rp.</td>
-                            <td class="text-right">{{ number_format($row->biaya_meter_air + $row->biaya_admin) }}</td>
+                                {{ number_format($row->harga_air + $row->biaya_ppn - $row->diskon + $row->biaya_meter_air + $row->biaya_admin) }}</td>
                         </tr>
                         <tr>
                             <td>Denda</td>
@@ -195,26 +161,6 @@
                             <td>Rp.</td>
                             <td class="text-right">{{ number_format($row->biaya_denda) }}</td>
                         </tr>
-                        <tr>
-                            <td>Materai</td>
-                            <td>:</td>
-                            <td>Rp.</td>
-                            <td class="text-right">{{ number_format($row->biaya_materai) }}</td>
-                        </tr>
-                        @if ($row->tarifLainnya)
-                            <tr>
-                                <td>Biaya
-                                    @foreach ($row->tarifLainnya->tarifLainnyaDetail as $subRow)
-                                        {{ $row->jenis . ' ' }}
-                                    @endforeach
-                                </td>
-                                <td>:</td>
-                                <td>Rp.</td>
-                                <td class="text-right">
-                                    {{ number_format($row->biaya_lainnya) }}
-                                </td>
-                            </tr>
-                        @endif
                         <tr>
                             <th>Total</th>
                             <th>:</th>
