@@ -88,6 +88,10 @@
                                 <input type="radio" id="penagih2" name="penagih" class="custom-control-input" wire:model.defer="penagih" value="2">
                                 <label class="custom-control-label" for="penagih2">PPOB</label>
                             </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="penagih2" name="penagih" class="custom-control-input" wire:model.defer="penagih" value="3">
+                                <label class="custom-control-label" for="penagih2">Kasir</label>
+                            </div>
                         </div>
                         <div class="checkbox checkbox-css">
                             <input type="checkbox" id="bacameter" wire:model.defer="bacameter" />
