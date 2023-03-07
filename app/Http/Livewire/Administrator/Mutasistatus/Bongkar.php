@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Livewire\Administrator;
+namespace App\Http\Livewire\Administrator\Mutasistatus;
 
-use App\Models\LogStatusPelanggan;
-use App\Models\Pelanggan;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use App\Models\Pelanggan;
+use App\Models\LogStatusPelanggan;
+use Illuminate\Support\Facades\DB;
 
-class Statuspelanggan extends Component
+class Bongkar extends Component
 {
-    public $pelanggan, $pelangganId, $catatan, $status;
+    public $pelanggan, $pelangganId, $catatan;
 
     protected $rules = [
         'pelangganId' => 'required',
         'catatan' => 'required',
-        'status' => 'required',
     ];
 
     public function booted()
@@ -29,7 +28,7 @@ class Statuspelanggan extends Component
         DB::transaction(function () {
             $log = new LogStatusPelanggan();
             $log->status_lama = $this->pelanggan->status;
-            $log->status_baru = $this->status;
+            $log->status_baru = 3;
             $log->pelanggan_id = $this->pelangganId;
             $log->save();
 
@@ -38,17 +37,16 @@ class Statuspelanggan extends Component
             session()->flash('success', 'Berhasil menyimpan data');
         });
 
-        return redirect(route('administrator.statuspelanggan'));
+        return redirect(route('administrator.mutasistatus.segel'));
     }
 
     public function updatedPelangganId()
     {
         $this->pelanggan = Pelanggan::with('golongan')->findOrFail($this->pelangganId);
-        $this->status = $this->pelanggan->status;
     }
-
+    
     public function render()
     {
-        return view('livewire.administrator.statuspelanggan');
+        return view('livewire.administrator.mutasistatus.bongkar');
     }
 }

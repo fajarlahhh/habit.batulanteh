@@ -45,10 +45,27 @@ return [
                     'title' => 'Rekening Non Air',
                 ]
             ],
-        ], [
-            'url' => '/administrator/statuspelanggan',
-            'id' => 'administratorstatuspelanggan',
-            'title' => 'Status Pelanggan',
+        ],[
+            'url' => 'javascript:;',
+            'caret' => true,
+            'title' => 'Mutasi Status Pelanggan',
+            'id' => 'administratormutasistatus',
+            'sub_menu' => [
+                //     [
+                //     'url' => '/administrator/datapembayaran/angsuranrekeningair',
+                //     'id' => 'administratordatapembayaranangsuranrekeningair',
+                //     'title' => 'Angsuran Rekening Air',
+                // ],
+                [
+                    'url' => '/administrator/mutasistatus/bongkar',
+                    'id' => 'administratormutasistatusbongkar',
+                    'title' => 'Bongkar',
+                ], [
+                    'url' => '/administrator/mutasistatus/segel',
+                    'id' => 'administratormutasistatussegel',
+                    'title' => 'Segel',
+                ]
+            ],
         ]],
     ], [
         'icon' => 'fas fa-tachometer-alt',

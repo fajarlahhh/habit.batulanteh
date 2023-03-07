@@ -37,10 +37,11 @@
                 <div class="form-group">
                     <label for="control-label">Kelurahan</label>
                     <select wire:model.defer="kelurahan" class="form-control selectpicker" data-live-search="true"
-                        data-width="100%">
+                        data-width="100%" data-size="10">
                         <option selected hidden>-- Pilih Kelurahan --</option>
                         @foreach (\App\Models\Kelurahan::orderBy('nama')->get() as $row)
-                            <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
+                            <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }},
+                                {{ $row->kecamatan->nama }}</option>
                         @endforeach
                     </select>
                     @error('kelurahan')

@@ -1,12 +1,13 @@
 <div>
-    @section('title', 'Status Pelanggan')
+    @section('title', 'Bongkar')
 
     @section('page')
         <li class="breadcrumb-item">Administrator</li>
-        <li class="breadcrumb-item active">Status Pelanggan</li>
+        <li class="breadcrumb-item">Mutasi Status Pelanggan</li>
+        <li class="breadcrumb-item active">Bongkar</li>
     @endsection
 
-    <h1 class="page-header">Status Pelanggan</h1>
+    <h1 class="page-header">Bongkar</h1>
 
     <x-alert />
 
@@ -74,9 +75,8 @@
                                     <input class="form-control" type="text"
                                         value=" @if ($pelanggan) @switch($pelanggan->status) 
                                         @case(1) Aktif @break
-                                        @case(2) Putus Sementara @break
-                                        @case(3) Segel @break
-                                        @case(4) Bongkar @break
+                                        @case(2) Segel @break
+                                        @case(3) Bongkar @break
                                     @default
                                 @endswitch @endif
                                 "
@@ -84,36 +84,6 @@
                                 </div>
                                 @if ($pelanggan)
                                     <hr>
-                                    <div class="form-group">
-                                        <label class="control-label">Ubah Status Pelanggan</label>
-                                        <div class="row ml-1">
-                                            <div class="col-md-6">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="status1" name="status" value="1"
-                                                        wire:model.defer="status" class="custom-control-input">
-                                                    <label class="custom-control-label" for="status1">Aktif</label>
-                                                </div>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="status2" name="status" value="2"
-                                                        wire:model.defer="status" class="custom-control-input">
-                                                    <label class="custom-control-label" for="status2">Putus
-                                                        Sementara</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="status3" name="status" value="3"
-                                                        wire:model.defer="status" class="custom-control-input">
-                                                    <label class="custom-control-label" for="status3">Segel</label>
-                                                </div>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="status4" name="status" value="4"
-                                                        wire:model.defer="status" class="custom-control-input">
-                                                    <label class="custom-control-label" for="status4">Bongkar</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <label class="control-label">Catatan</label>
                                         <textarea class="form-control" rows="3" wire:model.defer="catatan"></textarea>

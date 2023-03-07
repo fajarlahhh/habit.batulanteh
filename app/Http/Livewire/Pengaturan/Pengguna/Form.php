@@ -34,7 +34,7 @@ class Form extends Component
             $this->data->deskripsi = $this->deskripsi;
             $this->data->penagih = $this->penagih;
             $this->data->unit_pelayanan_id = $this->unitPelayanan;
-            $this->data->pembaca = $this->pembaca ? 1 : 0;
+            $this->data->bacameter = $this->pembaca ? 1 : 0;
             $this->data->save();
 
             $this->data->syncPermissions($this->akses);
@@ -66,7 +66,7 @@ class Form extends Component
             $this->nama = $this->data->nama;
             $this->deskripsi = $this->data->deskripsi;
             $this->penagih = $this->data->penagih;
-            $this->pembaca = $this->data->pembaca;
+            $this->pembaca = $this->data->bacameter;
             $this->unitPelayanan = $this->data->unit_pelayanan_id;
             $this->level = $this->data->getRoleNames()->first();
             $this->akses = $this->data->getPermissionNames()->toArray();
