@@ -52,7 +52,9 @@
                                 wire:model.defer="kasir">
                                 <option value="">SEMUA KASIR</option>
                                 @foreach ($dataKasir as $row)
-                                    <option value="{{ $row->nama }}">{{ $row->nama }}</option>
+                                    <option value="{{ $row->nama }}">
+                                        {{ $row->nama . '' . ($row->penagih == 1 ? ' (Penagih)' : ($row->penagiha == 2 ? '(PPOB)' : null)) }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>&nbsp;
