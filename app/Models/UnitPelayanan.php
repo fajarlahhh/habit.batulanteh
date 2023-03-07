@@ -18,6 +18,11 @@ class UnitPelayanan extends Model
         return $this->belongsTo(Pengguna::class)->withTrashed();
     }
 
+    public function kepalaCabang()
+    {
+        return $this->belongsTo(Pengguna::class, 'kepala_cabang_id')->withTrashed();
+    }
+
     public function kecamatan()
     {
         return $this->hasMany(Kecamatan::class);

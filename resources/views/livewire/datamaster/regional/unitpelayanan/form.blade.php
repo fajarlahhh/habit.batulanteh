@@ -35,6 +35,19 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label class="control-label">Kepala Cabang</label>
+                    <select class="form-control selectpicker" data-live-search="true" data-width="100%"
+                        wire:model.defer="kepalaCabang">
+                        <option selected hidden>-- Pilih Kepala Cabang --</option>
+                        @foreach (\App\Models\Pengguna::all() as $row)
+                            <option value="{{ $row->nama }}">{{ $row->nama }}</option>
+                        @endforeach
+                    </select>
+                    @error('kepalaCabang')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
             <div class="panel-footer">
                 @role('administrator|super-admin')

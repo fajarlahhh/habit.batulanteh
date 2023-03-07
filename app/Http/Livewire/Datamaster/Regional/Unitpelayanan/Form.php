@@ -7,17 +7,19 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $key, $alamat, $nama, $data;
+    public $key, $alamat, $nama, $data, $kepalaCabang;
 
     protected $rules = [
         'alamat' => 'required',
         'nama' => 'required',
+        'kepalaCabang' => 'required'
     ];
 
     public function submit()
     {
         $this->validate();
 
+        $this->data->kepala_cabang_id = $this->kepalaCabang;
         $this->data->alamat = $this->alamat;
         $this->data->nama = $this->nama;
         $this->data->save();
