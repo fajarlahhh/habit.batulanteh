@@ -146,7 +146,7 @@ class PenagihanController extends Controller
                         "waktu_bayar" => $q->waktu_bayar,
                         "kasir" => $q->kasir,
                         "denda" => $q->biaya_denda,
-                        "jumlah" => $q->harga_air + $q->biaya_lainnya + $q->biaya_meter_air +$q->biaya_admin + $q->biaya_materai + $q->biaya_denda,
+                        "jumlah" => $q->harga_air + $q->biaya_lainnya + $q->biaya_meter_air +$q->biaya_admin + $q->biaya_materai ,
                     ]),
                 ]);
             }
