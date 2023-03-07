@@ -98,8 +98,8 @@
                             </div>
                         </div>
                         <div class="checkbox checkbox-css">
-                            <input type="checkbox" id="bacameter" wire:model.defer="bacameter" />
-                            <label for="bacameter">
+                            <input type="checkbox" id="pembaca" wire:model.defer="pembaca" />
+                            <label for="pembaca">
                                 Baca Meter
                             </label>
                         </div>
