@@ -51,10 +51,10 @@
                         <th>UID</th>
                         <th>Nama</th>
                         <th>Deskripsi</th>
+                        <th>Unit Pelayanan</th>
                         <th>Level</th>
                         <th>Penagih</th>
                         <th>Baca Meter</th>
-                        <th>Unit Pelayanan</th>
                         @role('administrator|super-admin|operator')
                             <th class="width-90"></th>
                         @endrole
@@ -67,6 +67,7 @@
                             <td class="align-middle">{{ $row->uid }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->deskripsi }}</td>
+                            <td class="align-middle">{{ $row->unit_pelayanan_id?$row->unitPelayanan->nama: null }}</td>
                             <td class="align-middle">{{ $row->getRoleNames() ? $row->getRoleNames()->first() : null }}
                             </td>
                             <td class="align-middle">
