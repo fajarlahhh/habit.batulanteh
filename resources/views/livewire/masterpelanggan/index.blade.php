@@ -62,9 +62,8 @@
                             <select class="form-control selectpicker" data-width="100%" wire:model="status">
                                 <option value="">SEMUA STATUS</option>
                                 <option value="1">AKTIF</option>
-                                <option value="2">PUTUS SEMENTARA</option>
-                                <option value="3">SEGEL</option>
-                                <option value="4">BONGKAR</option>
+                                <option value="2">SEGEL</option>
+                                <option value="3">BONGKAR</option>
                             </select>
                         </div>&nbsp;
                         <div class="input-group">

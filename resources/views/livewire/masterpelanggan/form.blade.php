@@ -32,9 +32,8 @@
                             <select wire:model.defer="status" class="form-control selectpicker" data-width="100%">
                                 <option selected hidden>-- Pilih Status --</option>
                                 <option value="1">Aktif</option>
-                                <option value="2">Putus Sementara</option>
-                                <option value="3">Segel</option>
-                                <option value="4">Bongkar</option>
+                                <option value="2">Segel</option>
+                                <option value="3">Bongkar</option>
                             </select>
                             @error('status')
                                 <span class="text-danger">{{ $message }}</span>
