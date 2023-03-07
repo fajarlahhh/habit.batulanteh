@@ -39,6 +39,11 @@
                                     @foreach (\App\Models\Rayon::whereIn('id', \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'))->get() as $row)
                                         <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
                                     @endforeach
+
+                                @else
+                                    @foreach (\App\Models\Rayon::all() as $row)
+                                        <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}</option>
+                                    @endforeach
                                 @endif
                             </select>
                         </div>&nbsp;
