@@ -85,7 +85,7 @@ return [
             'title' => 'Daftar Pergantian Status Pelanggan',
         ], [
             'url' => '/cetak/drd',
-            'id' => 'cetakira',
+            'id' => 'cetakdrd',
             'title' => 'DRD',
         ], [
             'url' => '/cetak/dspl',
