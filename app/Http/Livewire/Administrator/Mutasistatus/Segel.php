@@ -32,7 +32,7 @@ class Segel extends Component
             $log->pelanggan_id = $this->pelangganId;
             $log->save();
 
-            $this->pelanggan->status = $this->status;
+            $this->pelanggan->status = 2;
             $this->pelanggan->save();
             session()->flash('success', 'Berhasil menyimpan data');
         });

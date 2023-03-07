@@ -22,7 +22,7 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label class="control-label">Kata Sandi Lama</label>
-                    <input data-toggle="password" data-placement="after" class="form-control password" type="password"
+                    <input data-placement="after" class="form-control" type="text"
                         wire:model.defer="kataSandiLama" />
                     @error('kataSandiLama')
                         <span class="text-danger">{{ $message }}</span>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Kata Sandi Baru</label>
-                    <input data-toggle="password" data-placement="after" class="form-control password" type="password"
+                    <input data-placement="after" class="form-control" type="text"
                         wire:model.defer="kataSandiBaru" />
                     @error('kataSandiBaru')
                         <span class="text-danger">{{ $message }}</span>

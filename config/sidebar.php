@@ -30,11 +30,6 @@ return [
             'title' => 'Data Pembayaran',
             'id' => 'administratordatapembayaran',
             'sub_menu' => [
-                //     [
-                //     'url' => '/administrator/datapembayaran/angsuranrekeningair',
-                //     'id' => 'administratordatapembayaranangsuranrekeningair',
-                //     'title' => 'Angsuran Rekening Air',
-                // ],
                 [
                     'url' => '/administrator/datapembayaran/rekeningair',
                     'id' => 'administratordatapembayaranrekeningair',
@@ -45,17 +40,20 @@ return [
                     'title' => 'Rekening Non Air',
                 ]
             ],
-        ],[
+        ], [
+            'url' => '/administrator/mutasigolongan',
+            'id' => 'administratormutasigolongan',
+            'title' => 'Mutasi Golongan',
+        ], [
+            'url' => '/administrator/mutasiwm',
+            'id' => 'administratormutasiwm',
+            'title' => 'Mutasi WM',
+        ], [
             'url' => 'javascript:;',
             'caret' => true,
             'title' => 'Mutasi Status Pelanggan',
             'id' => 'administratormutasistatus',
             'sub_menu' => [
-                //     [
-                //     'url' => '/administrator/datapembayaran/angsuranrekeningair',
-                //     'id' => 'administratordatapembayaranangsuranrekeningair',
-                //     'title' => 'Angsuran Rekening Air',
-                // ],
                 [
                     'url' => '/administrator/mutasistatus/bongkar',
                     'id' => 'administratormutasistatusbongkar',

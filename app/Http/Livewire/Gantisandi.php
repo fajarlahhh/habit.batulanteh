@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class Gantisandi extends Component
 {
     public $kataSandiLama, $kataSandiBaru;
+    
     public function submit()
     {
         $this->validate([

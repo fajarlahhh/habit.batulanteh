@@ -25,6 +25,12 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('/rekeningnonair', \App\Http\Livewire\Administrator\Datapembayaran\Rekeningnonair::class)->name('administrator.datapembayaran.rekeningnonair');
             });
         });
+        Route::group(['middleware' => ['role_or_permission:administrator|administratorbuattarget']], function () {
+            Route::get('/mutasigolongan', \App\Http\Livewire\Administrator\Mutasigolongan::class)->name('administrator.mutasigolongan');
+        });
+        Route::group(['middleware' => ['role_or_permission:administrator|administratormutasiwm']], function () {
+            Route::get('/mutasiwm', \App\Http\Livewire\Administrator\Mutasiwatermeter::class)->name('administrator.mutasiwm');
+        });
         Route::prefix('mutasistatus')->group(function () {
             Route::group(['middleware' => ['role_or_permission:administrator|administratormutasipelanggansegel']], function () {
                 Route::get('/segel', \App\Http\Livewire\Administrator\Mutasistatus\Segel::class)->name('administrator.mutasistatus.segel');
