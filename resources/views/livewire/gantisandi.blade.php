@@ -8,7 +8,7 @@
     <h1 class="page-header">Ganti Kata Sandi</small></h1>
 
     <x-alert />
-    
+
     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
         <!-- begin panel-heading -->
         <div class="panel-heading ui-sortable-handle">
@@ -38,9 +38,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                @role('administrator|super-admin')
-                    <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
-                @endrole
+                <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
             </div>
         </form>
     </div>
@@ -48,11 +46,11 @@
     <x-info />
 
     @push('scripts')
-	<script src="/assets/plugins/bootstrap-show-password/dist/bootstrap-show-password.js"></script>
-    <script>
-        Livewire.on('reinitialize', () => {
-            $('.password').password();
-        });
-    </script>
+        <script src="/assets/plugins/bootstrap-show-password/dist/bootstrap-show-password.js"></script>
+        <script>
+            Livewire.on('reinitialize', () => {
+                $('.password').password();
+            });
+        </script>
     @endpush
 </div>
