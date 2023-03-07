@@ -136,7 +136,7 @@ class PenagihanController extends Controller
                     'status' => 'sukses',
                     'data' => RekeningAir::where('kasir', $pengguna->nama)->whereBetween('waktu_bayar', [$tanggal[0] . ' 00:00:00', $tanggal[1] . ' 23:59:59'])->get()->map(fn ($q) => [
                         "id" => $q->id,
-                        "no_langganan" => "010500005",
+                        "no_langganan" => $q->pelanggan->no_langganan,
                         "periode" => $q->periode,
                         "stand_lalu" => $q->stand_lalu,
                         "stand_ini" => $q->stand_ini,
