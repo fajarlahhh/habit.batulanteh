@@ -86,7 +86,7 @@
                                     wire:model.defer="penagih" value="1">
                                 <label class="custom-control-label" for="penagih1">Penagih</label>
                             </div>
-                            <div class="custom-control custom-radio">
+                            <div class="custom-control custom-radio mr-3">
                                 <input type="radio" id="penagih2" name="penagih" class="custom-control-input"
                                     wire:model.defer="penagih" value="2">
                                 <label class="custom-control-label" for="penagih2">PPOB</label>
