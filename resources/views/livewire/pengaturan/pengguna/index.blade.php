@@ -54,7 +54,7 @@
                         <th>Level</th>
                         <th>Penagih</th>
                         <th>Baca Meter</th>
-                        <th>API Token</th>
+                        <th>Unit Pelayanan</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
                         @endrole
@@ -83,7 +83,6 @@
                                 @endswitch
                             </td>
                             <td class="align-middle">{{ $row->bacameter == 1 ? 'YA' : '' }}</td>
-                            <td class="align-middle">{{ $row->api_token }}</td>
                             <td class="with-btn-group align-middle text-right" nowrap>
                                 @role('administrator|super-admin')
                                     <div class="btn-group btn-group-sm" role="group">

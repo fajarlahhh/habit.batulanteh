@@ -42,7 +42,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.pengaturan.pengguna.index', [
-            'data' => Pengguna::when($this->exist == '2', fn($q) => $q->onlyTrashed())->where(fn($q) => $q->where('uid', 'like', '%' . $this->cari . '%')->orWhere('nama', 'like', '%' . $this->cari . '%'))->orderBy('uid')->paginate(10),
+            'data' => Pengguna::with('unitPelayanan')->when($this->exist == '2', fn($q) => $q->onlyTrashed())->where(fn($q) => $q->where('uid', 'like', '%' . $this->cari . '%')->orWhere('nama', 'like', '%' . $this->cari . '%'))->orderBy('uid')->paginate(10),
             'no' => ($this->page - 1) * 10,
         ]);
     }

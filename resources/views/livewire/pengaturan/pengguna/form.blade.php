@@ -62,7 +62,19 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
+                        <div class="form-group">
+                            <label class="control-label">Unit Pelayanan</label>
+                            <select class="form-control selectpicker" data-live-search="true" data-width="100%"
+                                wire:model="unitPelayanan">
+                                <option value="">-- Tidak Ada --</option>
+                                @foreach (\App\Models\UnitPelayanan::all() as $row)
+                                    <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                @endforeach
+                            </select>
+                            @error('unitPelayanan')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="alert alert-muted form-inline">
                             <div class="custom-control custom-radio mr-3">
                                 <input type="radio" id="penagih0" name="penagih" class="custom-control-input" wire:model.defer="penagih" value="0">

@@ -17,6 +17,16 @@
         <th class="width-10">:</th> 
         <td>{{ date('F Y', strtotime($tahun . '-' . $bulan . '-01')) }}</td>
     </tr>
+    <tr>
+        <th class="width-150">Operator</th> 
+        <th class="width-10">:</th> 
+        <td>{{ auth()->user()->nama }}</td>
+    </tr>
+    <tr>
+        <th class="width-150">Tgl Cetak</th> 
+        <th class="width-10">:</th> 
+        <td>{{ now() }}</td>
+    </tr>
 </table>
 <table class="table table-bordered">
     <thead>

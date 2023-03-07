@@ -1,5 +1,5 @@
 <div class="text-center">
-    <h5>LPP Non Air</h5>
+    <h5>Laporan Penerimaan Penagihan Non Air</h5>
 </div>
 <table class="table table-borderless">
     <tr>
@@ -22,6 +22,16 @@
         <th class="width-150">Kasir</th>
         <th class="width-10">:</th>
         <td>{{ $kasir ?: 'Semua Kasir' }}</td>
+    </tr>
+    <tr>
+        <th class="width-150">Operator</th> 
+        <th class="width-10">:</th> 
+        <td>{{ auth()->user()->nama }}</td>
+    </tr>
+    <tr>
+        <th class="width-150">Tgl Cetak</th> 
+        <th class="width-10">:</th> 
+        <td>{{ now() }}</td>
     </tr>
 </table>
 <table class="table table-bordered">

@@ -44,4 +44,9 @@ class Pengguna extends Authenticatable
     {
         return $this->hasMany(BacaMeter::class, 'pembaca_id')->select('id', 'pembaca_id', DB::raw('date(tanggal_baca) tanggal_baca'));
     }
+
+    public function unitPelayanan()
+    {
+        return $this->belongsTo(UnitPelayanan::class);
+    }
 }
