@@ -53,7 +53,7 @@
                     <select wire:model.defer="bacameter" class="form-control selectpicker" data-live-search="true"
                         data-width="100%" data-size="10">
                         <option selected hidden>-- Pilih Pembaca Meter --</option>
-                        @foreach (\App\Models\Pengguna::orderBy('nama')->where('baca_meter', 1)->get() as $row)
+                        @foreach (\App\Models\Pengguna::orderBy('nama')->where('bacameter', 1)->get() as $row)
                             <option value="{{ $row->getKey() }}">{{ $row->nama }} - {{ $row->deskripsi }}
                                 ({{ $row->unit_pelayanan_id ? $row->unitPelayanan->nama : null }})
                             </option>
