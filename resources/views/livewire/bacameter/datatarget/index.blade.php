@@ -87,7 +87,8 @@
                             <td class="align-middle">{{ $row->pelanggan->no_langganan }}</td>
                             <td class="align-middle">{{ $row->pelanggan->nama }}</td>
                             <td class="align-middle">{{ $row->pelanggan->alamat }}</td>
-                            <td class="align-middle">{{ $row->rayon->nama }}</td>
+                            <td class="align-middle">{{ $row->rayon->kelurahan->kecamatan->unitPelayanan->nama }} -
+                                {{ $row->rayon->nama }}</td>
                             <td class="align-middle">{{ $row->pembaca->nama }}</td>
                             <td class="align-middle">{{ $row->tanggal_baca }}</td>
                             <td class="align-middle">{{ $row->stand_lalu }}</td>
