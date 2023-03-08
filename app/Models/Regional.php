@@ -10,9 +10,4 @@ class Regional extends Model
     use HasFactory;
 
     protected $table = 'regional';
-
-    public function ruteBaca()
-    {
-        return $this->hasOne(RuteBaca::class, 'rayon_id');
-    }
 }

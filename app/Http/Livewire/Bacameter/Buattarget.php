@@ -36,7 +36,7 @@ class Buattarget extends Component
         BacaMeter::whereNull('tanggal_baca')->where('periode', $this->tahun . '-' . $this->bulan . '-01')->forceDelete();
 
         DB::transaction(function () {
-            $dataPelanggan = Pelanggan::with('rayon.ruteBaca')->whereIn('status', [1, 3])->get();
+            $dataPelanggan = Pelanggan::with('rayon')->whereIn('status', [1, 3])->get();
 
             $data = [];
             foreach ($dataPelanggan as $key => $row) {
@@ -46,7 +46,7 @@ class Buattarget extends Component
                     'latitude' => $row->latitude,
                     'longitude' => $row->longitude,
                     'pelanggan_id' => $row->id,
-                    'pembaca_id' => $row->rayon->ruteBaca->pembaca_id,
+                    'pembaca_id' => $row->rayon->pembaca_id,
                     'rayon_id' => $row->rayon_id,
                     'pengguna_id' => auth()->id(),
                     'created_at' => now(),

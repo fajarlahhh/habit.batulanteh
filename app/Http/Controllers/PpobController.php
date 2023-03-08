@@ -40,6 +40,9 @@ class PpobController extends Controller
                                 $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $r->tarifDenda->nilai : 0;
                                 return [
                                     'id' => $r->id,
+                                    'stand_ini'  => $r->stand_ini,
+                                    'stand_lalu'  => $r->stand_lalu,
+                                    'golongan'  => $r->golongan->nama,
                                     'pakai' => $r->stand_ini || $r->stand_lalu ? $r->stand_ini - $r->stand_pasang + $r->stand_angkat - $r->stand_lalu : $r->stand_ini - $r->stand_lalu,
                                     'periode' => $r->periode,
                                     'tagihan' => $r->harga_air + $r->biaya_lainnya + $r->biaya_meter_air + $r->biaya_admin + $r->biaya_materai,
@@ -79,7 +82,7 @@ class PpobController extends Controller
                 $pengguna  = $pengguna->first();
                 if (collect($req->id)->count() <= 3) {
                     if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() == collect($req->id)->count()) {
-                        DB::transaction(function () use($pengguna, $req) {
+                        DB::transaction(function () use ($pengguna, $req) {
                             foreach (RekeningAir::whereIn('id', $req->id)->get() as $key => $row) {
                                 $periode = new Carbon($row->periode);
                                 $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->tarifDenda->nilai : 0;
@@ -99,7 +102,7 @@ class PpobController extends Controller
                         'status' => 'gagal',
                         'data' => 'Data tidak ditemukan',
                     ], 404);
-                } 
+                }
                 return response()->json([
                     'status' => 'gagal',
                     'data' => 'Transaksi tidak sah',
@@ -137,10 +140,13 @@ class PpobController extends Controller
                 $pengguna  = $pengguna->first();
                 return response()->json([
                     'status' => 'sukses',
-                    'data' => RekeningAir::with('pelanggan')->where('kasir', $pengguna->nama)->whereBetween('waktu_bayar', [$tanggal[0] . ' 00:00:00', $tanggal[1] . ' 23:59:59'])->get()->map(fn ($q) => [
+                    'data' => RekeningAir::with('golongan')->with('pelanggan')->where('kasir', $pengguna->nama)->whereBetween('waktu_bayar', [$tanggal[0] . ' 00:00:00', $tanggal[1] . ' 23:59:59'])->get()->map(fn ($q) => [
                         "id" => $q->id,
                         "no_langganan" => $q->pelanggan->no_langganan,
                         "periode" => $q->periode,
+                        'stand_ini'  => $q->stand_ini,
+                        'stand_lalu'  => $q->stand_lalu,
+                        'golongan'  => $q->golongan->nama,
                         'pakai' => $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu,
                         "waktu_bayar" => $q->waktu_bayar,
                         "kasir" => $q->kasir,

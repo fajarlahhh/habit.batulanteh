@@ -9,14 +9,15 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $nama, $kode, $kelurahan, $data, $key, $dataKelurahan;
+    public $nama, $kode, $kelurahan, $data, $key, $dataKelurahan, $bacameter;
 
     protected $queryString = ['key'];
 
     protected $rules = [
         'kode' => 'required|digits:4',
         'nama' => 'required',
-        'kelurahan' => 'required'
+        'kelurahan' => 'required',
+        'bacameter' => 'required'
     ];
 
     public function submit()
@@ -25,6 +26,7 @@ class Form extends Component
         DB::transaction(function () {
             $this->data->kode = $this->kode;
             $this->data->nama = $this->nama;
+            $this->data->pembaca_id = $this->bacameter;
             $this->data->kelurahan_id = $this->kelurahan;
             $this->data->save();
             session()->flash('success', 'Berhasil menyimpan data');
@@ -40,7 +42,7 @@ class Form extends Component
 
     public function mount()
     {
-        $this->dataKelurahan = Kelurahan::with('kecamatan')->get()->map(fn($q) => [
+        $this->dataKelurahan = Kelurahan::with('kecamatan')->get()->map(fn ($q) => [
             'id' => $q->id,
             'nama' => $q->nama,
             'nama_kecamatan' => $q->kecamatan->nama,
@@ -49,6 +51,7 @@ class Form extends Component
             $this->data = Rayon::findOrFail($this->key);
             $this->kode = $this->data->kode;
             $this->nama = $this->data->nama;
+            $this->bacameter = $this->data->pembaca_id;
             $this->kelurahan = $this->data->kelurahan_id;
         } else {
             $this->data = new Rayon();

@@ -51,6 +51,7 @@
                         <th>Kode</th>
                         <th>Nama</th>
                         <th>Kelurahan</th>
+                        <th>Pembaca Meter</th>
                         <th>Operator</th>
                         @role('administrator|super-admin')
                             <th class="width-90"></th>
@@ -63,7 +64,10 @@
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle">{{ $row->kode }}</td>
                             <td class="align-middle">{{ $row->nama }}</td>
-                            <td class="align-middle">{{ $row->kelurahan->nama }}</td>
+                            <td class="align-middle">{{ $row->kelurahan->nama }},
+                                {{ $row->kelurahan->kecamatan->nama }}
+                            </td>
+                            <td class="align-middle">{{ $row->pembaca->nama }}</td>
                             <td class="align-middle"><small>{!! $row->pengguna->nama . '</br>' . $row->updated_at !!}</small></td>
                             @role('administrator|super-admin')
                                 <td class="with-btn-group align-middle text-right" nowrap>
@@ -88,6 +92,10 @@
         <div class="panel-footer form-inline">
             <label class="pull-right">Jumlah Data : {{ $data->count() }}</label>
         </div>
+    </div>
+
+    <div wire:loading>
+        <x-loading />
     </div>
 
     @push('scripts')

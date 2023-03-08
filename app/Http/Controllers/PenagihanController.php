@@ -31,7 +31,7 @@ class PenagihanController extends Controller
             if ($pengguna->count() > 0) {
                 return response()->json([
                     'status' => 'sukses',
-                    'data' => Pelanggan::whereHas('tagihan')->where('nama', 'like', '%' . $req->cari . '%')->orWhere('no_langganan', 'like', '%' . $req->cari . '%')->where('status',1)->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
+                    'data' => Pelanggan::whereHas('tagihan.golongan')->where('nama', 'like', '%' . $req->cari . '%')->orWhere('no_langganan', 'like', '%' . $req->cari . '%')->where('status', 1)->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
                         'no_langganan' => $q->no_langganan,
                         'nama' => $q->nama,
                         'alamat' => $q->alamat,
@@ -82,7 +82,7 @@ class PenagihanController extends Controller
             if ($pengguna->count() > 0) {
                 $pengguna  = $pengguna->first();
                 if (RekeningAir::whereIn('id', $req->id)->whereNull('waktu_bayar')->count() == collect($req->id)->count()) {
-                    DB::transaction(function () use($pengguna, $req) {
+                    DB::transaction(function () use ($pengguna, $req) {
                         foreach (RekeningAir::whereIn('id', $req->id)->get() as $key => $row) {
                             $periode = new Carbon($row->periode);
                             $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->tarifDenda->nilai : 0;
@@ -146,7 +146,7 @@ class PenagihanController extends Controller
                         "waktu_bayar" => $q->waktu_bayar,
                         "kasir" => $q->kasir,
                         "denda" => $q->biaya_denda,
-                        "jumlah" => $q->harga_air + $q->biaya_lainnya + $q->biaya_meter_air +$q->biaya_admin + $q->biaya_materai ,
+                        "jumlah" => $q->harga_air + $q->biaya_lainnya + $q->biaya_meter_air + $q->biaya_admin + $q->biaya_materai,
                     ]),
                 ]);
             }

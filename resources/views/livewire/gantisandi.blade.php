@@ -43,6 +43,10 @@
         </form>
     </div>
 
+    <div wire:loading>
+        <x-loading />
+    </div>
+
     <x-info />
 
     @push('scripts')

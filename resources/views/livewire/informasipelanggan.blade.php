@@ -175,7 +175,7 @@
                                 <tr>
                                     <td class="text-nowrap width-100">Petugas Baca Meter</td>
                                     <td class="width-10">:</td>
-                                    <td>{{ $pelanggan && $pelanggan->rayon_id ? $pelanggan->rayon->ruteBaca->pembaca->nama : null }}
+                                    <td>{{ $pelanggan && $pelanggan->rayon_id ? $pelanggan->rayon->pembaca->nama : null }}
                                     </td>
                                 </tr>
                             </table>

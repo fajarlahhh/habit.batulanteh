@@ -159,23 +159,54 @@
                             data-live-search="true" data-size="10" data-width="100%">
                             <option value="">SEMUA RAYON</option>
                             @if ($unitPelayanan)
-                                @foreach (\App\Models\Rayon::whereIn('id', \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'))->get() as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                @foreach (\App\Models\Rayon::whereIn(
+        'id',
+        \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'),
+    )->get() as $row)
+                                    <option value="{{ $row->getKey() }}">{{ $row->kode }} - {{ $row->nama }}
+                                    </option>
                                 @endforeach
                             @endif
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Pemakaian</label>
-                        <select class="form-control selectpicker" wire:model="pemakaian"
-                            data-container="#sidebar-right" data-live-search="true" data-size="10"
-                            data-width="100%">
-                            <option value="">SEMUA PEMAKAIAN</option>
-                            <option value="1">
-                                < 0</option>
-                            <option value="2">>= 0</option>
+                        <label class="control-label">Pembaca</label>
+                        <select class="form-control selectpicker" wire:model="rayon" data-container="#sidebar-right"
+                            data-live-search="true" data-size="10" data-width="100%">
+                            <option value="">SEMUA PEMBACA</option>
+                            @foreach (\App\Models\Pengguna::where('bacameter', 1)->get() as $row)
+                                <option value="{{ $row->getKey() }}">{{ $row->nama }}
+                                    ({{ $row->unit_pelayanan_id ? $row->unitPelayanan->nama : null }})
+                                </option>
+                            @endforeach
                         </select>
                     </div>
+                    @if ($statusBaca == 1)
+                        <div class="form-group">
+                            <label class="control-label">Status Baca</label>
+                            <select class="form-control selectpicker" wire:model="rayon"
+                                data-container="#sidebar-right" data-live-search="true" data-size="10"
+                                data-width="100%">
+                                <option value="">SEMUA STATUS BACA</option>
+                                @if ($unitPelayanan)
+                                    @foreach (\App\Models\StatusBaca::withTrashed()->all() as $row)
+                                        <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Pemakaian</label>
+                            <select class="form-control selectpicker" wire:model="pemakaian"
+                                data-container="#sidebar-right" data-live-search="true" data-size="10"
+                                data-width="100%">
+                                <option value="">SEMUA PEMAKAIAN</option>
+                                <option value="1">
+                                    < 0</option>
+                                <option value="2">>= 0</option>
+                            </select>
+                        </div>
+                    @endif
                 </li>
             </ul>
             <!-- end sidebar user -->

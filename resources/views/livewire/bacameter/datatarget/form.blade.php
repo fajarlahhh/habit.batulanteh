@@ -45,7 +45,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Pembaca</label>
                                     <input class="form-control" type="text" disabled
-                                        value="{{ $data->rayon->ruteBaca->pembaca->nama }} ({{ $data->rayon->ruteBaca->pembaca->deskripsi }})" />
+                                        value="{{ $data->rayon->pembaca->nama }} ({{ $data->rayon->pembaca->deskripsi }})" />
                                 </div>
                             </div>
                         </div>

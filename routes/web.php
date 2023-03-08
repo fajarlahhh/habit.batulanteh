@@ -65,11 +65,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/kolektifpelanggan/tambah', \App\Http\Livewire\Pengaturan\Kolektifpelanggan\Form::class)->name('pengaturan.kolektifpelanggan.tambah');
             Route::get('/kolektifpelanggan/edit/{key}', \App\Http\Livewire\Pengaturan\Kolektifpelanggan\Form::class)->name('pengaturan.kolektifpelanggan.edit');
         });
-        Route::group(['middleware' => ['role_or_permission:administrator|pengaturanrutebaca']], function () {
-            Route::get('/rutebaca', \App\Http\Livewire\Pengaturan\Rutebaca\Index::class)->name('pengaturan.rutebaca');
-            Route::get('/rutebaca/tambah', \App\Http\Livewire\Pengaturan\Rutebaca\Form::class)->name('pengaturan.rutebaca.tambah');
-            Route::get('/rutebaca/edit/{key}', \App\Http\Livewire\Pengaturan\Rutebaca\Form::class)->name('pengaturan.rutebaca.edit');
-        });
     });
 
     Route::prefix('cetak')->group(function () {

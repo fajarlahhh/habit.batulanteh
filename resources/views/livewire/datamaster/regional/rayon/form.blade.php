@@ -48,6 +48,21 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label for="control-label">Pembaca Meter</label>
+                    <select wire:model.defer="bacameter" class="form-control selectpicker" data-live-search="true"
+                        data-width="100%" data-size="10">
+                        <option selected hidden>-- Pilih Pembaca Meter --</option>
+                        @foreach (\App\Models\Pengguna::orderBy('nama')->where('baca_meter', 1)->get() as $row)
+                            <option value="{{ $row->getKey() }}">{{ $row->nama }} - {{ $row->deskripsi }}
+                                ({{ $row->unit_pelayanan_id ? $row->unitPelayanan->nama : null }})
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('bacameter')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
             <div class="panel-footer">
                 @role('administrator|super-admin')

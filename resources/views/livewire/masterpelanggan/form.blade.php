@@ -69,10 +69,10 @@
                         </div>
                         <div class="form-group">
                             <label for="control-label">Rayon</label>
-                            <select wire:model.defer="rayon" class="form-control selectpicker"
-                                data-width="100%" data-live-search="true" data-size="10">
+                            <select wire:model.defer="rayon" class="form-control selectpicker" data-width="100%"
+                                data-live-search="true" data-size="10">
                                 <option selected hidden>-- Pilih Rayon --</option>
-                                @foreach (\App\Models\Regional::orderBy('nama_rayon')->whereHas('ruteBaca')->get() as $row)
+                                @foreach (\App\Models\Regional::orderBy('nama_rayon')->get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->nama_rayon }},
                                         {{ $row->nama_kelurahan }}, {{ $row->nama_kecamatan }}
                                     </option>

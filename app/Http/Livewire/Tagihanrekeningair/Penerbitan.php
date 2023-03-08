@@ -20,8 +20,8 @@ class Penerbitan extends Component
 
     public function mount()
     {
-        $this->bulan = $this->bulan?:date('m');
-        $this->tahun = $this->tahun?:date('Y');
+        $this->bulan = $this->bulan ?: date('m');
+        $this->tahun = $this->tahun ?: date('Y');
         $this->dataTarifProgresif = TarifProgresif::with('tarifProgresifDetail')->withTrashed()->get();
         $this->dataTarifMaterai = TarifMaterai::withTrashed()->get();
         $this->dataTarifDenda = TarifDenda::withTrashed()->get();
@@ -124,7 +124,7 @@ class Penerbitan extends Component
                     $bacaMeter->longitude = $this->pelanggan->longitude;
                     $bacaMeter->pelanggan_id = $this->pelangganId;
                     $bacaMeter->rayon_id = $this->pelanggan->rayon_id;
-                    $bacaMeter->pembaca_id = $this->pelanggan->rayon->ruteBaca->pembaca_id;
+                    $bacaMeter->pembaca_id = $this->pelanggan->rayon->pembaca_id;
                     $bacaMeter->pengguna_id = auth()->id();
                     $bacaMeter->created_at = now();
                     $bacaMeter->updated_at = now();
