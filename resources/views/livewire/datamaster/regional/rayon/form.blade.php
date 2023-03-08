@@ -55,7 +55,7 @@
                         <option selected hidden>-- Pilih Pembaca Meter --</option>
                         @foreach (\App\Models\Pengguna::orderBy('nama')->where('bacameter', 1)->get() as $row)
                             <option value="{{ $row->getKey() }}">{{ $row->nama }} - {{ $row->deskripsi }}
-                                ({{ $row->unit_pelayanan_id ? $row->unitPelayanan->nama : null }})
+                                {{ $row->unit_pelayanan_id ? '(' . $row->unitPelayanan->nama . ')' : null }}
                             </option>
                         @endforeach
                     </select>

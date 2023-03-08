@@ -14,7 +14,7 @@ class Form extends Component
 {
     use WithFileUploads;
 
-    public $key, $data, $noBodyWaterMeter, $tanggalBaca, $standIni, $statusBaca, $standAngkat, $standPasang, $foto, $fotoUpload;
+    public $key, $data, $noBodyWaterMeter, $tanggalBaca, $standIni, $statusBaca, $standAngkat, $standPasang, $foto, $fotoUpload, $pembaca;
 
     public function mount()
     {
@@ -25,6 +25,7 @@ class Form extends Component
         $this->standAngkat = $this->data->stand_angkat;
         $this->standPasang = $this->data->stand_pasang;
         $this->statusBaca = $this->data->status_baca;
+        $this->pembaca = $this->data->pembaca_id;
     }
 
     public function submit()
@@ -34,6 +35,7 @@ class Form extends Component
             'standIni' => 'required|numeric',
             'tanggalBaca' => 'required|date',
             'statusBaca' => 'required',
+            'pembaca' => 'required',
         ]);
 
         if ($this->standPasang || $this->standAngkat) {
@@ -61,6 +63,7 @@ class Form extends Component
                     $this->data->stand_pasang = $this->standPasang;
                     $this->data->stand_angkat = $this->standAngkat;
                 }
+                $this->data->pembaca_id = $this->pembaca;
                 $this->data->tanggal_baca = $this->tanggalBaca;
                 $this->data->status_baca = $this->statusBaca;
                 if ($this->fotoUpload) {
