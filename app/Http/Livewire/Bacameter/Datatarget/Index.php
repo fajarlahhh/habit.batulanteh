@@ -39,8 +39,8 @@ class Index extends Component
     public function render()
     {
         $data = BacaMeter::with('pengguna')->with('rayon')->where('periode', $this->tahun . '-' . $this->bulan . '-01')
-            ->when($this->pembaca == 0, fn ($q) => $q->where('pembaca_id', $this->pembaca))
-            ->when($this->statusBaca == 0, fn ($q) => $q->whereNull('tanggal_baca'))
+            ->when($this->pembaca, fn ($q) => $q->where('pembaca_id', $this->pembaca))
+            ->when($this->statusBaca, fn ($q) => $q->whereNull('tanggal_baca'))
             ->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))
             ->when($this->statusBaca == 1, fn ($q) => $q->whereNotNull('tanggal_baca'))
             ->when($this->tanggalBaca, fn ($q) => $q->where(DB::raw('date(tanggal_baca)'), date('Y-m-d', strtotime($this->tanggalBaca))))
