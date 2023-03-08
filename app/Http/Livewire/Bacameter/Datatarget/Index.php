@@ -15,9 +15,17 @@ class Index extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $tahun, $bulan, $statusBaca, $tanggalBaca, $unitPelayanan, $rayon, $cari, $dataUnitPelayanan, $pemakaian, $pembaca;
+    public $tahun, $bulan, $statusBaca, $tanggalBaca, $unitPelayanan, $rayon, $cari, $dataUnitPelayanan, $pemakaian, $pembaca, $pembacaUpdate;
 
     protected $queryString = ['tahun', 'bulan', 'statusBaca', 'tanggalBaca', 'unitPelayanan', 'rayon', 'cari', 'pemakaian', 'pembaca'];
+
+    public function setPembaca($key)
+    {
+        dd($this->pembacaUpdate);
+        BacaMeter::where('id', $key)->update([
+            'pembaca_id' => $this->pembaca
+        ]);
+    }
 
     public function mount()
     {

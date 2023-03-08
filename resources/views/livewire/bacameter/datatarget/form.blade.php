@@ -42,6 +42,11 @@
                                     <input class="form-control" type="text" disabled
                                         value="{{ $data->rayon->nama . ', ' . $data->rayon->kelurahan->nama . ', ' . $data->rayon->kelurahan->kecamatan->nama }}" />
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label">Pembaca</label>
+                                    <input class="form-control" type="text" disabled
+                                        value="{{ $data->pembaca->nama }} ({{ $data->pembaca->deskripsi }})" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,21 +95,6 @@
                                 @endforeach
                             </select>
                             @error('statusBaca')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="control-label">Pembaca Meter</label>
-                            <select wire:model.defer="pembaca" class="form-control selectpicker" data-live-search="true"
-                                data-width="100%" data-size="10">
-                                <option selected hidden>-- Pilih Pembaca Meter --</option>
-                                @foreach (\App\Models\Pengguna::orderBy('nama')->where('bacameter', 1)->get() as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->nama }} - {{ $row->deskripsi }}
-                                        {{ $row->unit_pelayanan_id ? '(' . $row->unitPelayanan->nama . ')' : null }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('pembaca')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
