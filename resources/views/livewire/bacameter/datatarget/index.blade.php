@@ -171,8 +171,9 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Pembaca</label>
-                        <select class="form-control selectpicker" wire:model="rayon" data-container="#sidebar-right"
-                            data-live-search="true" data-size="10" data-width="100%">
+                        <select class="form-control selectpicker" wire:model="pembaca"
+                            data-container="#sidebar-right" data-live-search="true" data-size="10"
+                            data-width="100%">
                             <option value="">SEMUA PEMBACA</option>
                             @foreach (\App\Models\Pengguna::where('bacameter', 1)->get() as $row)
                                 <option value="{{ $row->getKey() }}">{{ $row->nama }}
@@ -184,7 +185,7 @@
                     @if ($statusBaca == 1)
                         <div class="form-group">
                             <label class="control-label">Status Baca</label>
-                            <select class="form-control selectpicker" wire:model="rayon"
+                            <select class="form-control selectpicker" wire:model="statusBaca"
                                 data-container="#sidebar-right" data-live-search="true" data-size="10"
                                 data-width="100%">
                                 <option value="">SEMUA STATUS BACA</option>
