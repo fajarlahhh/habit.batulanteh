@@ -42,11 +42,6 @@
                                     <input class="form-control" type="text" disabled
                                         value="{{ $data->rayon->nama . ', ' . $data->rayon->kelurahan->nama . ', ' . $data->rayon->kelurahan->kecamatan->nama }}" />
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">Pembaca</label>
-                                    <input class="form-control" type="text" disabled
-                                        value="{{ $data->rayon->pembaca->nama }} ({{ $data->rayon->pembaca->deskripsi }})" />
-                                </div>
                             </div>
                         </div>
                     </div>
