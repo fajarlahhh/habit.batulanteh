@@ -58,7 +58,7 @@ class Rekeningnonair extends Component
             $terakhir = ModelsRekeningNonAir::where('created_at', 'like', date('Y-m') . '%')->orderBy('created_at', 'desc')->first();
             $nomor = '000001/NONAIR/PBL/' . $roman->filter(date('m')) . '/' . date('Y');
             if ($terakhir) {
-                $terakhir = sprintf('%06s', (integer) substr($terakhir->nomor, 0, 6) + 1);
+                $terakhir = sprintf('%06s', (int) substr($terakhir->nomor, 0, 6) + 1);
                 $nomor = $terakhir . '/NONAIR/PBL/' . $roman->filter(date('m')) . '/' . date('Y');
             }
 
@@ -76,14 +76,13 @@ class Rekeningnonair extends Component
             $cetak = view('cetak.nota-rekeningnonair', [
                 'dataRekeningNonAir' => ModelsRekeningNonAir::findOrFail($data->id),
             ])->render();
-            
+
             if ($pelayanan->fungsi == 'aktifkan pelanggan') {
-                Pelanggan::where('id', $this->pelangganId)->update('status',1);
+                Pelanggan::where('id', $this->pelangganId)->update('status', 1);
             }
 
             session()->flash('cetak', $cetak);
             session()->flash('success', 'Berhasil menyimpan data');
-
         });
         return redirect(route('pembayaran.rekeningnonair'));
     }
