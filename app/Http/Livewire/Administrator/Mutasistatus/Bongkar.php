@@ -30,6 +30,7 @@ class Bongkar extends Component
             $log->status_lama = $this->pelanggan->status;
             $log->status_baru = 3;
             $log->pelanggan_id = $this->pelangganId;
+            $log->catatan = $this->catatan;
             $log->save();
 
             $this->pelanggan->status = 3;
