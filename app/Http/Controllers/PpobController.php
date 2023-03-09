@@ -40,8 +40,8 @@ class PpobController extends Controller
                                 $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $r->tarifDenda->nilai : 0;
                                 return [
                                     'id' => $r->id,
-                                    'stand_ini'  =>(int) $r->stand_ini,
-                                    'stand_lalu'  =>(int) $r->stand_lalu,
+                                    'stand_ini'  => (int) $r->stand_ini,
+                                    'stand_lalu'  => (int) $r->stand_lalu,
                                     'golongan'  => $r->golongan->nama,
                                     'pakai' => (int)$r->stand_ini || $r->stand_lalu ? $r->stand_ini - $r->stand_pasang + $r->stand_angkat - $r->stand_lalu : $r->stand_ini - $r->stand_lalu,
                                     'periode' => $r->periode,
@@ -151,7 +151,7 @@ class PpobController extends Controller
                         'stand_ini'  => (int)$q->stand_ini,
                         'stand_lalu'  => (int)$q->stand_lalu,
                         'golongan'  => $q->golongan->nama,
-                        'pakai' =>(int) $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu,
+                        'pakai' => (int) $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu,
                         "waktu_bayar" => $q->waktu_bayar,
                         "kasir" => $q->kasir,
                         'harga_air' => (int)$q->harga_air,

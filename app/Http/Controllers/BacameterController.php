@@ -23,7 +23,7 @@ class BacameterController extends Controller
                     'status' => 'sukses',
                     'data' => BacaMeter::withoutGlobalScopes()->with(['pelanggan.rekeningAirTigaTerakhir' => function ($q) {
                         return  $q->take(3);
-                    }])->where('periode', $periode)->whereNull('tanggal_baca')->where('pembaca_id', $pengguna->id)->get()->map(fn ($q) => [
+                    }])->where('periode', $periode)->where('pembaca_id', $pengguna->id)->get()->map(fn ($q) => [
                         'id' => $q->id,
                         'no_langganan' => $q->pelanggan->no_langganan,
                         'nama' => $q->pelanggan->nama,
@@ -34,6 +34,8 @@ class BacameterController extends Controller
                         'periode' => $q->periode,
                         'stand_lalu' => $q->stand_lalu,
                         'stand_ini' => $q->stand_ini,
+                        'tanggal_baca' => substr($q->tanggal_baca, 0, 10),
+                        'foto' => $q->foto,
                         'latitude' => $q->latitude,
                         'longitude' => $q->longitude,
                         'rekeningAirTigaTerakhir' => $q->pelanggan->rekeningAirTigaTerakhir->map(fn ($r) => [
