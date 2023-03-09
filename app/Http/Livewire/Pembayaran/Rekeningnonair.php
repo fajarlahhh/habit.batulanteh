@@ -76,6 +76,10 @@ class Rekeningnonair extends Component
             $cetak = view('cetak.nota-rekeningnonair', [
                 'dataRekeningNonAir' => ModelsRekeningNonAir::findOrFail($data->id),
             ])->render();
+            
+            if ($pelayanan->fungsi == 'aktifkan pelanggan') {
+                Pelanggan::where('id', $this->pelangganId)->update('status',1);
+            }
 
             session()->flash('cetak', $cetak);
             session()->flash('success', 'Berhasil menyimpan data');
