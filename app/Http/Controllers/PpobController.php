@@ -48,6 +48,7 @@ class PpobController extends Controller
                                     'harga_air' => $r->harga_air,
                                     'biaya_meter_air' => $r->biaya_meter_air,
                                     'biaya_admin' => $r->biaya_admin,
+                                    'biaya_materai' => $r->biaya_materai,
                                     'denda' => $denda,
                                     'tagihan' => $r->harga_air + $r->biaya_lainnya + $r->biaya_meter_air + $r->biaya_admin + $r->biaya_materai,
                                 ];
@@ -156,6 +157,7 @@ class PpobController extends Controller
                         'harga_air' => $q->harga_air,
                         'biaya_meter_air' => $q->biaya_meter_air,
                         'biaya_admin' => $q->biaya_admin,
+                        'biaya_materai' => $q->biaya_materai,
                         'biaya_denda' => $q->biaya_denda,
                         "jumlah" => $q->harga_air + $q->biaya_lainnya + $q->biaya_meter_air + $q->biaya_admin + $q->biaya_materai + $q->biaya_denda,
                     ]),
