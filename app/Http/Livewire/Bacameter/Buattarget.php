@@ -51,9 +51,9 @@ class Buattarget extends Component
                     'pengguna_id' => auth()->id(),
                     'created_at' => now(),
                     'updated_at' => now(),
-                    'stand_ini' => $row->status == 3 ? DB::raw('stand_lalu') : 0,
-                    'status_baca' => $row->status == 3 ? 'SEGEL' : null,
-                    'tanggal_baca' => $row->status == 3 ? now() : null,
+                    'stand_ini' => $row->status == 2 ? DB::raw('stand_lalu') : 0,
+                    'status_baca' => $row->status == 2 ? 'SEGEL' : null,
+                    'tanggal_baca' => $row->status == 2 ? now() : null,
                 ]);
             }
 

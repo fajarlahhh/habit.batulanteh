@@ -50,7 +50,7 @@ class PpobController extends Controller
                                     'biaya_admin' => (int)$r->biaya_admin,
                                     'biaya_materai' => (int)$r->biaya_materai,
                                     'denda' => (int)$denda,
-                                    'tagihan' => (int)$r->harga_air + $r->biaya_lainnya + $r->biaya_meter_air + $r->biaya_admin + $r->biaya_materai,
+                                    'tagihan' => (int)$r->harga_air + $r->biaya_lainnya + $r->biaya_meter_air + $r->biaya_admin + $r->biaya_materai + $denda,
                                 ];
                             })
                         ]),

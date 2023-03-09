@@ -34,14 +34,10 @@
                         @break
 
                         @case(2)
-                            Putus Sementara
-                        @break
-
-                        @case(3)
                             Segel
                         @break
 
-                        @case(4)
+                        @case(3)
                             Bongkar
                         @break
 
@@ -55,14 +51,10 @@
                         @break
 
                         @case(2)
-                            Putus Sementara
-                        @break
-
-                        @case(3)
                             Segel
                         @break
 
-                        @case(4)
+                        @case(3)
                             Bongkar
                         @break
 

@@ -67,14 +67,10 @@
                                         @break
 
                                         @case(2)
-                                            Putus Sementara
+                                        Segel
                                         @break
 
                                         @case(3)
-                                            Segel
-                                        @break
-
-                                        @case(4)
                                             Bongkar
                                         @break
 
@@ -114,7 +110,7 @@
                             <td>{{ $pelanggan ? $pelanggan->tanggal_pasang : null }}</td>
                         </tr>
                         <tr>
-                            <td class="text-nowrap width-100">Tanggal Putus Sementara</td>
+                            <td class="text-nowrap width-100">Tanggal Segel</td>
                             <td class="width-10">:</td>
                             <td>{{ $pelanggan ? $pelanggan->tanggal_putus_sementara : null }}</td>
                         </tr>

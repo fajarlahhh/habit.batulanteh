@@ -108,7 +108,7 @@ class Postingrekeningair extends Component
                     'stand_ini' => $row->stand_ini,
                     'stand_angkat' => $row->stand_angkat,
                     'stand_pasang' => $row->stand_pasang,
-                    'harga_air' => $row->status_baca == 'PUTUS SEMENTAR PERMINTAAN SENDIRI' ? 0 : $hargaAir, // Untuk pelanggan putus sementara APS tidak dikenakan harga air
+                    'harga_air' => $row->status_baca == 'SEGEL' ? 0 : $hargaAir, // Untuk pelanggan pSEGEL tidak dikenakan harga air
                     'biaya_denda' => 0,
                     'biaya_lainnya' => $biayaLainnya,
                     'biaya_meter_air' => $biayaMeterAir,
@@ -155,7 +155,7 @@ class Postingrekeningair extends Component
                 'updated_at' => now(),
             ])->chunk(1000);
 
-            $ira[] = Pelanggan::with('rayon')->whereIn('status', [2, 4])->get()->map(fn ($q) => [
+            $ira[] = Pelanggan::with('rayon')->whereIn('status', [3])->get()->map(fn ($q) => [
                 'periode' => $this->tahun . '-' . $this->bulan . '-01',
                 'stand_lalu' => null,
                 'stand_ini' => null,
