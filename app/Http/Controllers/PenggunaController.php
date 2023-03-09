@@ -64,12 +64,4 @@ class PenggunaController extends Controller
             ], 500);
         }
     }
-
-    public function versi(Request $req)
-    {
-        return response()->json([
-            'status' => 'sukses',
-            'data' => 1,
-        ], 200);
-    }
 }

@@ -17,15 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware(['cors'])->get('/', function () {
+ Route::middleware(['cors'])->get('/', function () {
     return response()->json([
         'status' => 'sukses',
         'data' => 'API PERUMDAM BATU LANTEH',
     ]);
 });
+Route::middleware(['cors'])->get('/versi', function () {
+    return response()->json([
+        'status' => 'sukses',
+        'data' => 1,
+    ]);
+});
 
 Route::middleware(['cors'])->post('/login', [\App\Http\Controllers\PenggunaController::class, 'login']);
-Route::middleware(['cors'])->get('/versi', [\App\Http\Controllers\PenggunaController::class, 'versi']);
 
 Route::prefix('master')->group(function () {
     Route::middleware(['cors', 'apitoken'])->get('/statusbaca', [StatusbacaController::class, 'index']);
