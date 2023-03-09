@@ -45,6 +45,8 @@ class PpobController extends Controller
                                     'golongan'  => $r->golongan->nama,
                                     'pakai' => $r->stand_ini || $r->stand_lalu ? $r->stand_ini - $r->stand_pasang + $r->stand_angkat - $r->stand_lalu : $r->stand_ini - $r->stand_lalu,
                                     'periode' => $r->periode,
+                                    'biaya_meter_air' => $r->biaya_meter_air,
+                                    'biaya_admin' => $r->biaya_admin,
                                     'tagihan' => $r->harga_air + $r->biaya_lainnya + $r->biaya_meter_air + $r->biaya_admin + $r->biaya_materai,
                                     'denda' => $denda,
                                 ];
@@ -150,6 +152,9 @@ class PpobController extends Controller
                         'pakai' => $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu,
                         "waktu_bayar" => $q->waktu_bayar,
                         "kasir" => $q->kasir,
+                        'biaya_meter_air' => $q->biaya_meter_air,
+                        'biaya_admin' => $q->biaya_admin,
+                        'biaya_denda' => $q->biaya_denda,
                         "jumlah" => $q->harga_air + $q->biaya_lainnya + $q->biaya_meter_air + $q->biaya_admin + $q->biaya_materai + $q->biaya_denda,
                     ]),
                 ]);
