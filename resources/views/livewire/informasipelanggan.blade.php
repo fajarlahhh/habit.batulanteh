@@ -12,7 +12,7 @@
     <select class="form-control selectpicker mb-3" style="width: 100%;" data-size="10" data-live-search="true"
         data-style="primary" wire:model.lazy="pelangganId">
         <option selected hidden>-- Cari Pelanggan --</option>
-        @foreach (\App\Models\Pelanggan::with('rayon.kelurahan.kecamatan')->get() as $row)
+        @foreach ($dataPelanggan as $row)
             <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} -
                 {{ $row->nama }} ({{$row->alamat}})
             </option>
@@ -228,7 +228,7 @@
                                 $denda =
                                     $periode
                                         ->addMonths(1)
-                                        ->day(25)
+                                        ->day(20)
                                         ->format('Ymd') < \Carbon\Carbon::now()->format('Ymd') &&
                                     $row->waktu_bayar == null &&
                                     $row->kasir == null

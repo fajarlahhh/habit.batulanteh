@@ -37,7 +37,7 @@ class PenagihanController extends Controller
                         'alamat' => $q->alamat,
                         'tagihan' => $q->tagihan->map(function ($r) {
                             $periode = new Carbon($r->periode);
-                            $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $r->tarifDenda->nilai : 0;
+                            $denda = $periode->addMonths(1)->day(20)->format('Ymd') < date('Ymd') ? $r->tarifDenda->nilai : 0;
                             return [
                                 'id' => $r->id,
                                 'stand_lalu' => $r->stand_lalu,
@@ -85,7 +85,7 @@ class PenagihanController extends Controller
                     DB::transaction(function () use ($pengguna, $req) {
                         foreach (RekeningAir::whereIn('id', $req->id)->get() as $key => $row) {
                             $periode = new Carbon($row->periode);
-                            $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $row->tarifDenda->nilai : 0;
+                            $denda = $periode->addMonths(1)->day(20)->format('Ymd') < date('Ymd') ? $row->tarifDenda->nilai : 0;
                             RekeningAir::where('id', $row->id)->whereNull('waktu_bayar')->update([
                                 'kasir' => $pengguna->nama,
                                 'waktu_bayar' => now(),

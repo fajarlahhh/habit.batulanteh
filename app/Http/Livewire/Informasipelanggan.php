@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Informasipelanggan extends Component
 {
-    public $pelanggan, $pelangganId, $catatan, $status, $dataTarifDenda;
+    public $pelanggan, $pelangganId, $catatan, $status, $dataTarifDenda, $dataPelanggan = [];
 
     public function booted()
     {
@@ -18,6 +18,7 @@ class Informasipelanggan extends Component
     public function mount()
     {
         $this->dataTarifDenda = TarifDenda::orderBy('tanggal_berlaku', 'desc')->first();
+        $this->dataPelanggan =Pelanggan::with('rayon.kelurahan.kecamatan')->get();
     }
 
     public function updatedPelangganId()

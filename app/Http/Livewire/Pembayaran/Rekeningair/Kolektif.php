@@ -37,7 +37,7 @@ class Kolektif extends Component
         foreach ($this->dataPelanggan as $key => $row) {
             foreach ($row->rekeningAir->whereNotIn('id', collect($this->dataRekeningAir)->pluck('id'))->all() as $key => $subRow) {
                 $periode = new Carbon($subRow->periode);
-                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? $subRow->tarifDenda->nilai : 0;
+                $denda = $periode->addMonths(1)->day(20)->format('Ymd') < date('Ymd') ? $subRow->tarifDenda->nilai : 0;
                 $this->dataRekeningAir[] = [
                     'id' => $subRow->id,
                     'pelanggan_id' => $subRow->pelanggan_id,

@@ -41,7 +41,7 @@ class Perpelanggan extends Component
         if ($this->pelanggan->rekeningAir->count() > 0) {
             foreach ($this->pelanggan->rekeningAir->whereNotIn('id', collect($this->dataRekeningAir)->pluck('id'))->all() as $key => $row) {
                 $periode = new Carbon($row->periode);
-                $denda = $periode->addMonths(1)->day(25)->format('Ymd') < date('Ymd') ? ($row->harga_air > 0 ? $row->tarifDenda->nilai : 0) : 0;
+                $denda = $periode->addMonths(1)->day(20)->format('Ymd') < date('Ymd') ? ($row->harga_air > 0 ? $row->tarifDenda->nilai : 0) : 0;
                 $this->dataRekeningAir[] = [
                     'id' => $row->id,
                     'pelanggan_id' => $row->pelanggan_id,
