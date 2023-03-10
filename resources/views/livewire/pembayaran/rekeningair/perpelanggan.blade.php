@@ -31,7 +31,7 @@
                                 <option selected hidden>-- Pilih Pelanggan --</option>
                                 @foreach (\App\Models\Pelanggan::get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} -
-                                        {{ $row->nama }}
+                                        {{ $row->nama }} ({{$row->alamat}})
                                     </option>
                                 @endforeach
                             </select>

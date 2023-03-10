@@ -50,6 +50,15 @@
                 <td class="text-right">{{ $row->nilai }}</td>
                 <td class="text-nowrap">{{ $row->kasir }}</td>
             </tr>
+            @if ($total - $no == 0)
+                <tr>
+                    <td colspan="7">TOTAL</td>
+                    <td class="text-right">
+                        {{ $dataRaw->sum('nilai') }}
+                    </td>
+                    <td></td>
+                </tr>
+            @endif
         @endforeach
     </tbody>
 </table>
