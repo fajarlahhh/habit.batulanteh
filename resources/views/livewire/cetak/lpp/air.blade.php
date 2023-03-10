@@ -27,24 +27,10 @@
                         <div class="form-group">
                             <select class="form-control selectpicker" data-live-search="true" data-width="100%"
                                 wire:model.defer="unitPelayanan">
-                                <option value="">SEMUA UNIT PELAYANAN</option>
+                                <option value="">SEMUA PEL. UNIT PELAYANAN</option>
                                 @foreach ($dataUnitPelayanan as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
+                                    <option value="{{ $row->getKey() }}">SEMUA PEL. {{ $row->nama }}</option>
                                 @endforeach
-                            </select>
-                        </div>&nbsp;
-                        <div class="form-group">
-                            <select class="form-control selectpicker" data-live-search="true" data-width="100%"
-                                wire:model.defer="rayon">
-                                <option value="">SEMUA RAYON</option>
-                                @if ($unitPelayanan)
-                                    @foreach (\App\Models\Rayon::whereIn(
-        'id',
-        \App\Models\Regional::where('unit_pelayanan_id', $unitPelayanan)->get()->pluck('id'),
-    )->get() as $row)
-                                        <option value="{{ $row->getKey() }}">{{ $row->nama }}</option>
-                                    @endforeach
-                                @endif
                             </select>
                         </div>&nbsp;
                         <div class="form-group">
@@ -56,7 +42,7 @@
                                 @endforeach
                                 @foreach ($dataKasir as $row)
                                     <option value="{{ $row->nama }}">
-                                        {{ $row->nama . '' . ($row->penagih == 1 ? ' (Penagih)' : ($row->penagih == 2 ? ' (PPOB)' : null)) }}
+                                        {{ $row->nama . '' . ($row->penagih == 1 ? ' (Penagih)' : ($row->penagih == 2 ? ' (PPOB)' : ($row->penagih == 3 ? ' (Kasir)' : null))) }}
                                     </option>
                                 @endforeach
                             </select>

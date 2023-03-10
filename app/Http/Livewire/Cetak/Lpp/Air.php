@@ -21,7 +21,7 @@ class Air extends Component
 
     public function mount()
     {
-        $this->dataKasir = Pengguna::all();
+        $this->dataKasir = Pengguna::where('penagih', '>', 0)->get();
         $this->dataUnitPelayanan = UnitPelayanan::all();
         $this->tanggal1 = $this->tanggal1 ?: date('Y-m-d');
         $this->tanggal2 = $this->tanggal2 ?: date('Y-m-d');
@@ -43,9 +43,20 @@ class Air extends Component
 
     public function render()
     {
+        $data = RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->whereNotNull('kasir')->orderBy('waktu_bayar');
+
+        if ($this->kasir) {
+            if (is_int((int)$this->kasir) && (int)$this->kasir > 0) {
+                $data = $data->whereIn('kasir', \App\Models\Pengguna::where('unit_pelayanan_id', $this->kasir)->get()->pluck('uid'));
+            } else {
+                $data = $data->where('kasir', $this->kasir);
+            }            
+        }
+
         return view('livewire.cetak.lpp.air', [
             'no' => ($this->page - 1) * 10,
-            'data' => RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->kasir, fn ($q) => $q->where('kasir', $this->kasir))->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->whereNotNull('kasir')->orderBy('waktu_bayar')->paginate(10)
+            'dataRaw' => $data->get(),
+            'data' => $data->paginate(10),
         ]);
     }
 }

@@ -22,6 +22,15 @@ class LPPAirExport implements FromView
 
     public function view(): View
     {
+        $data = RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->whereNotNull('kasir')->orderBy('waktu_bayar');
+
+        if ($this->kasir) {
+            if (is_int((int)$this->kasir) && (int)$this->kasir > 0) {
+                $data = $data->whereIn('kasir', \App\Models\Pengguna::where('unit_pelayanan_id', $this->kasir)->get()->pluck('uid'));
+            } else {
+                $data = $data->where('kasir', $this->kasir);
+            }            
+        }
         return view('cetak.lppair', [
             'no' => 0,
             'tanggal1' => $this->tanggal1,
@@ -29,7 +38,8 @@ class LPPAirExport implements FromView
             'rayon' => $this->rayon,
             'kasir' => $this->kasir,
             'unitPelayanan' => $this->unitPelayanan,
-            'data' =>  RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->kasir, fn ($q) => $q->where('kasir', $this->kasir))->whereNotNull('kasir')->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->orderBy('waktu_bayar')->get()
+            'dataRaw' => $data->get(),
+            'data' => $data->paginate(10),
         ]);
     }
 }
