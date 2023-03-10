@@ -232,7 +232,7 @@
                     @enderror
                 </div>
                 <br>
-                @role('operator|administrator|super-admin')
+                @role('administrator|super-admin|operator')
                     <div wire:loading.remove>
                         <input type="submit" value="Simpan" class="btn btn-success m-r-3" />
                     </div>
