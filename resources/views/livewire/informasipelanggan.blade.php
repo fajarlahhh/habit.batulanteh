@@ -14,7 +14,7 @@
         <option selected hidden>-- Cari Pelanggan --</option>
         @foreach (\App\Models\Pelanggan::all() as $row)
             <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} -
-                {{ $row->nama }}
+                {{ $row->nama }} ({{$row->alamat}}, kel. {{$row->rayon->kelurahan->nama}}, kec. {{$row->rayon->kelurahan->kecamatan->nama}})
             </option>
         @endforeach
     </select>
