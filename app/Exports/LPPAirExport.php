@@ -36,6 +36,7 @@ class LPPAirExport implements FromView
             'tanggal2' => $this->tanggal2,
             'kasir' => $this->kasir,
             'unitPelayanan' => $this->unitPelayanan,
+            'total' => $data->count(),
             'dataRaw' => $data->get(),
             'data' => $data->get(),
         ]);

@@ -74,9 +74,9 @@
                 </td>
                 <td>{{ $row->kasir }}</td>
             </tr>
-            @if ($data->total() - $no == 0)
+            @if ($total - $no == 0)
                 <tr>
-                    <td colspan="7">TOTAL</td>
+                    <td colspan="8">TOTAL</td>
                     <td class="text-right">
                         {{ $dataRaw->sum(fn($q) => $q->stand_ini || $q->stand_lalu ? $q->stand_ini - $q->stand_pasang + $q->stand_angkat - $q->stand_lalu : $q->stand_ini - $q->stand_lalu) }}
                     </td>

@@ -55,6 +55,7 @@ class Air extends Component
 
         return view('livewire.cetak.lpp.air', [
             'no' => ($this->page - 1) * 10,
+            'total' => $data->count(),
             'dataRaw' => $data->get(),
             'data' => $data->paginate(10),
         ]);
