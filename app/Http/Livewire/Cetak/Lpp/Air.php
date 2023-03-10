@@ -15,7 +15,7 @@ class Air extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $dataUnitPelayanan, $unitPelayanan, $rayon, $tanggal1, $tanggal2, $dataKasir, $kasir;
+    public $dataUnitPelayanan, $unitPelayanan, $tanggal1, $tanggal2, $dataKasir, $kasir;
 
     public $queryString = ['unitPelayanan', 'tanggal1', 'tanggal2', 'kasir'];
 
@@ -38,12 +38,12 @@ class Air extends Component
         ini_set('max_execution_time', 0);
         set_time_limit(0);
         ini_set('memory_limit', '512M');
-        return Excel::download(new LPPAirExport($this->unitPelayanan, $this->rayon, $this->kasir, $this->tanggal1, $this->tanggal2), 'lppair' . $this->unitPelayanan . $this->rayon . $this->kasir . $this->tanggal1 . $this->tanggal2 . '.xlsx');
+        return Excel::download(new LPPAirExport($this->unitPelayanan, $this->kasir, $this->tanggal1, $this->tanggal2), 'lppair' . $this->unitPelayanan . $this->kasir . $this->tanggal1 . $this->tanggal2 . '.xlsx');
     }
 
     public function render()
     {
-        $data = RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->when($this->rayon, fn ($q) => $q->where('rayon_id', $this->rayon))->whereNotNull('kasir')->orderBy('waktu_bayar');
+        $data = RekeningAir::whereBetween('waktu_bayar', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->whereNotNull('kasir')->orderBy('waktu_bayar');
 
         if ($this->kasir) {
             if (is_int((int)$this->kasir) && (int)$this->kasir > 0) {
