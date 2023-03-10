@@ -28,7 +28,7 @@
                             <select class="form-control selectpicker" style="width: 100%;" data-live-search="true"
                                 data-size="10" data-size="10" wire:model.lazy="pelangganId">
                                 <option selected hidden>-- Pilih Pelanggan --</option>
-                                @foreach (\App\Models\Pelanggan::when(auth()->user()->unit_pelayanan_id, fn ($q) => $q->whereIn('rayon_id', \App\Models\Regional::where('unit_pelayanan_id', auth()->user()->unit_pelayanan_id)->whereIn('status', [1])->get()->pluck('id')))->get() as $row)
+                                @foreach (\App\Models\Pelanggan::when(auth()->user()->unit_pelayanan_id, fn ($q) => $q->whereIn('rayon_id', \App\Models\Regional::where('unit_pelayanan_id', auth()->user()->unit_pelayanan_id)->get()->pluck('id')))->whereIn('status', [1])->get() as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} -
                                         {{ $row->nama }}
                                     </option>

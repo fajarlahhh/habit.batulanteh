@@ -12,9 +12,9 @@
     <select class="form-control selectpicker mb-3" style="width: 100%;" data-size="10" data-live-search="true"
         data-style="primary" wire:model.lazy="pelangganId">
         <option selected hidden>-- Cari Pelanggan --</option>
-        @foreach (\App\Models\Pelanggan::all() as $row)
+        @foreach (\App\Models\Pelanggan::with('rayon.kelurahan.kecamatan')->get() as $row)
             <option value="{{ $row->getKey() }}">{{ $row->no_langganan }} -
-                {{ $row->nama }} ({{$row->alamat}}, kel. {{$row->rayon->kelurahan->nama}}, kec. {{$row->rayon->kelurahan->kecamatan->nama}})
+                {{ $row->nama }} ({{$row->alamat}})
             </option>
         @endforeach
     </select>
