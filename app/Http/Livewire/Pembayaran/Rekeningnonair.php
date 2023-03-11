@@ -78,7 +78,7 @@ class Rekeningnonair extends Component
             ])->render();
 
             if ($pelayanan->fungsi == 'aktifkan pelanggan') {
-                Pelanggan::where('id', $this->pelangganId)->update('status', 1);
+                Pelanggan::where('id', $this->pelangganId)->update(['status'=> 1]);
             }
 
             session()->flash('cetak', $cetak);
