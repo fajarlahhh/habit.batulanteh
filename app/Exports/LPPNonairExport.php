@@ -23,7 +23,7 @@ class LPPNonairExport implements FromView
     public function view(): View
     {
         $data = RekeningNonAir::whereBetween('created_at', [$this->tanggal1 . ' 00:00:00', $this->tanggal2 . ' 23:59:59'])->when($this->kasir, fn ($q) => $q->where('kasir', $this->kasir))->when($this->unitPelayanan, fn ($q) => $q->whereIn('rayon_id', Regional::where('unit_pelayanan_id', $this->unitPelayanan)->get()->pluck('id')))->whereNotNull('kasir')->orderBy('created_at');
-        return view('cetak.lppair', [
+        return view('cetak.lppnonair', [
             'no' => 0,
             'tanggal1' => $this->tanggal1,
             'tanggal2' => $this->tanggal2,
