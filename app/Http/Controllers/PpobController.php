@@ -28,33 +28,40 @@ class PpobController extends Controller
         try {
             $pengguna = Pengguna::where('api_token', $req->header('Token'))->where('penagih', 2)->get();
             if ($pengguna->count() > 0) {
-                return response()->json([
-                    'status' => 'sukses',
-                    'data' => Pelanggan::whereHas('tagihan')->withCount('tagihan')
-                        ->having('tagihan_count', '<=', 3)->where('no_langganan', $req->cari)->where('status', 1)->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
-                            'no_langganan' => $q->no_langganan,
-                            'nama' => $q->nama,
-                            'alamat' => $q->alamat,
-                            'tagihan' => $q->tagihan->map(function ($r) {
-                                $periode = new Carbon($r->periode);
-                                $denda = $periode->addMonths(1)->day(20)->format('Ymd') < date('Ymd') ? $r->tarifDenda->nilai : 0;
-                                return [
-                                    'id' => $r->id,
-                                    'stand_ini'  => (int) $r->stand_ini,
-                                    'stand_lalu'  => (int) $r->stand_lalu,
-                                    'golongan'  => $r->golongan->nama,
-                                    'pakai' => (int)$r->stand_ini || $r->stand_lalu ? $r->stand_ini - $r->stand_pasang + $r->stand_angkat - $r->stand_lalu : $r->stand_ini - $r->stand_lalu,
-                                    'periode' => $r->periode,
-                                    'harga_air' => (int)$r->harga_air,
-                                    'biaya_meter_air' => (int)$r->biaya_meter_air,
-                                    'biaya_admin' => (int)$r->biaya_admin,
-                                    'biaya_materai' => (int)$r->biaya_materai,
-                                    'denda' => (int)$denda,
-                                    'tagihan' => (int)$r->harga_air + $r->biaya_lainnya + $r->biaya_meter_air + $r->biaya_admin + $r->biaya_materai + $denda,
-                                ];
-                            })
-                        ]),
-                ]);
+                if (Pelanggan::where('no_langganan', $req->cari)->where('status', 1)->count() == 0) {
+                    return response()->json([
+                        'status' => 'gagal',
+                        'data' => 'Pelanggan tidak ditemukan/Pelanggan tidak aktif'
+                    ], 404);
+                }
+                    return response()->json([
+                        'status' => 'sukses',
+                        'data' => Pelanggan::whereHas('tagihan')->withCount('tagihan')
+                            ->having('tagihan_count', '<=', 3)->where('no_langganan', $req->cari)->where('status', 1)->with('tagihan.golongan')->with('tagihan.tarifDenda')->get()->map(fn ($q) => [
+                                'no_langganan' => $q->no_langganan,
+                                'nama' => $q->nama,
+                                'alamat' => $q->alamat,
+                                'tagihan' => $q->tagihan->map(function ($r) {
+                                    $periode = new Carbon($r->periode);
+                                    $denda = $periode->addMonths(1)->day(20)->format('Ymd') < date('Ymd') ? $r->tarifDenda->nilai : 0;
+                                    return [
+                                        'id' => $r->id,
+                                        'stand_ini'  => (int) $r->stand_ini,
+                                        'stand_lalu'  => (int) $r->stand_lalu,
+                                        'golongan'  => $r->golongan->nama,
+                                        'pakai' => (int)$r->stand_ini || $r->stand_lalu ? $r->stand_ini - $r->stand_pasang + $r->stand_angkat - $r->stand_lalu : $r->stand_ini - $r->stand_lalu,
+                                        'periode' => $r->periode,
+                                        'harga_air' => (int)$r->harga_air,
+                                        'biaya_meter_air' => (int)$r->biaya_meter_air,
+                                        'biaya_admin' => (int)$r->biaya_admin,
+                                        'biaya_materai' => (int)$r->biaya_materai,
+                                        'denda' => (int)$denda,
+                                        'tagihan' => (int)$r->harga_air + $r->biaya_lainnya + $r->biaya_meter_air + $r->biaya_admin + $r->biaya_materai + $denda,
+                                    ];
+                                })
+                            ]),
+                    ]);
+                
             }
             return response()->json([
                 'status' => 'gagal',
